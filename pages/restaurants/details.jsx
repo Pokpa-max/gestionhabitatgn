@@ -5,7 +5,7 @@ import Header from '@/components/Header'
 function Home() {
   return (
     <Scaffold>
-      <Header title={'Acceuil'} />
+      <Header title={'Details'} />
     </Scaffold>
   )
 }

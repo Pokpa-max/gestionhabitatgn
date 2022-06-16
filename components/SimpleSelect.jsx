@@ -10,7 +10,7 @@ const SimpleSelect = ({ options, ...nextProps }) => (
         'input:focus': {
           boxShadow: 'none',
         },
-        height: '2rem',
+        height: '1.6rem',
       }),
       placeholder: (base) => ({
         ...base,
@@ -18,8 +18,8 @@ const SimpleSelect = ({ options, ...nextProps }) => (
       }),
       control: (base, state) => ({
         ...base,
-        border: state.isFocused ? '2px solid #20B2AA' : '1px solid #d1d5db',
-        borderRadius: '0.125rem',
+        border: state.isFocused ? '2px solid #000' : '1px solid #d1d5db',
+        borderRadius: '0 rem',
         '&:hover': {
           border: '1px solid #d1d5db',
         },

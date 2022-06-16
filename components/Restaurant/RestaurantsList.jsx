@@ -1,29 +1,24 @@
 import React, { useState } from 'react'
-import MenuTabsContainer from './MenuTabsContainer'
-import { columnsItems } from './_dataTable'
+import { columnsRestaurant } from './_dataTable'
 
-import { RiEdit2Line, RiDeleteRow, RiSearchLine } from 'react-icons/ri'
-import { menuItems } from '../../_data'
-import CreateItemsDrawer from './CreateItemsDrawer'
+import {
+  RiDeleteRow,
+  RiFileCopy2Line,
+  RiSearchLine,
+  RiSendPlane2Fill,
+} from 'react-icons/ri'
+import { restaurants } from '../../_data'
+import RestaurantFormDrawer from './RestaurantFormDrawer'
 
-function ItemsList() {
-  return (
-    <MenuTabsContainer
-      title={'Elements'}
-      description={
-        'Naviguez vos differents elements de menus, selectionner ou modifier les details d une element.'
-      }
-    >
-      <ItemsTable />
-    </MenuTabsContainer>
-  )
+function RestaurantsList() {
+  return <RestaurantsTable />
 }
 
-function ItemsTable() {
+function RestaurantsTable() {
   const [openDrawer, setOpenDrawer] = useState(false)
   return (
     <div className="">
-      <CreateItemsDrawer open={openDrawer} setOpen={setOpenDrawer} />
+      <RestaurantFormDrawer open={openDrawer} setOpen={setOpenDrawer} />
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <div className="flex items-center flex-1 ">
@@ -41,7 +36,7 @@ function ItemsTable() {
                 <input
                   id="search"
                   name="search"
-                  className="block w-full py-2 pl-10 pr-3 leading-5 placeholder-gray-500 bg-white border border-gray-300 rounded-sm focus:border-primary-500 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary-500 sm:text-sm"
+                  className="block w-full py-2 pl-10 pr-3 leading-5 placeholder-gray-500 bg-white border border-gray-300 rounded-sm focus:border-primary-500 focus:ring-primary-500 focus:placeholder-gray-400 focus:outline-none focus:ring-1 sm:text-sm"
                   placeholder="Rechercher une categorie"
                   type="search"
                 />
@@ -53,7 +48,7 @@ function ItemsTable() {
           <button
             onClick={() => setOpenDrawer(true)}
             type="button"
-            className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-sm bg-primary-500 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:w-auto"
+            className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-sm bg-primary-500 hover:bg-primary-700 focus:ring-primary-500 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:w-auto"
           >
             Ajouter un element
           </button>
@@ -66,7 +61,7 @@ function ItemsTable() {
               <table className="min-w-full text-left divide-y divide-gray-300 table-auto">
                 <thead className="bg-gray-50">
                   <tr>
-                    {columnsItems.map((column, index) => (
+                    {columnsRestaurant.map((column, index) => (
                       <th
                         key={index}
                         scope="col"
@@ -84,9 +79,9 @@ function ItemsTable() {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {menuItems?.map((row, index) => (
+                  {restaurants?.map((row, index) => (
                     <tr key={index}>
-                      {columnsItems.map((column, index) => {
+                      {columnsRestaurant.map((column, index) => {
                         const cell = row[column.accessor]
                         const element = column.Cell?.(cell) ?? cell
                         return <td key={index}>{element}</td>
@@ -96,7 +91,7 @@ function ItemsTable() {
                           type="button"
                           className="inline-flex items-center p-3 bg-gray-200 border border-transparent rounded-full shadow-sm text-black-900 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                         >
-                          <RiEdit2Line
+                          <RiFileCopy2Line
                             className="w-4 h-4"
                             aria-hidden="true"
                             onClick={() => setOpenDrawer(true)}
@@ -121,4 +116,4 @@ function ItemsTable() {
   )
 }
 
-export default ItemsList
+export default RestaurantsList

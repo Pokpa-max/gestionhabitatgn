@@ -1,42 +1,37 @@
 import { Fragment, useState } from 'react'
-import Link from 'next/link'
 import { Dialog, Transition } from '@headlessui/react'
 
 import {
-  RiHome2Fill,
-  RiStarSFill,
-  RiRestaurantFill,
-  RiBillLine,
+  RiSafe2Fill,
   RiMenuFill,
-  RiWallet3Fill,
   RiCloseFill,
-  RiTeamFill,
-  RiTimerFlashFill,
-  RiSettings4Fill,
+  RiSettings2Fill,
+  RiStore3Fill,
+  RiAlarmWarningFill,
+  RiGroupFill,
+  RiDashboard2Fill,
+  RiNewspaperFill,
 } from 'react-icons/ri'
 
 import NavItem from './NavItem'
+import Link from 'next/link'
 
 const navigation = [
-  { name: 'Acceuil', href: '/', icon: RiHome2Fill },
-  { name: 'Feedback', href: '/feedback', icon: RiStarSFill },
-  { name: 'Rapport', href: '/report', icon: RiBillLine },
-  { name: 'Paiements', href: '/payment', icon: RiWallet3Fill },
-  { name: 'Menu', href: '/menu', icon: RiRestaurantFill },
+  { name: 'Acceuil', href: '/', icon: RiDashboard2Fill },
+  { name: 'Restaurants', href: '/restaurants', icon: RiStore3Fill },
+  { name: 'Rapports', href: '/reports', icon: RiNewspaperFill },
+  { name: 'Paiements', href: '/payments', icon: RiSafe2Fill },
+  { name: 'Promotions', href: '/marketing', icon: RiAlarmWarningFill },
   {
-    name: 'Temps de preparations',
-    href: '/cooktime',
-    icon: RiTimerFlashFill,
+    name: 'Utilisateurs',
+    href: '/users',
+    icon: RiGroupFill,
   },
-  {
-    name: 'Staff',
-    href: '/staff',
-    icon: RiTeamFill,
-  },
+
   {
     name: 'Parametres',
     href: '/settings',
-    icon: RiSettings4Fill,
+    icon: RiSettings2Fill,
   },
 ]
 
@@ -117,16 +112,16 @@ export default function Scaffold({ children, title }) {
                       <div>
                         <img
                           className="inline-block w-10 h-10 rounded-full"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                          src="https://pps.whatsapp.net/v/t61.24694-24/157381423_714662729958382_3255548508171682425_n.jpg?ccb=11-4&oh=66269bf17dc70b43bbcbd4949c6d81c9&oe=62B022BF"
                           alt=""
                         />
                       </div>
                       <div className="ml-3">
                         <p className="text-base font-medium text-gray-700 group-hover:text-gray-900">
-                          Tom Cook
+                          Amadou Tidiane Bah
                         </p>
                         <p className="text-sm font-medium text-gray-500 group-hover:text-gray-700">
-                          View profile
+                          Se deconnecter
                         </p>
                       </div>
                     </div>
@@ -147,10 +142,16 @@ export default function Scaffold({ children, title }) {
             <div className="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
               <div className="flex items-center flex-shrink-0 px-4">
                 <img
-                  className="w-full h-auto"
-                  src="/images/logo_3.png"
+                  className="w-10 h-auto"
+                  src="/images/logo.png"
                   alt="Eat224"
                 />
+                <h1 className="ml-2 text-2xl">
+                  <span className="font-extrabold text-primary-accent">
+                    EAT224
+                  </span>
+                  ADMIN
+                </h1>
               </div>
               <nav className="flex-1 px-2 mt-5 space-y-1 bg-white">
                 {navigation.map((item) => (
@@ -159,25 +160,27 @@ export default function Scaffold({ children, title }) {
               </nav>
             </div>
             <div className="flex flex-shrink-0 p-4 border-t border-gray-200">
-              <a href="#" className="flex-shrink-0 block w-full group">
-                <div className="flex items-center">
-                  <div>
-                    <img
-                      className="inline-block rounded-full h-9 w-9"
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR55r25_jgqOqljJTurHvNXvQ66NLaIbva_yA&usqp=CAU"
-                      alt=""
-                    />
+              <Link href={'/auth/signin'}>
+                <a className="flex-shrink-0 block w-full group">
+                  <div className="flex items-center">
+                    <div>
+                      <img
+                        className="inline-block rounded-full h-9 w-9"
+                        src="https://pps.whatsapp.net/v/t61.24694-24/157381423_714662729958382_3255548508171682425_n.jpg?ccb=11-4&oh=66269bf17dc70b43bbcbd4949c6d81c9&oe=62B022BF"
+                        alt=""
+                      />
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
+                        Amadou Tidiane Bah
+                      </p>
+                      <p className="text-xs font-medium text-gray-500 group-hover:text-gray-700">
+                        Se deconnecter
+                      </p>
+                    </div>
                   </div>
-                  <div className="ml-3">
-                    <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
-                      Bamboo
-                    </p>
-                    <p className="text-xs font-medium text-gray-500 group-hover:text-gray-700">
-                      Se deconnecter
-                    </p>
-                  </div>
-                </div>
-              </a>
+                </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -185,7 +188,7 @@ export default function Scaffold({ children, title }) {
           <div className="sticky top-0 z-10 pt-1 pl-1 bg-white sm:pl-3 sm:pt-3 md:hidden">
             <button
               type="button"
-              className="-ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+              className="focus:ring-black-500 -ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset"
               onClick={() => setSidebarOpen(true)}
             >
               <span className="sr-only">Open sidebar</span>
