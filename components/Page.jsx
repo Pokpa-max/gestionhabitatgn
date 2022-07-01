@@ -1,5 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
+import { Toaster } from 'react-hot-toast'
 
 const Page = ({ name, children }) => {
   const title = name
@@ -10,6 +11,7 @@ const Page = ({ name, children }) => {
         <title>{title}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
+      <Toaster position="top-right" />
       {children}
     </div>
   )

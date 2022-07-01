@@ -54,3 +54,24 @@ export const restaurants = [
     createdAt: new Date(Date.now()),
   },
 ]
+
+export const zones = [
+  { label: 'Matam', value: 'Matam' },
+  { label: 'Kaloum', value: 'Kaloum' },
+  { label: 'Dixinn', value: 'Dixinn' },
+  { label: 'Ratoma', value: 'Ratoma' },
+  { label: 'Matoto', value: 'Matoto' },
+]
+
+export const quartier = [
+  { label: 'Koulewondy', value: 'Koulewondy' },
+  { label: 'Donka', value: 'Donka' },
+  { label: 'Camayenne', value: 'Camayenne' },
+  { label: 'BelleVue', value: 'BelleVue' },
+  { label: 'Dixinn', value: 'Dixinn' },
+  { label: 'Madina', value: 'Madina' },
+  { label: 'Kipé', value: 'Kipé' },
+  { label: 'Ratoma', value: 'Ratoma' },
+  { label: 'Cosa', value: 'Cosa' },
+  { label: 'Bambeto', value: 'Bambeto' },
+]
