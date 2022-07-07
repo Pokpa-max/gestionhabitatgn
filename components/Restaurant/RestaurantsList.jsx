@@ -1,24 +1,43 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { columnsRestaurant } from './_dataTable'
 
-import {
-  RiDeleteRow,
-  RiFileCopy2Line,
-  RiSearchLine,
-  RiSendPlane2Fill,
-} from 'react-icons/ri'
-import { restaurants } from '../../_data'
+import { RiDeleteRow, RiFileCopy2Line, RiSearchLine } from 'react-icons/ri'
 import RestaurantFormDrawer from './RestaurantFormDrawer'
+import { getOnboardings } from '@/lib/services/restaurant'
 
 function RestaurantsList() {
-  return <RestaurantsTable />
+  const [restaurants, setRestaurants] = useState([])
+  const [selectedRestaurant, setSelectedRestaurant] = useState(null)
+
+  useEffect(() => {
+    const unsubscribe = getOnboardings(setRestaurants)
+    return () => {
+      unsubscribe()
+    }
+  }, [])
+
+  return (
+    <RestaurantsTable
+      selectedRestaurant={selectedRestaurant}
+      setSelectedRestaurant={setSelectedRestaurant}
+      restaurants={restaurants}
+    />
+  )
 }
 
-function RestaurantsTable() {
+function RestaurantsTable({
+  selectedRestaurant,
+  setSelectedRestaurant,
+  restaurants,
+}) {
   const [openDrawer, setOpenDrawer] = useState(false)
   return (
     <div className="">
-      <RestaurantFormDrawer open={openDrawer} setOpen={setOpenDrawer} />
+      <RestaurantFormDrawer
+        restaurant={selectedRestaurant}
+        open={openDrawer}
+        setOpen={setOpenDrawer}
+      />
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <div className="flex items-center flex-1 ">
@@ -88,13 +107,16 @@ function RestaurantsTable() {
                       })}
                       <td className="relative flex py-4 pl-3 pr-4 space-x-2 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
                         <button
+                          onClick={() => {
+                            setSelectedRestaurant(row)
+                            setOpenDrawer(true)
+                          }}
                           type="button"
                           className="inline-flex items-center p-3 bg-gray-200 border border-transparent rounded-full shadow-sm text-black-900 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                         >
                           <RiFileCopy2Line
                             className="w-4 h-4"
                             aria-hidden="true"
-                            onClick={() => setOpenDrawer(true)}
                           />
                         </button>
                         <button

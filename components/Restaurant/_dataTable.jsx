@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { firebaseDateFormat } from '../../utils/date'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -47,7 +48,7 @@ export const columnsRestaurant = [
     Cell: (data) => {
       return (
         <div className="px-3 text-sm text-gray-500 whitespace-nowrap font-stratos-light">
-          {data}
+          <a href={`mailto:${data}`}>{data}</a>
         </div>
       )
     },
@@ -76,7 +77,7 @@ export const columnsRestaurant = [
       return (
         <div className="flex-col py-4">
           <div className="px-3 text-sm text-gray-500 whitespace-nowrap font-stratos-light">
-            {data.toLocaleDateString()}
+            {firebaseDateFormat(data)}
           </div>
         </div>
       )

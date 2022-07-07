@@ -2,13 +2,14 @@ import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { RiCloseFill } from 'react-icons/ri'
 
-export default function Drawer({
+export default function DrawerForm({
   title,
   description,
   open,
   setOpen,
   footerButtons,
   children,
+  onSubmit,
 }) {
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -31,7 +32,10 @@ export default function Drawer({
               leaveTo="translate-x-full"
             >
               <div className="w-screen pointer-events-auto max-w-7xl">
-                <form className="flex flex-col h-full bg-white divide-y divide-gray-200 shadow-xl">
+                <form
+                  onSubmit={onSubmit}
+                  className="flex flex-col h-full bg-white divide-y divide-gray-200 shadow-xl"
+                >
                   <div className="flex-1 h-0 overflow-y-auto">
                     <div className="px-4 py-6 bg-primary-500 sm:px-6">
                       <div className="flex items-center justify-between">
