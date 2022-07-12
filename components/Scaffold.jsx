@@ -15,6 +15,7 @@ import {
 
 import NavItem from './NavItem'
 import Link from 'next/link'
+import { useAuthUser } from 'next-firebase-auth'
 
 const navigation = [
   { name: 'Acceuil', href: '/', icon: RiDashboard2Fill },
@@ -37,6 +38,8 @@ const navigation = [
 
 export default function Scaffold({ children, title }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  const AuthUser = useAuthUser();
 
   return (
     <>
@@ -120,9 +123,9 @@ export default function Scaffold({ children, title }) {
                         <p className="text-base font-medium text-gray-700 group-hover:text-gray-900">
                           Amadou Tidiane Bah
                         </p>
-                        <p className="text-sm font-medium text-gray-500 group-hover:text-gray-700">
+                        <button  onClick={AuthUser.signOut} className="text-sm font-medium text-gray-500 group-hover:text-gray-700">
                           Se deconnecter
-                        </p>
+                        </button>
                       </div>
                     </div>
                   </a>
@@ -174,9 +177,9 @@ export default function Scaffold({ children, title }) {
                       <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
                         Amadou Tidiane Bah
                       </p>
-                      <p className="text-xs font-medium text-gray-500 group-hover:text-gray-700">
+                      <button  onClick={AuthUser.signOut} className="text-xs font-medium text-gray-500 group-hover:text-gray-700">
                         Se deconnecter
-                      </p>
+                      </button>
                     </div>
                   </div>
                 </a>
