@@ -4,39 +4,50 @@ import { serverTimestamp } from 'firebase/firestore'
 
 // dataConstructors
 
-export const onboardingConstructor = ({
+export const restaurantConstructorUpdate = ({
   storename: name,
   firstname,
   lastname,
   email,
-  phone: phoneNumber,
-  indications: description,
+  phoneNumber,
+  position,
+  indication: description,
+  long,
+  lat,
   zone,
   quartier,
+  rccm,
+  nif,
+  otherAcc
 }) => ({
   restaurant: {
     name,
     description: 'Aucune description',
+    rccm,
+    nif,
+    otherAcc
   },
   manager: {
     firstname,
     lastname,
     phoneNumber,
+    position,
   },
   email,
   adress: {
     description,
     zone: zone.value,
     quartier: quartier.value,
+    long,
+    lat
   },
-  isActive: false,
   createdAt: serverTimestamp(),
   updatedAt: serverTimestamp(),
 })
 
 // Form
 
-export const autoFillOnboardingForm = (reset, setValue, restaurant) => {
+export const autoFillRestaurantForm = (reset, setValue, restaurant) => {
   if (!restaurant) {
     reset()
     return
@@ -48,24 +59,18 @@ export const autoFillOnboardingForm = (reset, setValue, restaurant) => {
     email,
     adress,
     isActive,
-    nif,
-    rccm,
-    otherAcc,
-    lat,
-    long,
-    position,
   } = restaurant
   setValue('storename', storename?.name)
   setValue('description', storename?.description)
   setValue('firstname', manager?.firstname)
   setValue('lastname', manager?.lastname)
   setValue('phoneNumber', manager?.phoneNumber)
-  setValue('position', position)
-  setValue('nif', nif)
-  setValue('rccm', rccm)
-  setValue('otherAcc', otherAcc)
-  setValue('lat', lat)
-  setValue('long', long)
+  setValue('position', manager?.position)
+  setValue('nif', storename?.nif)
+  setValue('rccm', storename?.rccm)
+  setValue('otherAcc', storename.otherAcc)
+  setValue('lat', adress?.lat)
+  setValue('long', adress?.long)
   setValue('email', email)
   setValue('indication', adress?.description)
   setValue('zone', { value: adress?.zone, label: adress?.zone })

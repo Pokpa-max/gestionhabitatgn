@@ -39,13 +39,13 @@ export default function DrawerForm({
                   <div className="flex-1 h-0 overflow-y-auto">
                     <div className="px-4 py-6 bg-primary-500 sm:px-6">
                       <div className="flex items-center justify-between">
-                        <Dialog.Title className="text-xl font-bold text-primary">
+                        <Dialog.Title className="text-xl font-bold text-white">
                           {title}
                         </Dialog.Title>
                         <div className="flex items-center ml-3 h-7">
                           <button
                             type="button"
-                            className=" bg-primary-500 text-primary-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
+                            className="bg-white text-primary-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
                             onClick={() => setOpen(false)}
                           >
                             <span className="sr-only">Close panel</span>
@@ -57,7 +57,7 @@ export default function DrawerForm({
                         </div>
                       </div>
                       <div className="mt-1">
-                        <p className="text-sm italic font-light text-primary">
+                        <p className="text-sm italic font-light text-white">
                           {description}
                         </p>
                       </div>

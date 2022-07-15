@@ -21,6 +21,7 @@ module.exports = {
           light: '#00c7b6',
           DEFAULT: '#000',
           accent: '#20b2aa',
+          "500": "#000",
         },
       },
     },

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { editOnboarding } from '../../lib/services/restaurant'
-import { autoFillOnboardingForm } from '../../utils/functionFactory'
+import { createAccount, editRestaurant } from '../../lib/services/restaurant'
+import { autoFillRestaurantForm } from '../../utils/functionFactory'
 import { notify } from '../../utils/toast'
 import { quartier, zones } from '../../_data'
 
@@ -30,17 +30,35 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
 
   useEffect(() => {
     const setFormvalue = () => {
-      autoFillOnboardingForm(reset, setValue, restaurant)
+      autoFillRestaurantForm(reset, setValue, restaurant)
     }
     setFormvalue()
   }, [restaurant])
 
+  // useEffect(() => {
+  //   if (!open) {
+  //   }
+  // }, [open])
+
   const onSubmit = async (data) => {
     setLoading(true)
     try {
-      if (restaurant) await editOnboarding(restaurant.id, data)
+      if (restaurant) await editRestaurant(restaurant.id, data)
       setOpen(false)
       notify('Votre requète s est executée avec succès', 'success')
+    } catch (error) {
+      console.log(error)
+      notify('Une erreur est survenue', 'error')
+    }
+    setLoading(false)
+  }
+
+  const CreatedAccountSubmit = async (data) => {
+    setLoading(true)
+    try {
+      await createAccount(restaurant.id, data)
+      setOpen(false)
+      notify('le compte à été crée avec succès', 'success')
     } catch (error) {
       console.log(error)
       notify('Une erreur est survenue', 'error')
@@ -81,7 +99,8 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                 Enregistrer
               </button>
               <button
-                type="submit"
+                type="button"
+                onClick={handleSubmit(CreatedAccountSubmit)}
                 className="inline-flex justify-center px-4 py-2 ml-4 text-sm font-medium text-white border border-transparent bg-primary-accent hover:bg-primary-light focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               >
                 Creer un compte
