@@ -45,7 +45,7 @@ export default function DrawerForm({
                         <div className="flex items-center ml-3 h-7">
                           <button
                             type="button"
-                            className="bg-white text-primary-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
+                            className="bg-white text-primary-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white "
                             onClick={() => setOpen(false)}
                           >
                             <span className="sr-only">Close panel</span>

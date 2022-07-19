@@ -11,8 +11,8 @@ export default async function handler(
     const userRecord = await createUserAuth(email, 'password', name)
 
     const { uid } = userRecord
-    const generateLink = await authAdmin.generateEmailVerificationLink(email)
-    console.log('generatedLink ', generateLink)
+    // const generateLink = await authAdmin.generateEmailVerificationLink(email)
+    // console.log('generatedLink ', generateLink)
 
     const batch = dbAdmin.batch()
     batch.set(dbAdmin.collection('users').doc(uid), {
