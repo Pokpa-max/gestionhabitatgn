@@ -1,4 +1,7 @@
-import { init,  } from 'next-firebase-auth'
+import { init, } from 'next-firebase-auth'
+import { auth } from '../../lib/firebase/client_config'
+import { notify } from '../toast'
+import { getObjectInString } from '../functionFactory'
 
 const initAuth = () => {
     init({
@@ -7,7 +10,11 @@ const initAuth = () => {
         loginAPIEndpoint: '/api/login',
         logoutAPIEndpoint: '/api/logout',
         onLoginRequestError: (error) => {
-            console.log('onLoginRequestError', error)
+            auth.signOut()
+            const errorMessage = error.message
+            const convertedError = getObjectInString(errorMessage)
+            notify(`Une erreur est survenue, ${convertedError}`, 'error')
+            console.log('onLoginRequestError', convertedError)
         },
         onLogoutRequestError: (error) => {
             console.log('onLogoutRequestError', error)

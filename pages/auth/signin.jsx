@@ -1,10 +1,13 @@
 import Page from '@/components/Page'
-import { AuthAction, withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth';
-import { useState } from 'react';
-import { useForm } from "react-hook-form";
+import {
+  AuthAction,
+  withAuthUser,
+  withAuthUserTokenSSR,
+} from 'next-firebase-auth'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 
 import { signin } from '../../lib/services/auth'
-
 
 function SignIn() {
   const {
@@ -12,23 +15,22 @@ function SignIn() {
     register,
     reset,
     formState: { errors },
-} = useForm({
-    mode: "onBlur",
-    reValidateMode: "onChange",
+  } = useForm({
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
     shouldUnregister: true,
-});
+  })
 
-const [loading, setLoading] = useState(false);
-const onSubmit = async (data) => {
-  setLoading(true);
-  try {
-      await signin(data.email, data.password);
-      reset();
-  } catch (error) {
-      console.log(error);
+  const [loading, setLoading] = useState(false)
+  const onSubmit = async (data) => {
+    setLoading(true)
+    try {
+      await signin(data.email, data.password)
+    } catch (error) {
+      console.log(error)
+    }
+    setLoading(false)
   }
-  setLoading(false);
-};
   return (
     <>
       {/* bg-gradient-to-r from-red-300 via-yellow-300 to-primary-300 */}
@@ -56,7 +58,12 @@ const onSubmit = async (data) => {
               EAT224.
             </p>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)}  className="mt-8 space-y-6" action="#" method="POST">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="mt-8 space-y-6"
+            action="#"
+            method="POST"
+          >
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="-space-y-px shadow-sm">
               <div>
@@ -65,18 +72,18 @@ const onSubmit = async (data) => {
                 </label>
                 <input
                   id="email-address"
-                  {...register("email", {
-                    required: "Champs requis",
-                })}
+                  {...register('email', {
+                    required: 'Champs requis',
+                  })}
                   type="email"
                   autoComplete="email"
                   required
-                  className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none focus:border-primary-500 focus:ring-primary-500 focus:z-10 focus:outline-none sm:text-sm"
+                  className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none focus:z-10 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
                   placeholder="Adresse email"
                 />
                 <p className="pt-1 text-xs text-red-600 font-stratos-light">
-                                    {errors?.email?.message}
-                                </p>
+                  {errors?.email?.message}
+                </p>
               </div>
               <div>
                 <label htmlFor="password" className="sr-only">
@@ -84,18 +91,18 @@ const onSubmit = async (data) => {
                 </label>
                 <input
                   id="password"
-                  {...register("password", {
-                    required: "Champs requis",
-                })}
+                  {...register('password', {
+                    required: 'Champs requis',
+                  })}
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none focus:border-primary-500 focus:ring-primary-500 focus:z-10 focus:outline-none sm:text-sm"
+                  className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none focus:z-10 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
                   placeholder="Mot de passe"
                 />
-                  <p className="pt-1 text-xs text-red-600 font-stratos-light">
-                                    {errors?.password?.message}
-                                </p>
+                <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                  {errors?.password?.message}
+                </p>
               </div>
             </div>
 
@@ -129,7 +136,7 @@ const onSubmit = async (data) => {
               <button
                 type="submit"
                 className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-sm group bg-primary hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                            >
+              >
                 Connexion
               </button>
             </div>
@@ -148,8 +155,9 @@ const SignInPage = () => (
 
 export const getServerSideProps = withAuthUserTokenSSR({
   whenAuthed: AuthAction.REDIRECT_TO_APP,
-})();
+})()
 
-export default withAuthUser({ whenAuthed: AuthAction.REDIRECT_TO_APP })(
-  SignInPage
-);
+export default withAuthUser({
+  whenAuthed: AuthAction.REDIRECT_TO_APP,
+  whenAuthedBeforeRedirect: AuthAction.RENDER,
+})(SignInPage)

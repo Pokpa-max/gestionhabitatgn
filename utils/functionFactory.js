@@ -77,3 +77,8 @@ export const autoFillRestaurantForm = (reset, setValue, restaurant) => {
   setValue('quartier', { value: adress?.quartier, label: adress?.quartier })
   setValue('isActive', isActive)
 }
+
+export const getObjectInString = (str) => {
+  return JSON.parse(str.substring(str.indexOf('{'), str.lastIndexOf('}') + 1))
+
+}

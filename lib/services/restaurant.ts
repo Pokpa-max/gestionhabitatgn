@@ -9,6 +9,7 @@ import { db } from '@/lib/firebase/client_config'
 import { parseDocsData } from '@/utils/firebase/firestore'
 import { fetchWithPost } from '../../utils/fetch'
 import { restaurantConstructorUpdate } from '../../utils/functionFactory'
+import { notify } from '../../utils/toast'
 
 // Restaurants
 export const restaurantsCollectionRef = collection(db, `restaurants`)
@@ -25,7 +26,10 @@ export const getRestaurants = (setState) => {
 }
 
 export const editRestaurant = async (restaurantId, data) => {
-  await updateDoc(restaurantDocRef(restaurantId), restaurantConstructorUpdate(data))
+  await updateDoc(
+    restaurantDocRef(restaurantId),
+    restaurantConstructorUpdate(data)
+  )
 }
 
 export const deleteRestaurant = async (restaurantId) => {
@@ -33,19 +37,18 @@ export const deleteRestaurant = async (restaurantId) => {
 }
 
 export const createAccount = async (restaurantId, data) => {
-  try {
-    await editRestaurant(restaurantId, data)
+  await editRestaurant(restaurantId, data)
 
-    //creating account
-    const { firstname, lastname } = data
-    const name = `${firstname} ${lastname}`
-    const response = await fetchWithPost('api/createUser', { email: data.email, name, restaurantId })
-    console.log('response', response)
-  } catch (error) {
-    console.log('error : ', error)
-  }
-
+  //creating account
+  const { firstname, lastname } = data
+  const name = `${firstname} ${lastname}`
+  const response = await fetchWithPost('api/createUser', {
+    email: data.email,
+    name,
+    restaurantId,
+  })
+  if (response.code != 'ok') throw new Error(response.message)
+  console.log('response', response)
 }
-
 
 // ----------------------------------------------------------------------------

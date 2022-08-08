@@ -6,7 +6,7 @@ import {
   AuthAction,
   withAuthUser,
   withAuthUserTokenSSR,
-} from "next-firebase-auth";
+} from 'next-firebase-auth'
 
 function Restaurants() {
   return (
@@ -24,13 +24,12 @@ const RestaurantsPage = () => (
 )
 
 export const getServerSideProps = withAuthUserTokenSSR({
-  whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
+  // whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
 })(async () => {
   return {
-      props: {},
-  };
-});
+    props: {},
+  }
+})
 export default withAuthUser({
-  whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
-})(RestaurantsPage);
-
+  // whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
+})(RestaurantsPage)

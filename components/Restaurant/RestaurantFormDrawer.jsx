@@ -55,7 +55,7 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
     setLoading(true)
     try {
       await createAccount(restaurant.id, data)
-      setOpen(false)
+      // setOpen(false)
       notify('le compte à été crée avec succès', 'success')
     } catch (error) {
       console.log(error)

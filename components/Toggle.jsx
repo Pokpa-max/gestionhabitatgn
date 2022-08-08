@@ -21,7 +21,7 @@ export default function Toggle({ control, name, setToggleValue }) {
     <>
       <ConfirmModal
         confirmFunction={async () => {
-          setOpenModal(false)
+          setOpenWarning(false)
         }}
         cancelFuction={() => {
           setToggleValue('isActive', !value)
