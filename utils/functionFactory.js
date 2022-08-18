@@ -19,23 +19,27 @@ export const restaurantConstructorUpdate = ({
   rccm,
   nif,
   otherAcc,
-  isActive
+  isActive,
+  restaurantEmail,
+  restaurantPhoneNumber,
 }) => ({
   restaurant: {
     name,
     description: 'Aucune description',
     rccm,
     nif,
-    otherAcc
+    otherAcc,
+    email: restaurantEmail,
+    phoneNumber: restaurantPhoneNumber,
   },
   manager: {
     firstname,
     lastname,
     phoneNumber,
     position,
+    email,
   },
   isActive,
-  email,
   adress: {
     description,
     zone: zone.value,
@@ -58,7 +62,6 @@ export const autoFillRestaurantForm = (reset, setValue, restaurant) => {
   const {
     restaurant: storename,
     manager,
-    email,
     adress,
     isActive,
   } = restaurant
@@ -67,13 +70,15 @@ export const autoFillRestaurantForm = (reset, setValue, restaurant) => {
   setValue('firstname', manager?.firstname)
   setValue('lastname', manager?.lastname)
   setValue('phoneNumber', manager?.phoneNumber)
+  setValue('email', manager?.email)
   setValue('position', manager?.position)
   setValue('nif', storename?.nif)
   setValue('rccm', storename?.rccm)
   setValue('otherAcc', storename.otherAcc)
+  setValue('restaurantPhoneNumber', storename.phoneNumber)
   setValue('lat', adress?.lat)
   setValue('long', adress?.long)
-  setValue('email', email)
+  setValue('restaurantEmail', storename?.email)
   setValue('indication', adress?.description)
   setValue('zone', { value: adress?.zone, label: adress?.zone })
   setValue('quartier', { value: adress?.quartier, label: adress?.quartier })
