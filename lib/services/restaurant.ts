@@ -9,7 +9,7 @@ import { db } from '@/lib/firebase/client_config'
 import { parseDocsData } from '@/utils/firebase/firestore'
 import { fetchWithPost } from '../../utils/fetch'
 import { restaurantConstructorUpdate } from '../../utils/functionFactory'
-import { FieldValue } from 'firebase-admin/firestore'
+// import { FieldValue } from 'firebase-admin/firestore'
 
 // Restaurants
 export const restaurantsCollectionRef = collection(db, `restaurants`)
@@ -115,7 +115,7 @@ export const getDefaultRestaurantData = (uid: string) => {
     'restaurant.description': '',
     'restaurant.imageUrl': '',
     'restaurant.imageHash': '',
-    updatedAt: FieldValue.serverTimestamp(),
+    // updatedAt: FieldValue.serverTimestamp(),
   }
 }
 

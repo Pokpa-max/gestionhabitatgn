@@ -37,10 +37,10 @@ export default async function handler(
       createdAt: FieldValue.serverTimestamp(),
     })
 
-    batch.update(
-      dbAdmin.collection('restaurants').doc(restaurantId),
-      getDefaultRestaurantData(uid)
-    )
+    batch.update(dbAdmin.collection('restaurants').doc(restaurantId), {
+      ...getDefaultRestaurantData(uid),
+      updatedAt: FieldValue.serverTimestamp(),
+    })
 
     batch.set(
       dbAdmin
