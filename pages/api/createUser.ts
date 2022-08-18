@@ -1,7 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { authAdmin, dbAdmin } from 'lib/firebase-admin/admin_config'
 import { setCustomUserClaims } from '@/utils/firebase/auth'
-import { getDefaultHours } from '@/lib/services/restaurant'
+import { FieldValue } from 'firebase-admin/firestore'
+
+import {
+  getDefaultHours,
+  getDefaultRestaurantData,
+  getDefaultReviewsData,
+} from '@/lib/services/restaurant'
+
+import { firestoreAutoId } from '../../utils/firebase/firestore'
 
 //TODO: create the default restaurant menu
 
@@ -26,21 +34,49 @@ export default async function handler(
       name,
       type: 'manager',
       restaurantId,
-      // updatedAt: serverTimestamp(),
+      createdAt: FieldValue.serverTimestamp(),
     })
 
-    batch.update(dbAdmin.collection('restaurants').doc(restaurantId), {
-      managerId: uid,
-      accountCreated: true,
-      categoriesIds: [], //TODO: change the property inside the flutter app (restaurant app manager)
-      dishDay: [],
-      kitchenspeciality: [],
-      openHours: [],
-      rating: 0,
-      ratingCount: 0,
-      hours: getDefaultHours(),
-      // updatedAt: serverTimestamp(),
+    batch.update(
+      dbAdmin.collection('restaurants').doc(restaurantId),
+      getDefaultRestaurantData(uid)
+    )
+
+    batch.set(
+      dbAdmin
+        .collection('restaurants')
+        .doc(restaurantId)
+        .collection('reviews')
+        .doc('--stats-reviews--'),
+      getDefaultReviewsData()
+    )
+
+    const menuId = firestoreAutoId()
+
+    batch.set(dbAdmin.collection('menus').doc(restaurantId), {
+      description: 'Menu principal',
+      menuImages: [],
+      name: 'Menu principal',
+      id: menuId,
+      createdAt: FieldValue.serverTimestamp(),
+      updatedAt: FieldValue.serverTimestamp(),
     })
+
+    batch.set(
+      dbAdmin
+        .collection('menus')
+        .doc(restaurantId)
+        .collection('menus')
+        .doc(menuId),
+      {
+        description: 'Menu principal',
+        menuImages: [],
+        menuSectionIds: [],
+        name: 'Menu principal',
+        createdAt: FieldValue.serverTimestamp(),
+        updatedAt: FieldValue.serverTimestamp(),
+      }
+    )
 
     await batch.commit()
 

@@ -18,7 +18,8 @@ export const restaurantConstructorUpdate = ({
   quartier,
   rccm,
   nif,
-  otherAcc
+  otherAcc,
+  isActive
 }) => ({
   restaurant: {
     name,
@@ -33,6 +34,7 @@ export const restaurantConstructorUpdate = ({
     phoneNumber,
     position,
   },
+  isActive,
   email,
   adress: {
     description,
