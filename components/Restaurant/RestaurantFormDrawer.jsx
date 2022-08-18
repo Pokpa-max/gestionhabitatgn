@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { createAccount, editRestaurant } from '../../lib/services/restaurant'
+import {
+  addRestaurant,
+  createAccount,
+  editRestaurant,
+} from '../../lib/services/restaurant'
 import { autoFillRestaurantForm } from '../../utils/functionFactory'
 import { notify } from '../../utils/toast'
 import { quartier, zones } from '../../_data'
@@ -26,7 +30,7 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
   } = useForm({
     mode: 'onBlur',
     reValidateMode: 'onChange',
-    shouldUnregister: true,
+    shouldUnregister: false,
   })
 
   useEffect(() => {
@@ -36,12 +40,16 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
     setFormvalue()
   }, [restaurant])
 
-  console.log('restaurant')
-
   const onSubmit = async (data) => {
     setLoading(true)
     try {
       if (restaurant) await editRestaurant(restaurant.id, data)
+      else
+        await addRestaurant({
+          ...data,
+          isActive: false,
+          isAccountCreated: false,
+        })
       setOpen(false)
       notify('Votre requète s est executée avec succès', 'success')
     } catch (error) {
@@ -63,8 +71,6 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
     }
     setLoading(false)
   }
-
-  const values = watch()
 
   return (
     <>
@@ -98,7 +104,7 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                   Enregistrer
                 </button>
                 <button
-                  disabled={restaurant?.isAccountCreated}
+                  disabled={restaurant?.isAccountCreated || !restaurant}
                   type="button"
                   onClick={handleSubmit(CreatedAccountSubmit)}
                   className="ml-4 inline-flex justify-center border border-transparent bg-primary-accent px-4 py-2 text-sm font-medium text-white hover:bg-primary-light focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-300"
@@ -212,6 +218,30 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                       : errors?.phoneNumber?.message}
                   </p>
                 </div>
+              </div>
+
+              <div className="col-span-6 sm:col-span-3">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Email
+                </label>
+                <input
+                  type="email"
+                  {...register('email', {
+                    required: 'Champs requis',
+                    pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                  })}
+                  id="email"
+                  placeholder="email@madifood.com"
+                  className="mt-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                />
+                <p className="pt-1 font-stratos-light text-xs text-red-600">
+                  {errors?.email?.type === 'pattern'
+                    ? 'Entrez un email valide'
+                    : errors?.email?.message}
+                </p>
               </div>
 
               <div className="col-span-6 sm:col-span-3">
@@ -410,19 +440,48 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                 </label>
                 <input
                   type="email"
-                  {...register('email', {
+                  {...register('restaurantEmail', {
                     required: 'Champs requis',
                     pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                   })}
-                  id="email"
+                  id="restaurantEmail"
                   placeholder="email@madifood.com"
                   className="mt-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                 />
                 <p className="pt-1 font-stratos-light text-xs text-red-600">
-                  {errors?.email?.type === 'pattern'
+                  {errors?.restaurantEmail?.type === 'pattern'
                     ? 'Entrez un email valide'
-                    : errors?.email?.message}
+                    : errors?.restaurantEmail?.message}
                 </p>
+              </div>
+              <div className="col-span-6 sm:col-span-3">
+                <label
+                  htmlFor="phoneNumber"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Telephone du restaurant
+                </label>
+                <div className="relative mt-1">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 mr-5 flex items-center pl-3">
+                    <span className="text-gray-500 sm:text-sm">+224</span>
+                  </div>
+                  <input
+                    type="tel"
+                    {...register('restaurantPhoneNumber', {
+                      required: 'Champs requis',
+                      pattern:
+                        /^(\+\d{3}\s?)?\(?\d{3}\)?[\s-]*\d{2}[\s-]*\d{2}[\s-]*\d{2}$/i,
+                    })}
+                    id="restaurantPhoneNumber"
+                    className="block w-full border-gray-300 pl-12 pr-20 focus:border-primary focus:ring-primary sm:text-sm"
+                    placeholder="Votre numero de telephone"
+                  />
+                  <p className="pt-1 font-stratos-light text-xs text-red-600">
+                    {errors?.restaurantPhoneNumber?.type === 'pattern'
+                      ? 'Entrez un numero valide'
+                      : errors?.restaurantPhoneNumber?.message}
+                  </p>
+                </div>
               </div>
             </div>
 

@@ -18,7 +18,7 @@ function SignIn() {
   } = useForm({
     mode: 'onBlur',
     reValidateMode: 'onChange',
-    shouldUnregister: true,
+    shouldUnregister: false,
   })
 
   const [loading, setLoading] = useState(false)
@@ -34,16 +34,16 @@ function SignIn() {
   return (
     <>
       {/* bg-gradient-to-r from-red-300 via-yellow-300 to-primary-300 */}
-      <div className="flex items-center justify-center min-h-screen px-4 py-12 bg-white sm:px-6 lg:px-8">
+      <div className="flex min-h-screen items-center justify-center bg-white px-4 py-12 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div>
-            <div className="flex items-center justify-center mx-auto">
+            <div className="mx-auto flex items-center justify-center">
               <img
-                className="h-24 mb-20 "
+                className="mb-20 h-24 "
                 src="/images/logo.png"
                 alt="Workflow"
               />
-              <div className="flex-col ml-5">
+              <div className="ml-5 flex-col">
                 <h1 className="text-5xl font-black text-primary-accent">
                   EAT224
                 </h1>
@@ -53,7 +53,7 @@ function SignIn() {
             <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
               Bienvenu.
             </h2>
-            <p className="mt-4 text-gray-500 font-stratos-light">
+            <p className="mt-4 font-stratos-light text-gray-500">
               Utilisez vos identifiants pour acceder au panel d'administration
               EAT224.
             </p>
@@ -78,10 +78,10 @@ function SignIn() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none focus:z-10 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+                  className="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
                   placeholder="Adresse email"
                 />
-                <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                <p className="pt-1 font-stratos-light text-xs text-red-600">
                   {errors?.email?.message}
                 </p>
               </div>
@@ -97,10 +97,10 @@ function SignIn() {
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none focus:z-10 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+                  className="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
                   placeholder="Mot de passe"
                 />
-                <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                <p className="pt-1 font-stratos-light text-xs text-red-600">
                   {errors?.password?.message}
                 </p>
               </div>
@@ -112,11 +112,11 @@ function SignIn() {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="w-4 h-4 border-gray-300 rounded text-primary-500 focus:ring-primary-500"
+                  className="h-4 w-4 rounded border-gray-300 text-primary-500 focus:ring-primary-500"
                 />
                 <label
                   htmlFor="remember-me"
-                  className="block ml-2 text-sm text-gray-900"
+                  className="ml-2 block text-sm text-gray-900"
                 >
                   Se souvenir de moi
                 </label>
@@ -135,7 +135,7 @@ function SignIn() {
             <div>
               <button
                 type="submit"
-                className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-sm group bg-primary hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                className="group relative flex w-full justify-center rounded-sm border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               >
                 Connexion
               </button>

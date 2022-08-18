@@ -2,11 +2,7 @@ import Page from '@/components/Page'
 import RestaurantsList from '@/components/Restaurant/RestaurantsList'
 import Scaffold from '@/components/Scaffold'
 import Header from '@/components/Header'
-import {
-  AuthAction,
-  withAuthUser,
-  withAuthUserTokenSSR,
-} from 'next-firebase-auth'
+import { withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth'
 
 function Restaurants() {
   return (
