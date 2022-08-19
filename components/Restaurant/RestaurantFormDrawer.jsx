@@ -8,7 +8,6 @@ import {
 import { autoFillRestaurantForm } from '../../utils/functionFactory'
 import { notify } from '../../utils/toast'
 import { quartier, zones } from '../../_data'
-import ConfirmModal from '../ConfirmModal'
 
 import DrawerForm from '../DrawerForm'
 import GoogleMaps from '../GoogleMaps'
@@ -24,7 +23,6 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
     register,
     reset,
     setValue,
-    watch,
     control,
     formState: { errors },
   } = useForm({
@@ -32,6 +30,11 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
     reValidateMode: 'onChange',
     shouldUnregister: false,
   })
+
+  const setLonLat = (lon, lat) => {
+    setValue('long', lon)
+    setValue('lat', lat)
+  }
 
   useEffect(() => {
     const setFormvalue = () => {
@@ -364,18 +367,9 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                     className="mt-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                   />
                 </div>
-                <div className="py-2">
-                  <button
-                    type="button"
-                    className="border border-gray-300 bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                    onClick={() => setOpen(false)}
-                  >
-                    Rechercher
-                  </button>
-                </div>
               </div>
               <div className="col-span-12 sm:col-span-6 ">
-                <GoogleMaps />
+                <GoogleMaps setLonLat={setLonLat} />
               </div>
             </div>
 

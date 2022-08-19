@@ -1,6 +1,6 @@
 // Entity constructor for the data model
 
-import { serverTimestamp } from 'firebase/firestore'
+import { serverTimestamp, GeoPoint } from 'firebase/firestore'
 
 // dataConstructors
 
@@ -45,7 +45,8 @@ export const restaurantConstructorUpdate = ({
     zone: zone.value,
     quartier: quartier.value,
     long,
-    lat
+    lat,
+    position: new GeoPoint(long, lat),
   },
   createdAt: serverTimestamp(),
   updatedAt: serverTimestamp(),
