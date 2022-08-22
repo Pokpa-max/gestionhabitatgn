@@ -345,6 +345,7 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                     Longitude
                   </label>
                   <input
+                    disabled
                     type="text"
                     {...register('long')}
                     id="long"
@@ -360,6 +361,7 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                     Latitude
                   </label>
                   <input
+                    disabled
                     type="text"
                     {...register('lat')}
                     id="lat"
@@ -369,7 +371,11 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                 </div>
               </div>
               <div className="col-span-12 sm:col-span-6 ">
-                <GoogleMaps setLonLat={setLonLat} />
+                <GoogleMaps
+                  lat={restaurant?.adress.lat}
+                  lng={restaurant?.adress.long}
+                  setLonLat={setLonLat}
+                />
               </div>
             </div>
 

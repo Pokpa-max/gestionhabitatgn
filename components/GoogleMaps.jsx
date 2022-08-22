@@ -6,11 +6,8 @@ const center = {
   lng: -13.656484042509089,
 }
 
-function GoogleMaps({ setLonLat }) {
-  const [position, setposition] = useState({
-    lat: 9.550543829083447,
-    lng: -13.656484042509089,
-  })
+function GoogleMaps({ setLonLat, lng, lat }) {
+  const [position, setposition] = useState(lng ? { lng, lat } : null)
 
   const onMapClick = (e) => {
     setposition({
