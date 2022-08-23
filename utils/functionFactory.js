@@ -1,6 +1,8 @@
 // Entity constructor for the data model
 
 import { serverTimestamp, GeoPoint } from 'firebase/firestore'
+import { encode } from './geoHash';
+// import geofire from 'geofire-common'
 
 // dataConstructors
 
@@ -23,34 +25,82 @@ export const restaurantConstructorUpdate = ({
   restaurantEmail,
   restaurantPhoneNumber,
 }) => ({
-  restaurant: {
-    name,
-    description: 'Aucune description',
-    rccm,
-    nif,
-    otherAcc,
-    email: restaurantEmail,
-    phoneNumber: restaurantPhoneNumber,
-  },
-  manager: {
-    firstname,
-    lastname,
-    phoneNumber,
-    position,
-    email,
-  },
+
+  "restaurant.name": name,
+  "restaurant.rccm": rccm,
+  "restaurant.nif": nif,
+  "restaurant.otherAcc": otherAcc,
+  "restaurant.email": restaurantEmail,
+  "restaurant.phoneNumber": restaurantPhoneNumber,
+
+  "manager.firstname": firstname,
+  "manager.lastname": lastname,
+  "manager.phoneNumber": phoneNumber,
+  "manager.position": position,
+  "manager.email": email,
   isActive,
-  adress: {
-    description,
-    zone: zone.value,
-    quartier: quartier.value,
-    long: Number(long),
-    lat: Number(lat),
-    position: lat ? new GeoPoint(long, lat) : null,
-  },
+  "adress.description": description,
+  "adress.zone": zone.value,
+  "adress.quartier": quartier.value,
+  "adress.long": Number(long),
+  "adress.lat": Number(lat),
+  "adress.position": getGeoPoint(lat, long),
+  updatedAt: serverTimestamp(),
+})
+
+export const restaurantConstructorCreate = ({
+  storename: name,
+  firstname,
+  lastname,
+  email,
+  phoneNumber,
+  position,
+  indication: description,
+  long,
+  lat,
+  zone,
+  quartier,
+  rccm,
+  nif,
+  otherAcc,
+  isActive,
+  restaurantEmail,
+  restaurantPhoneNumber,
+}) => ({
+
+  "restaurant.name": name,
+  "restaurant.rccm": rccm,
+  "restaurant.nif": nif,
+  "restaurant.otherAcc": otherAcc,
+  "restaurant.email": restaurantEmail,
+  "restaurant.phoneNumber": restaurantPhoneNumber,
+
+  "manager.firstname": firstname,
+  "manager.lastname": lastname,
+  "manager.phoneNumber": phoneNumber,
+  "manager.position": position,
+  "manager.email": email,
+  isActive,
+  "adress.description": description,
+  isAccountCreated: false,
+  "adress.zone": zone.value,
+  "adress.quartier": quartier.value,
+  "adress.long": Number(long),
+  "adress.lat": Number(lat),
   createdAt: serverTimestamp(),
   updatedAt: serverTimestamp(),
 })
+
+export const getGeoPoint = (lat, long) => {
+  console.log("gettting geo point", long, lat)
+  if (!lat) return null;
+  const hash = encode(lat, long, 9);
+  console.log("hash", hash)
+  return {
+    geohash: hash,
+    geopoint: new GeoPoint(lat, long),
+  }
+}
 
 // Form
 
