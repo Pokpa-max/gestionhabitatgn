@@ -2,7 +2,11 @@ import Page from '@/components/Page'
 import RestaurantsList from '@/components/Restaurant/RestaurantsList'
 import Scaffold from '@/components/Scaffold'
 import Header from '@/components/Header'
-import { withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth'
+import {
+  AuthAction,
+  withAuthUser,
+  withAuthUserTokenSSR,
+} from 'next-firebase-auth'
 
 function Restaurants() {
   return (
@@ -20,12 +24,10 @@ const RestaurantsPage = () => (
 )
 
 export const getServerSideProps = withAuthUserTokenSSR({
-  // whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
-})(async () => {
-  return {
-    props: {},
-  }
-})
+  whenAuthed: AuthAction.REDIRECT_TO_APP,
+})()
+
 export default withAuthUser({
-  // whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
+  whenAuthedBeforeRedirect: AuthAction.RENDER,
+  whenAuthed: AuthAction.REDIRECT_TO_APP,
 })(RestaurantsPage)
