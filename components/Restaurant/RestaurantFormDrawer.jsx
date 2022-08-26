@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { createAccount, editRestaurant } from '../../lib/services/restaurant'
+import {
+  addRestaurant,
+  createAccount,
+  editRestaurant,
+} from '../../lib/services/restaurant'
 import { autoFillRestaurantForm } from '../../utils/functionFactory'
 import { notify } from '../../utils/toast'
 import { quartier, zones } from '../../_data'
-import ConfirmModal from '../ConfirmModal'
 
 import DrawerForm from '../DrawerForm'
 import GoogleMaps from '../GoogleMaps'
@@ -20,14 +23,18 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
     register,
     reset,
     setValue,
-    watch,
     control,
     formState: { errors },
   } = useForm({
     mode: 'onBlur',
     reValidateMode: 'onChange',
-    shouldUnregister: true,
+    shouldUnregister: false,
   })
+
+  const setLonLat = (lon, lat) => {
+    setValue('long', lon)
+    setValue('lat', lat)
+  }
 
   useEffect(() => {
     const setFormvalue = () => {
@@ -36,12 +43,16 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
     setFormvalue()
   }, [restaurant])
 
-  console.log('restaurant')
-
   const onSubmit = async (data) => {
     setLoading(true)
     try {
       if (restaurant) await editRestaurant(restaurant.id, data)
+      else
+        await addRestaurant({
+          ...data,
+          isActive: false,
+          isAccountCreated: false,
+        })
       setOpen(false)
       notify('Votre requète s est executée avec succès', 'success')
     } catch (error) {
@@ -64,8 +75,6 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
     setLoading(false)
   }
 
-  const values = watch()
-
   return (
     <>
       <DrawerForm
@@ -86,22 +95,22 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
               <>
                 <button
                   type="button"
-                  className="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                  className="border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                   onClick={() => setOpen(false)}
                 >
                   Annuler
                 </button>
                 <button
                   type="submit"
-                  className="inline-flex justify-center px-4 py-2 ml-4 text-sm font-medium text-white border border-transparent bg-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                  className="ml-4 inline-flex justify-center border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                 >
                   Enregistrer
                 </button>
                 <button
-                  disabled={restaurant?.isAccountCreated}
+                  disabled={restaurant?.isAccountCreated || !restaurant}
                   type="button"
                   onClick={handleSubmit(CreatedAccountSubmit)}
-                  className="inline-flex justify-center px-4 py-2 ml-4 text-sm font-medium text-white border border-transparent bg-primary-accent hover:bg-primary-light focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-300"
+                  className="ml-4 inline-flex justify-center border border-transparent bg-primary-accent px-4 py-2 text-sm font-medium text-white hover:bg-primary-light focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-300"
                 >
                   Creer un compte
                 </button>
@@ -111,26 +120,26 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
         }
       >
         <div className="mt-5 md:col-span-2 md:mt-0">
-          <div className="px-4 py-5 space-y-6 bg-white sm:p-6">
+          <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
             <div className="grid grid-cols-3 gap-6">
-              <div className="col-span-3 group sm:col-span-2">
+              <div className="group col-span-3 sm:col-span-2">
                 <label
                   htmlFor="storename"
                   className="block text-sm font-medium text-gray-700"
                 >
                   Nom de l'etablissement
                 </label>
-                <div className="flex mt-1">
+                <div className="mt-1 flex">
                   <input
                     type="text"
                     {...register('storename', {
                       required: 'Champs requis',
                     })}
                     id="storename"
-                    className="flex-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                    className="block w-full flex-1 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                     placeholder="Nom du restaurant"
                   />
-                  <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                  <p className="pt-1 font-stratos-light text-xs text-red-600">
                     {errors?.storename?.message}
                   </p>
                 </div>
@@ -139,7 +148,7 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
 
             <h1 className="text-primary-accent">Gestionnaire</h1>
 
-            <div className="grid grid-cols-6 gap-6 pt-3 border-t">
+            <div className="grid grid-cols-6 gap-6 border-t pt-3">
               <div className="col-span-6 sm:col-span-3">
                 <label
                   htmlFor="firstname"
@@ -155,9 +164,9 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                   id="firstname"
                   autoComplete="given-name"
                   placeholder="votre nom"
-                  className="block w-full mt-1 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                  className="mt-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                 />
-                <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                <p className="pt-1 font-stratos-light text-xs text-red-600">
                   {errors?.firstname?.message}
                 </p>
               </div>
@@ -177,9 +186,9 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                   id="lastname"
                   autoComplete="family-name"
                   placeholder="votre prenom"
-                  className="block w-full mt-1 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                  className="mt-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                 />
-                <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                <p className="pt-1 font-stratos-light text-xs text-red-600">
                   {errors?.lastname?.message}
                 </p>
               </div>
@@ -192,7 +201,7 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                   Telephone
                 </label>
                 <div className="relative mt-1">
-                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 mr-5 pointer-events-none">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 mr-5 flex items-center pl-3">
                     <span className="text-gray-500 sm:text-sm">+224</span>
                   </div>
                   <input
@@ -203,15 +212,39 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                         /^(\+\d{3}\s?)?\(?\d{3}\)?[\s-]*\d{2}[\s-]*\d{2}[\s-]*\d{2}$/i,
                     })}
                     id="phoneNumber"
-                    className="block w-full pl-12 pr-20 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                    className="block w-full border-gray-300 pl-12 pr-20 focus:border-primary focus:ring-primary sm:text-sm"
                     placeholder="Votre numero de telephone"
                   />
-                  <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                  <p className="pt-1 font-stratos-light text-xs text-red-600">
                     {errors?.phoneNumber?.type === 'pattern'
                       ? 'Entrez un numero valide'
                       : errors?.phoneNumber?.message}
                   </p>
                 </div>
+              </div>
+
+              <div className="col-span-6 sm:col-span-3">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Email
+                </label>
+                <input
+                  type="email"
+                  {...register('email', {
+                    required: 'Champs requis',
+                    pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                  })}
+                  id="email"
+                  placeholder="email@madifood.com"
+                  className="mt-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                />
+                <p className="pt-1 font-stratos-light text-xs text-red-600">
+                  {errors?.email?.type === 'pattern'
+                    ? 'Entrez un email valide'
+                    : errors?.email?.message}
+                </p>
               </div>
 
               <div className="col-span-6 sm:col-span-3">
@@ -229,16 +262,16 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                   id="position"
                   autoComplete="family-name"
                   placeholder="Le poste occupé"
-                  className="block w-full mt-1 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                  className="mt-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                 />
-                <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                <p className="pt-1 font-stratos-light text-xs text-red-600">
                   {errors?.position?.message}
                 </p>
               </div>
             </div>
 
             <h1 className="text-primary-accent">Adresse</h1>
-            <div className="grid grid-cols-9 gap-6 pt-3 border-t">
+            <div className="grid grid-cols-9 gap-6 border-t pt-3">
               <div className="col-span-12 sm:col-span-3">
                 <label
                   htmlFor="zone"
@@ -256,7 +289,7 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                     placeholder="Selectionner la commune"
                   />
                 </div>
-                <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                <p className="pt-1 font-stratos-light text-xs text-red-600">
                   {errors?.zone?.message}
                 </p>
               </div>
@@ -277,7 +310,7 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                     placeholder="Selectionner le quartier"
                   />
                 </div>
-                <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                <p className="pt-1 font-stratos-light text-xs text-red-600">
                   {errors?.quartier?.message}
                 </p>
               </div>
@@ -297,9 +330,9 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                   id="indication"
                   autoComplete="street"
                   placeholder="Plus de precision"
-                  className="block w-full mt-1 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                  className="mt-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                 />
-                <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                <p className="pt-1 font-stratos-light text-xs text-red-600">
                   {errors?.indication?.message}
                 </p>
               </div>
@@ -312,11 +345,12 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                     Longitude
                   </label>
                   <input
+                    disabled
                     type="text"
                     {...register('long')}
                     id="long"
                     placeholder="Coordonnée long"
-                    className="block w-full mt-1 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                    className="mt-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                   />
                 </div>
                 <div className="py-2">
@@ -327,30 +361,26 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                     Latitude
                   </label>
                   <input
+                    disabled
                     type="text"
                     {...register('lat')}
                     id="lat"
                     placeholder="Coordonnée lat"
-                    className="block w-full mt-1 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                    className="mt-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                   />
-                </div>
-                <div className="py-2">
-                  <button
-                    type="button"
-                    className="px-4 py-2 text-sm font-medium text-white border border-gray-300 bg-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                    onClick={() => setOpen(false)}
-                  >
-                    Rechercher
-                  </button>
                 </div>
               </div>
               <div className="col-span-12 sm:col-span-6 ">
-                <GoogleMaps />
+                <GoogleMaps
+                  lat={restaurant?.adress.lat}
+                  lng={restaurant?.adress.long}
+                  setLonLat={setLonLat}
+                />
               </div>
             </div>
 
             <h1 className="text-primary-accent">Information entreprise</h1>
-            <div className="grid grid-cols-9 gap-6 pt-3 border-t">
+            <div className="grid grid-cols-9 gap-6 border-t pt-3">
               <div className="col-span-12 sm:col-span-3">
                 <label
                   htmlFor="rccm"
@@ -364,7 +394,7 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                   {...register('rccm')}
                   id="rccm"
                   placeholder="Numero de registre"
-                  className="block w-full mt-1 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                  className="mt-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                 />
               </div>
               <div className="col-span-12 sm:col-span-3">
@@ -380,7 +410,7 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                   {...register('nif')}
                   id="nif"
                   placeholder="votre NIF"
-                  className="block w-full mt-1 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                  className="mt-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                 />
               </div>
 
@@ -396,7 +426,7 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                   {...register('otherAcc')}
                   id="otherAcc"
                   placeholder="Reference"
-                  className="block w-full mt-1 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                  className="mt-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                 />
               </div>
             </div>
@@ -410,23 +440,52 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                 </label>
                 <input
                   type="email"
-                  {...register('email', {
+                  {...register('restaurantEmail', {
                     required: 'Champs requis',
                     pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                   })}
-                  id="email"
+                  id="restaurantEmail"
                   placeholder="email@madifood.com"
-                  className="block w-full mt-1 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                  className="mt-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                 />
-                <p className="pt-1 text-xs text-red-600 font-stratos-light">
-                  {errors?.email?.type === 'pattern'
+                <p className="pt-1 font-stratos-light text-xs text-red-600">
+                  {errors?.restaurantEmail?.type === 'pattern'
                     ? 'Entrez un email valide'
-                    : errors?.email?.message}
+                    : errors?.restaurantEmail?.message}
                 </p>
+              </div>
+              <div className="col-span-6 sm:col-span-3">
+                <label
+                  htmlFor="phoneNumber"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Telephone du restaurant
+                </label>
+                <div className="relative mt-1">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 mr-5 flex items-center pl-3">
+                    <span className="text-gray-500 sm:text-sm">+224</span>
+                  </div>
+                  <input
+                    type="tel"
+                    {...register('restaurantPhoneNumber', {
+                      required: 'Champs requis',
+                      pattern:
+                        /^(\+\d{3}\s?)?\(?\d{3}\)?[\s-]*\d{2}[\s-]*\d{2}[\s-]*\d{2}$/i,
+                    })}
+                    id="restaurantPhoneNumber"
+                    className="block w-full border-gray-300 pl-12 pr-20 focus:border-primary focus:ring-primary sm:text-sm"
+                    placeholder="Votre numero de telephone"
+                  />
+                  <p className="pt-1 font-stratos-light text-xs text-red-600">
+                    {errors?.restaurantPhoneNumber?.type === 'pattern'
+                      ? 'Entrez un numero valide'
+                      : errors?.restaurantPhoneNumber?.message}
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="p-2 px-4 bg-red-200">
+            <div className="bg-red-200 p-2 px-4">
               <Toggle
                 setToggleValue={setValue}
                 control={control}

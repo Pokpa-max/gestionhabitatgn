@@ -4,6 +4,7 @@ import {
   doc,
   onSnapshot,
   updateDoc,
+  addDoc,
 } from 'firebase/firestore'
 import { db } from '@/lib/firebase/client_config'
 import { parseDocsData } from '@/utils/firebase/firestore'
@@ -32,6 +33,10 @@ export const editRestaurant = async (restaurantId, data) => {
   )
 }
 
+export const addRestaurant = async (data) => {
+  await addDoc(restaurantsCollectionRef, restaurantConstructorUpdate(data))
+}
+
 export const deleteRestaurant = async (restaurantId) => {
   await deleteDoc(restaurantDocRef(restaurantId))
 }
@@ -43,7 +48,7 @@ export const createAccount = async (restaurantId, data) => {
   const { firstname, lastname } = data
   const name = `${firstname} ${lastname}`
   const response = await fetchWithPost('api/createUser', {
-    email: data.email,
+    email: data.restaurantEmail,
     name,
     restaurantId,
   })

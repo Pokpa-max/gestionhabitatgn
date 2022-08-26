@@ -65,7 +65,10 @@ function RestaurantsTable({
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <button
-            onClick={() => setOpenDrawer(true)}
+            onClick={() => {
+              setOpenDrawer(true)
+              setSelectedRestaurant(null)
+            }}
             type="button"
             className="hover:bg-primary-700 inline-flex items-center justify-center rounded-sm border border-transparent bg-primary-500 px-4 py-2 text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:w-auto"
           >

@@ -1,56 +1,38 @@
-// import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react'
-// import { Component } from 'react'
-
-// export class MapContainer extends Component {
-//   render() {
-//     return (
-//       <Map
-//         google={this.props.google}
-//         style={{
-//           width: '47vw',
-//           height: '27vh',
-//         }}
-//         containerStyle={{
-//           position: 'relative',
-//           width: '100%',
-//           height: '100%',
-//         }}
-//         zoom={14}
-//       >
-//         <Marker onClick={this.onMarkerClick} name={'Current location'} />
-//       </Map>
-//     )
-//   }
-// }
-
-// const GoogleMap = GoogleApiWrapper({
-//   apiKey: 'AIzaSyA0-O8o7phDIFY72L50o3mF1o336fE5p7s',
-// })(MapContainer)
-
-// export default GoogleMap
-
-import React from 'react'
-import { GoogleMap, LoadScriptNext } from '@react-google-maps/api'
+import React, { useState } from 'react'
+import { GoogleMap, LoadScriptNext, MarkerF } from '@react-google-maps/api'
 
 const center = {
-  lat: -3.745,
-  lng: -38.523,
+  lat: 9.550543829083447,
+  lng: -13.656484042509089,
 }
 
-function GoogleMaps() {
+function GoogleMaps({ setLonLat, lng, lat }) {
+  const [position, setposition] = useState(lng ? { lng, lat } : null)
+
+  const onMapClick = (e) => {
+    setposition({
+      lat: e.latLng.lat(),
+      lng: e.latLng.lng(),
+    })
+    setLonLat(e.latLng.lng(), e.latLng.lat())
+  }
+
+  console.log('first', position)
+
   return (
     <LoadScriptNext googleMapsApiKey="AIzaSyA0-O8o7phDIFY72L50o3mF1o336fE5p7s">
       <GoogleMap
+        clickableIcons={false}
         mapContainerStyle={{
           width: '100%',
           height: '200px',
           border: '2px solid black',
         }}
+        onClick={onMapClick}
         center={center}
-        zoom={10}
+        zoom={13}
       >
-        {/* Child components, such as markers, info windows, etc. */}
-        <></>
+        <MarkerF icon={'images/pin.png'} position={position} />
       </GoogleMap>
     </LoadScriptNext>
   )
