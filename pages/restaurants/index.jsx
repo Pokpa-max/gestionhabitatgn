@@ -24,10 +24,10 @@ const RestaurantsPage = () => (
 )
 
 export const getServerSideProps = withAuthUserTokenSSR({
-  whenAuthed: AuthAction.REDIRECT_TO_APP,
+  // whenAuthed: AuthAction.REDIRECT_TO_APP,
 })()
 
 export default withAuthUser({
   whenAuthedBeforeRedirect: AuthAction.RENDER,
-  whenAuthed: AuthAction.REDIRECT_TO_APP,
+  // whenAuthed: AuthAction.REDIRECT_TO_APP,
 })(RestaurantsPage)
