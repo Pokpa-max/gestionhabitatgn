@@ -11,7 +11,6 @@ const handler = async (req, res) => {
     const token = req.headers.authorization
 
     const decodedToken = await authAdmin.verifyIdToken(token)
-    console.log('inside login', decodedToken)
     const isAdmin = decodedToken.userType === 'admin'
 
     if (isAdmin) {
@@ -20,7 +19,6 @@ const handler = async (req, res) => {
       return res.status(500).json({ error: "Votre compte n'est pas valide" })
     }
   } catch (e) {
-    console.log('🦄 ', e)
     return res.status(500).json({ error: 'Unexpected error.' })
   }
   return res.status(200).json({ success: true })

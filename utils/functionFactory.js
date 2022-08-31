@@ -1,7 +1,10 @@
 // Entity constructor for the data model
 
-import { serverTimestamp, GeoPoint } from 'firebase/firestore'
+import { serverTimestamp, GeoPoint, Timestamp } from 'firebase/firestore'
+import { firestoreAutoId } from './firebase/firestore';
 import { encode } from './geoHash';
+import { firebaseDateToJsDate } from '../utils/date'
+import { stringToColour } from '../utils/ui'
 // import geofire from 'geofire-common'
 
 // dataConstructors
@@ -74,7 +77,6 @@ export const restaurantConstructorCreate = ({
   "restaurant.otherAcc": otherAcc,
   "restaurant.email": restaurantEmail,
   "restaurant.phoneNumber": restaurantPhoneNumber,
-
   "manager.firstname": firstname,
   "manager.lastname": lastname,
   "manager.phoneNumber": phoneNumber,
@@ -91,11 +93,107 @@ export const restaurantConstructorCreate = ({
   updatedAt: serverTimestamp(),
 })
 
+export const sliderConstructorCreate = (data, edit) => {
+  const typeValue = {}
+  if (data.type.value !== 'social') {
+    typeValue[data.type.value] = data[data.type.value].value
+  } else {
+
+    typeValue.externalLink = data.externalLink
+    typeValue.externalLinkFallback = data.externalLinkFallback
+  }
+
+  const conditionalProps = edit ? {
+    updatedAt: serverTimestamp(),
+  } : {
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  }
+
+  return {
+    sliderDetails: {
+      title: data.title,
+      description: data.description
+    },
+    ...typeValue,
+    imageHash: data.imageHash,
+    imageUrl: data.imageUrl,
+    imageUrl1000: data.imageUrl1000,
+    type: data.type.value,
+    typeLabel: data.type.label,
+    isActive: data.isActive,
+    ...conditionalProps
+  }
+}
+
+export const sponsorConstructorCreate = (data, edit) => {
+  const conditionalProps = edit ? {
+    updatedAt: serverTimestamp(),
+  } : {
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  }
+
+  return {
+    restaurant: {
+      name: data.restaurant.value,
+      id: firestoreAutoId()
+    },
+    type: data.type.value,
+    periode: {
+      startDate: Timestamp.fromDate(new Date(data.startDate)).toDate(),
+      endDate: Timestamp.fromDate(new Date(data.endDate)).toDate(),
+    },
+    isActive: data.isActive,
+    ...conditionalProps
+  }
+}
+
+export const collectionConstructorCreate = (data, edit) => {
+
+  const conditionalProps = edit ? {
+    updatedAt: serverTimestamp(),
+  } : {
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  }
+
+  return {
+    title: data.title,
+    restaurantsId: data.restaurants,
+    color: stringToColour(data.title),
+    isDefault: false,
+    nbPlaces: data.restaurants?.length,
+    ...conditionalProps
+  }
+}
+export const commercialConstructorCreate = (data, edit) => {
+
+  const conditionalProps = edit ? {
+    updatedAt: serverTimestamp(),
+  } : {
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  }
+
+  return {
+    title: data.title,
+    subtitle: data.subtitle,
+    externalLink: data.externalLink,
+    externalLinkFallback: data.externalLinkFallback,
+    imageHash: data.imageHash,
+    imageUrl: data.imageUrl,
+    imageUrl1000: data.imageUrl1000,
+    isActive: data.isActive,
+    ...conditionalProps
+  }
+}
+
+
+
 export const getGeoPoint = (lat, long) => {
-  console.log("gettting geo point", long, lat)
   if (!lat) return null;
   const hash = encode(lat, long, 9);
-  console.log("hash", hash)
   return {
     geohash: hash,
     geopoint: new GeoPoint(lat, long),
@@ -136,7 +234,85 @@ export const autoFillRestaurantForm = (reset, setValue, restaurant) => {
   setValue('isActive', isActive)
 }
 
+export const autoFillSliderForm = (reset, setValue, slider) => {
+  if (!slider) {
+    reset()
+    return
+  }
+
+  const {
+    sliderDetails,
+    type,
+    typeLabel,
+    isActive,
+    imageHash,
+  } = slider
+  setValue('title', sliderDetails.title)
+  setValue('description', sliderDetails.description)
+  setValue('type', { value: type, label: typeLabel })
+  setValue(type, { value: slider[type], label: slider[type] })
+  setValue('isActive', isActive)
+  setValue('imageHash', imageHash)
+}
+
+export const autoFillSponsorForm = (reset, setValue, sponsor) => {
+  if (!sponsor) {
+    reset()
+    return
+  }
+
+  const {
+    restaurant,
+    periode,
+    type,
+    isActive,
+  } = sponsor
+
+  setValue('restaurant', { value: restaurant.name, label: restaurant.name })
+  setValue('startDate', firebaseDateToJsDate(periode.startDate).toISOString().split('T')[0])
+  setValue('endDate', firebaseDateToJsDate(periode.endDate).toISOString().split('T')[0])
+  setValue('type', { value: type, label: type })
+  setValue('isActive', isActive)
+
+}
+
+export const autoFillCommercialForm = (reset, setValue, commercial) => {
+  if (!commercial) {
+    reset()
+    return
+  }
+
+  const {
+    title,
+    subtitle,
+    externalLink,
+    externalLinkFallback,
+    isActive,
+    imageHash,
+  } = commercial
+  setValue('title', title)
+  setValue('subtitle', subtitle)
+  setValue('externalLink', externalLink)
+  setValue('externalLinkFallback', externalLinkFallback)
+  setValue('isActive', isActive)
+  setValue('imageHash', imageHash)
+}
+
+export const autoFillCollectionForm = (reset, setValue, collection) => {
+  if (!collection) {
+    reset()
+    return
+  }
+
+  const {
+    title,
+    restaurantsId
+  } = collection
+  setValue('title', title)
+  setValue('restaurants', restaurantsId)
+
+}
+
 export const getObjectInString = (str) => {
   return JSON.parse(str.substring(str.indexOf('{'), str.lastIndexOf('}') + 1))
-
 }

@@ -1,40 +1,57 @@
 import React, { useEffect, useState } from 'react'
-import { columnsRestaurant } from './_dataTable'
+import { columnsCollection } from './_dataTable'
 
 import { RiDeleteRow, RiFileCopy2Line, RiSearchLine } from 'react-icons/ri'
-import RestaurantFormDrawer from './RestaurantFormDrawer'
-import { getRestaurants } from '@/lib/services/restaurant'
+import CollectionFormDrawer from './CollectionFormDrawer'
+import ConfirmModal from '../ConfirmModal'
+import { getCollections } from '@/lib/services/marketing'
+import { deleteCollection } from '../../lib/services/marketing'
 
-function RestaurantsList() {
-  const [restaurants, setRestaurants] = useState([])
-  const [selectedRestaurant, setSelectedRestaurant] = useState(null)
+function CollectionsList() {
+  const [collections, setCollections] = useState([])
+  const [selectedCollection, setSelectedCollection] = useState(null)
 
   useEffect(() => {
-    const unsubscribe = getRestaurants(setRestaurants)
+    const unsubscribe = getCollections(setCollections)
     return () => {
       unsubscribe()
     }
   }, [])
 
   return (
-    <RestaurantsTable
-      selectedRestaurant={selectedRestaurant}
-      setSelectedRestaurant={setSelectedRestaurant}
-      restaurants={restaurants}
+    <CollectionsTable
+      selectedCollection={selectedCollection}
+      setSelectedCollection={setSelectedCollection}
+      collections={collections}
     />
   )
 }
 
-function RestaurantsTable({
-  selectedRestaurant,
-  setSelectedRestaurant,
-  restaurants,
+function CollectionsTable({
+  selectedCollection,
+  setSelectedCollection,
+  collections,
 }) {
   const [openDrawer, setOpenDrawer] = useState(false)
+  const [openWarning, setOpenWarning] = useState(false)
+
   return (
     <div className="">
-      <RestaurantFormDrawer
-        restaurant={selectedRestaurant}
+      <ConfirmModal
+        confirmFunction={async () => {
+          deleteCollection(selectedCollection.id)
+          setOpenWarning(false)
+        }}
+        cancelFuction={() => {}}
+        title="Suppression Collection"
+        description={
+          "Etes vous sur de supprimer cette collection ? L'action est irreversible"
+        }
+        open={openWarning}
+        setOpen={setOpenWarning}
+      />
+      <CollectionFormDrawer
+        collection={selectedCollection}
         open={openDrawer}
         setOpen={setOpenDrawer}
       />
@@ -56,7 +73,7 @@ function RestaurantsTable({
                   id="search"
                   name="search"
                   className="block w-full py-2 pl-10 pr-3 leading-5 placeholder-gray-500 bg-white border border-gray-300 rounded-sm focus:border-primary-500 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary-500 sm:text-sm"
-                  placeholder="Rechercher une categorie"
+                  placeholder="Rechercher un Collection"
                   type="search"
                 />
               </div>
@@ -67,12 +84,12 @@ function RestaurantsTable({
           <button
             onClick={() => {
               setOpenDrawer(true)
-              setSelectedRestaurant(null)
+              setSelectedCollection(null)
             }}
             type="button"
             className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-sm hover:bg-primary-700 bg-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:w-auto"
           >
-            Ajouter un element
+            Ajouter une collection
           </button>
         </div>
       </div>
@@ -83,7 +100,7 @@ function RestaurantsTable({
               <table className="min-w-full text-left divide-y divide-gray-300 table-auto">
                 <thead className="bg-gray-50">
                   <tr>
-                    {columnsRestaurant.map((column, index) => (
+                    {columnsCollection.map((column, index) => (
                       <th
                         key={index}
                         scope="col"
@@ -101,9 +118,9 @@ function RestaurantsTable({
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {restaurants?.map((row, index) => (
+                  {collections?.map((row, index) => (
                     <tr key={index}>
-                      {columnsRestaurant.map((column, index) => {
+                      {columnsCollection.map((column, index) => {
                         const cell = row[column.accessor]
                         const element = column.Cell?.(cell) ?? cell
                         return <td key={index}>{element}</td>
@@ -111,7 +128,7 @@ function RestaurantsTable({
                       <td className="relative flex py-4 pl-3 pr-4 space-x-2 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
                         <button
                           onClick={() => {
-                            setSelectedRestaurant(row)
+                            setSelectedCollection(row)
                             setOpenDrawer(true)
                           }}
                           type="button"
@@ -123,6 +140,10 @@ function RestaurantsTable({
                           />
                         </button>
                         <button
+                          onClick={() => {
+                            setSelectedCollection(row)
+                            setOpenWarning(true)
+                          }}
                           type="button"
                           className="inline-flex items-center p-3 text-white bg-red-500 border border-transparent rounded-full shadow-sm hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                         >
@@ -141,4 +162,4 @@ function RestaurantsTable({
   )
 }
 
-export default RestaurantsList
+export default CollectionsList

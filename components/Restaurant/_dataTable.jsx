@@ -18,7 +18,7 @@ export const columnsRestaurant = [
                 {data.name}
               </a>
             </Link>
-            <p className="text-sm text-gray-500 w2/4 whitespace-nowrap font-stratos-light">
+            <p className="w-2/4 text-sm text-gray-500 truncate whitespace-nowrap font-stratos-light">
               {data.description}
             </p>
           </div>
@@ -59,7 +59,7 @@ export const columnsRestaurant = [
     Cell: (data) => {
       return (
         <div className="flex-col py-4">
-          <div className="px-3 text-sm font-bold text-black-900 whitespace-nowrap">
+          <div className="w-2/4 px-3 text-sm font-bold truncate text-black-900 whitespace-nowrap">
             {data.description}
           </div>
           <div className="px-3 text-sm text-gray-500 whitespace-nowrap font-stratos-light">

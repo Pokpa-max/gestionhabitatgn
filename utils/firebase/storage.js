@@ -21,12 +21,29 @@ export const deleteStorageImage = (imageUrl) => {
   // Delete the file
   deleteObject(desertRef)
     .then(() => {
-      throw `image supprimee avec succes`;
+      console.log(`image supprimee avec succes`);
     })
-    .catch(() => {
-      throw `pas supprimee feou`;
+    .catch((erro) => {
+      console.log('erorr error', erro)
+
     });
 };
+export const deleteResizedStorageImage = (primaryUrl, size = '200x200') => {
+  const resizeUrl = getImageLinkBySize(primaryUrl, size);
+  deleteStorageImage(resizeUrl)
+};
+
+export const getImageLinkBySize = (primaryUrl, size) => {
+  const withOutToken = primaryUrl.split('&')[0];
+
+  const splitedurl = withOutToken.split('.');
+  const lastElement = splitedurl.pop();
+  const firstElement = splitedurl.join('.');
+
+  const resizeUrl = `${firstElement}_${size}.${lastElement}`;
+  console.log('resizeUrl 😱😱', resizeUrl);
+  return resizeUrl;
+}
 
 export const getImageDownloadURL = async (file, folderName) => {
   const result = await uploadFile(file, folderName);
@@ -42,34 +59,4 @@ export const getDefaultImageDownloadURL = async (file, folderName) => {
     .then((url) => {
       return url;
     })
-}
-
-function delay(t, v) {
-  return new Promise(function (resolve) {
-    setTimeout(resolve.bind(null, v), t);
-  });
-}
-
-function keepTrying(triesRemaining, storageRef) {
-  if (triesRemaining < 0) {
-    return Promise.reject("out of tries");
-  }
-
-  return getDownloadURL(ref(storage, storageRef))
-    .then((url) => {
-      return url;
-    })
-    .catch((error) => {
-      switch (error.code) {
-        case "storage/object-not-found":
-          return delay(2000).then(() => {
-            console.log("retrying encours", error.message);
-
-            return keepTrying(triesRemaining - 1, storageRef);
-          });
-        default:
-          console.log("default", error.message);
-          return Promise.reject(error);
-      }
-    });
 }

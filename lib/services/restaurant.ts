@@ -9,8 +9,10 @@ import {
 import { db } from '@/lib/firebase/client_config'
 import { parseDocsData } from '@/utils/firebase/firestore'
 import { fetchWithPost } from '../../utils/fetch'
-import { restaurantConstructorUpdate } from '../../utils/functionFactory'
-// import { FieldValue } from 'firebase-admin/firestore'
+import {
+  restaurantConstructorCreate,
+  restaurantConstructorUpdate,
+} from '../../utils/functionFactory'
 
 // Restaurants
 export const restaurantsCollectionRef = collection(db, `restaurants`)
@@ -21,7 +23,6 @@ export const restaurantDocRef = (restaurantId) =>
 export const getRestaurants = (setState) => {
   return onSnapshot(restaurantsCollectionRef, (querySnapshot) => {
     const restaurant = parseDocsData(querySnapshot)
-    console.log('restaurants', restaurant)
     setState(restaurant)
   })
 }
@@ -34,7 +35,7 @@ export const editRestaurant = async (restaurantId, data) => {
 }
 
 export const addRestaurant = async (data) => {
-  await addDoc(restaurantsCollectionRef, restaurantConstructorUpdate(data))
+  await addDoc(restaurantsCollectionRef, restaurantConstructorCreate(data))
 }
 
 export const deleteRestaurant = async (restaurantId) => {
@@ -53,7 +54,6 @@ export const createAccount = async (restaurantId, data) => {
     restaurantId,
   })
   if (response.code != 'ok') throw new Error(response.message)
-  console.log('response', response)
 }
 
 export const getDefaultHours = () => {

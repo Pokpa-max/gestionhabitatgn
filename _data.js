@@ -75,3 +75,34 @@ export const quartier = [
   { label: 'Cosa', value: 'Cosa' },
   { label: 'Bambeto', value: 'Bambeto' },
 ]
+
+export const sliderTypes = [
+  { label: 'Collection', value: 'collection' },
+  { label: 'Facebook Post', value: 'social' },
+  { label: 'Restaurant', value: 'restaurant' },
+
+]
+
+export const sponsorTypes = [
+  { label: 'Premium', value: 'premium' },
+  { label: 'VIP', value: 'vip' },
+  { label: 'Growing', value: 'growing' },
+
+]
+
+export const collections = [
+  { label: 'Collection par defaut', value: 'defaut' },
+  { label: 'Valentin Day', value: 'valentineDay' },
+  { label: 'Entre Amis', value: 'friends' },
+
+]
+
+export const restaurantsOptions = [
+  { label: 'Bambou Restautant', value: 'Bambou Restautant' },
+  { label: 'Bambou Grill Restautant', value: 'Bambou Grill Restautant' },
+  { label: 'Mims Burger', value: 'Mims Burger' },
+  { label: 'Heroes Coffee', value: 'Heroes Coffee' },
+  { label: 'Kaki Restaurant', value: 'Kaki Restaurant' },
+  { label: 'Palm Camayenne', value: 'Palm Camayenne' },
+
+]

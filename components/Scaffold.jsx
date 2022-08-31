@@ -36,10 +36,10 @@ const navigation = [
   },
 ]
 
-export default function Scaffold({ children, title }) {
+export default function Scaffold({ children, title, subNav }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  const AuthUser = useAuthUser();
+  const AuthUser = useAuthUser()
 
   return (
     <>
@@ -123,7 +123,10 @@ export default function Scaffold({ children, title }) {
                         <p className="text-base font-medium text-gray-700 group-hover:text-gray-900">
                           Amadou Tidiane Bah
                         </p>
-                        <button  onClick={AuthUser.signOut} className="text-sm font-medium text-gray-500 group-hover:text-gray-700">
+                        <button
+                          onClick={AuthUser.signOut}
+                          className="text-sm font-medium text-gray-500 group-hover:text-gray-700"
+                        >
                           Se deconnecter
                         </button>
                       </div>
@@ -177,7 +180,10 @@ export default function Scaffold({ children, title }) {
                       <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
                         Amadou Tidiane Bah
                       </p>
-                      <button  onClick={AuthUser.signOut} className="text-xs font-medium text-gray-500 group-hover:text-gray-700">
+                      <button
+                        onClick={AuthUser.signOut}
+                        className="text-xs font-medium text-gray-500 group-hover:text-gray-700"
+                      >
                         Se deconnecter
                       </button>
                     </div>
@@ -198,20 +204,24 @@ export default function Scaffold({ children, title }) {
               <RiMenuFill className="w-6 h-6" aria-hidden="true" />
             </button>
           </div>
-          <main className="flex-1">
-            <div className="flex-1 py-6 ">
-              <div className="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
-                <h1 className="text-2xl font-semibold text-gray-900">
-                  {title}
-                </h1>
+          {subNav ? (
+            subNav
+          ) : (
+            <main className="flex-1">
+              <div className="flex-1 py-6 ">
+                <div className="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
+                  <h1 className="text-2xl font-semibold text-gray-900">
+                    {title}
+                  </h1>
+                </div>
+                <div className="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
+                  {/* Replace with your content */}
+                  {children}
+                  {/* /End replace */}
+                </div>
               </div>
-              <div className="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
-                {/* Replace with your content */}
-                {children}
-                {/* /End replace */}
-              </div>
-            </div>
-          </main>
+            </main>
+          )}
         </div>
       </div>
     </>

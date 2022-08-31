@@ -18,15 +18,12 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    console.log('req.body', req.body)
     const { email, name, restaurantId } = req.body
 
     const userRecord = await createUserAuth(email, 'password', name)
     await setCustomUserClaims(userRecord.uid, 'manager')
-    console.log('heho oooooo ')
     const { uid } = userRecord
     // const generateLink = await authAdmin.generateEmailVerificationLink(email)
-    // console.log('generatedLink ', generateLink)
 
     const batch = dbAdmin.batch()
     batch.set(dbAdmin.collection('users').doc(uid), {

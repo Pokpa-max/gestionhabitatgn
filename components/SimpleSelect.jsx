@@ -31,12 +31,10 @@ const SimpleSelect = ({
             }),
             control: (base, state) => ({
               ...base,
-              border: state.isFocused
-                ? '2px solid #20B2AA'
-                : '1px solid #d1d5db',
+              border: state.isFocused ? '2px solid #000' : '1px solid #d1d5db',
               borderRadius: '0.125rem',
               '&:hover': {
-                border: '1px solid #d1d5db',
+                border: '1px solid #000',
               },
               boxShadow: 'none',
             }),

@@ -1,6 +1,6 @@
 import fr from 'date-fns/locale/fr'
 import { Timestamp } from '@firebase/firestore'
-import { format, formatDistance } from 'date-fns'
+import { format, formatDistance, differenceInCalendarDays } from 'date-fns'
 
 export const firebaseDateFormat = (date, formatString = 'PP') => {
   if (!date) return
@@ -22,11 +22,18 @@ export const timeSince = (firebaseDate) => {
   return formatDistance(date, new Date(), { addSuffix: true, locale: fr })
 }
 
+export const timeBetween = (firebaseDateStart, firebaseDateEnd) => {
+  const dateStart = firebaseDateToTimestamp(firebaseDateStart)
+  const dateEnd = firebaseDateToTimestamp(firebaseDateEnd)
+  return differenceInCalendarDays(dateEnd, dateStart)
+}
+
+
 const firebaseDateToTimestamp = (firebaseDate) => {
   let { _seconds, _nanoseconds } = firebaseDate
 
   if (!_seconds) {
-    ;(_seconds = firebaseDate.seconds),
+    ; (_seconds = firebaseDate.seconds),
       (_nanoseconds = firebaseDate.nanoseconds)
   }
 
@@ -47,7 +54,7 @@ export const getCurrentDate = () => {
 }
 
 export const firebaseDateToJsDate = (firebaseDate) => {
-  return new Date(firebaseDate._seconds * 1000)
+  return new Date(firebaseDate.seconds * 1000)
 }
 
 export const firebaseDateFormatWithoutFormat = (date) =>

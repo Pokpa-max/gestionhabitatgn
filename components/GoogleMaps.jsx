@@ -17,8 +17,6 @@ function GoogleMaps({ setLonLat, lng, lat }) {
     setLonLat(e.latLng.lng(), e.latLng.lat())
   }
 
-  console.log('first', position)
-
   return (
     <LoadScriptNext googleMapsApiKey="AIzaSyA0-O8o7phDIFY72L50o3mF1o336fE5p7s">
       <GoogleMap
