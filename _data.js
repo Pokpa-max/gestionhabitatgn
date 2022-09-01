@@ -106,3 +106,13 @@ export const restaurantsOptions = [
   { label: 'Palm Camayenne', value: 'Palm Camayenne' },
 
 ]
+
+export const foodGenerics = [
+  { label: 'Attieke', value: 'Attieke' },
+  { label: 'Poulet', value: 'Poulet' },
+  { label: 'Pizza', value: 'Pizza' },
+  { label: 'Poisson', value: 'Poisson' },
+  { label: 'Riz gras', value: 'Riz gras' },
+
+
+]

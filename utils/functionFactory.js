@@ -208,6 +208,7 @@ export const categoryConstructorCreate = (data, edit) => {
     ...conditionalProps
   }
 }
+
 export const bundleConstructorCreate = (data, edit) => {
 
   const conditionalProps = edit ? {
@@ -233,6 +234,29 @@ export const bundleConstructorCreate = (data, edit) => {
   }
 }
 
+export const dishConstructorCreate = (data, edit) => {
+
+  const conditionalProps = edit ? {
+    updatedAt: serverTimestamp(),
+  } : {
+    likerCount: 0,
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  }
+
+  return {
+    name: data.name,
+    speciality: data.speciality,
+    description: data.description,
+    foodGenericId: data.foodGenericId,
+    ingredients: data.ingredients,
+    imageHash: data.imageHash,
+    imageUrl: data.imageUrl,
+    imageUrl1000: data.imageUrl1000,
+    isActive: data.isActive,
+    ...conditionalProps,
+  }
+}
 
 
 export const getGeoPoint = (lat, long) => {
@@ -390,6 +414,31 @@ export const autoFillBundleForm = (reset, setValue, bundle) => {
   setValue('isActive', isActive)
   setValue('hasCategories', hasCategories)
   if (hasCategories) setValue('categoriesId', categories)
+  setValue('imageHash', imageHash)
+}
+export const autoFillDishForm = (reset, setValue, dish) => {
+  if (!dish) {
+    reset()
+    return
+  }
+
+  const {
+    name,
+    imageHash,
+    foodGenericId,
+    ingredients,
+    likerCount,
+    speciality,
+    isActive,
+    description
+  } = dish
+  setValue('name', name)
+  setValue('isActive', isActive)
+  setValue('description', description)
+  setValue('foodGenericId', foodGenericId)
+  setValue('ingredients', ingredients)
+  setValue('likerCount', likerCount)
+  setValue('speciality', speciality)
   setValue('imageHash', imageHash)
 }
 
