@@ -17,6 +17,7 @@ import Page from '@/components/Page'
 import Scaffold from '@/components/Scaffold'
 import Link from 'next/link'
 import CategoriesPage from '../../components/Settings/Categories/CategoriesPage'
+import BundlesPage from '../../components/Settings/Bundles/BundlesPage'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -39,7 +40,7 @@ function Settings() {
       href: `bundles`,
       icon: RiFunctionFill,
       current: currentPath === `bundles`,
-      component: <div></div>,
+      component: <BundlesPage />,
     },
     {
       name: 'Espace decouverte',

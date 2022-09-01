@@ -7,7 +7,13 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Toggle({ control, name, setToggleValue }) {
+export default function Toggle({
+  control,
+  name,
+  setToggleValue,
+  description = "Rendre accessible l'etablissement sur l'application B2C",
+  title = 'Activer',
+}) {
   const [openWarning, setOpenWarning] = useState(false) // modal state for active restaurant warning
   const [value, setValue] = useState(null)
 
@@ -24,7 +30,7 @@ export default function Toggle({ control, name, setToggleValue }) {
           setOpenWarning(false)
         }}
         cancelFuction={() => {
-          setToggleValue('isActive', !value)
+          setToggleValue(name, !value)
           setValue(null)
         }}
         description={
@@ -43,10 +49,10 @@ export default function Toggle({ control, name, setToggleValue }) {
             className="text-sm font-medium text-gray-900 "
             passive
           >
-            Activer
+            {title}
           </Switch.Label>
           <Switch.Description as="span" className="text-sm text-gray-500">
-            Rendre accessible l'etablissement sur l'application B2C
+            {description}
           </Switch.Description>
         </span>
         <Controller

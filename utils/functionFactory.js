@@ -208,6 +208,30 @@ export const categoryConstructorCreate = (data, edit) => {
     ...conditionalProps
   }
 }
+export const bundleConstructorCreate = (data, edit) => {
+
+  const conditionalProps = edit ? {
+    updatedAt: serverTimestamp(),
+  } : {
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  }
+
+  const conditionalCategoriesId = data.hasCategories ? {
+    categories: data.categoriesId || []
+  } : {}
+
+  return {
+    name: data.name,
+    imageHash: data.imageHash,
+    imageUrl: data.imageUrl,
+    imageUrl1000: data.imageUrl1000,
+    hasCategories: data.hasCategories,
+    isActive: data.isActive,
+    ...conditionalProps,
+    ...conditionalCategoriesId
+  }
+}
 
 
 
@@ -344,11 +368,29 @@ export const autoFillCategoryForm = (reset, setValue, category) => {
     imageHash,
     isActive
   } = category
-  console.log('name', name)
   setValue('name', name)
   setValue('isActive', isActive)
   setValue('imageHash', imageHash)
+}
 
+export const autoFillBundleForm = (reset, setValue, bundle) => {
+  if (!bundle) {
+    reset()
+    return
+  }
+
+  const {
+    name,
+    imageHash,
+    categories,
+    isActive,
+    hasCategories
+  } = bundle
+  setValue('name', name)
+  setValue('isActive', isActive)
+  setValue('hasCategories', hasCategories)
+  if (hasCategories) setValue('categoriesId', categories)
+  setValue('imageHash', imageHash)
 }
 
 export const getObjectInString = (str) => {
