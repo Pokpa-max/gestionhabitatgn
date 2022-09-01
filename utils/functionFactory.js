@@ -189,6 +189,26 @@ export const commercialConstructorCreate = (data, edit) => {
   }
 }
 
+export const categoryConstructorCreate = (data, edit) => {
+
+  const conditionalProps = edit ? {
+    updatedAt: serverTimestamp(),
+  } : {
+    nbPlaces: 0,
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  }
+
+  return {
+    name: data.name,
+    imageHash: data.imageHash,
+    imageUrl: data.imageUrl,
+    imageUrl1000: data.imageUrl1000,
+    isActive: data.isActive,
+    ...conditionalProps
+  }
+}
+
 
 
 export const getGeoPoint = (lat, long) => {
@@ -310,6 +330,24 @@ export const autoFillCollectionForm = (reset, setValue, collection) => {
   } = collection
   setValue('title', title)
   setValue('restaurants', restaurantsId)
+
+}
+
+export const autoFillCategoryForm = (reset, setValue, category) => {
+  if (!category) {
+    reset()
+    return
+  }
+
+  const {
+    name,
+    imageHash,
+    isActive
+  } = category
+  console.log('name', name)
+  setValue('name', name)
+  setValue('isActive', isActive)
+  setValue('imageHash', imageHash)
 
 }
 

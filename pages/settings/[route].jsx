@@ -1,12 +1,9 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import {
-  RiAddBoxLine,
-  RiAppleFill,
   RiAppsFill,
   RiDiscFill,
   RiFunctionFill,
-  RiGridFill,
   RiInformationFill,
 } from 'react-icons/ri'
 
@@ -19,6 +16,7 @@ import {
 import Page from '@/components/Page'
 import Scaffold from '@/components/Scaffold'
 import Link from 'next/link'
+import CategoriesPage from '../../components/Settings/Categories/CategoriesPage'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -34,7 +32,7 @@ function Settings() {
       href: `categories`,
       icon: RiAppsFill,
       current: currentPath === `categories`,
-      component: <div>categories</div>,
+      component: <CategoriesPage />,
     },
     {
       name: 'Bundles',
@@ -102,7 +100,6 @@ function Settings() {
                   ))}
                 </nav>
               </aside>
-
               <div className="divide-y divide-gray-200 lg:col-span-10">
                 {cmp}
               </div>
