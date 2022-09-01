@@ -41,7 +41,7 @@ function Settings() {
       href: `bundles`,
       icon: RiFunctionFill,
       current: currentPath === `bundles`,
-      component: <div>bundles</div>,
+      component: <div></div>,
     },
     {
       name: 'Espace decouverte',
