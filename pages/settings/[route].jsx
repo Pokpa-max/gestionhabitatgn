@@ -15,10 +15,12 @@ import {
 
 import Page from '@/components/Page'
 import Scaffold from '@/components/Scaffold'
+
 import Link from 'next/link'
 import CategoriesPage from '../../components/Settings/Categories/CategoriesPage'
 import BundlesPage from '../../components/Settings/Bundles/BundlesPage'
 import DishesPage from '../../components/Settings/Dishes/DishesPage'
+import AppInfo from '../../components/Settings/AppInfo'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -55,7 +57,7 @@ function Settings() {
       href: `infos`,
       icon: RiInformationFill,
       current: currentPath === `infos`,
-      component: <div>infos</div>,
+      component: <AppInfo />,
     },
   ]
 
