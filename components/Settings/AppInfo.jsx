@@ -8,21 +8,27 @@ import Header from '@/components/Header'
 import { quartier } from '../../_data'
 import {
   addAppInfo,
+  addGenericDish,
   deleteAppInfo,
+  deletegenericDish,
   getAppInfos,
+  getGenericDishes,
 } from '../../lib/services/settings'
+import { notify } from '../../utils/toast'
 
 function AppInfo() {
   const [appInfos, setAppInfos] = useState([])
+  const [foodGenerics, setFoodGenerics] = useState([])
 
   useEffect(() => {
-    const unsubscribe = getAppInfos(setAppInfos)
+    const unsubscribe = () => {
+      getAppInfos(setAppInfos)
+      getGenericDishes(setFoodGenerics)
+    }
     return () => {
       unsubscribe()
     }
   }, [])
-
-  console.log('appInfos', appInfos)
 
   const {
     handleSubmit,
@@ -82,6 +88,18 @@ function AppInfo() {
                     ?.installations || []
                 }
               />
+              <CategoryPageSelect
+                inputName={'genericDish'}
+                label={'Plats Generiques'}
+                placeholder="Creer un plat"
+                register={register}
+                errors={errors}
+                onSubmit={handleSubmit(async (data) => {
+                  await addGenericDish(data?.genericDish)
+                  reset()
+                })}
+                elements={foodGenerics || []}
+              />
             </dl>
           </div>
         </div>
@@ -127,22 +145,22 @@ const CategoryPageSelect = ({
             </div>
           </form>
 
-          <div className="flex my-6 space-x-2">
+          <div className="flex flex-wrap my-6 space-x-2">
             {elements?.length === 0
               ? 'Rien à afficher pour le moment'
               : elements?.map(({ id, name }) => (
                   <div
-                    key={id}
-                    className="flex items-center px-4 py-2 my-1 space-x-1 text-white rounded-full border-primary-500 bg-primary"
+                    key={id || name}
+                    className="flex items-center px-4 py-2 my-1 space-x-1 text-white rounded-full whitespace-nowrap border-primary-500 bg-primary"
                   >
                     <p className="">{name}</p>
                     <button
-                      onClick={() => deleteAppInfo({ name, id }, inputName)}
+                      onClick={() => {
+                        if (inputName === 'genericDish') deletegenericDish(name)
+                        else deleteAppInfo({ name, id }, inputName)
+                      }}
                     >
-                      <RiCloseLine
-                        className="w-5 h-5 rounded-full hover:bg-gray-600"
-                        onClick={() => {}}
-                      />
+                      <RiCloseLine className="w-5 h-5 rounded-full hover:bg-gray-600" />
                     </button>
                   </div>
                 ))}

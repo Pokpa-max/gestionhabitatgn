@@ -32,7 +32,8 @@
     "pages/index.jsx",
     "global.d.js",
     "pages/home.jsx",
-    "lib/services/marketing.js"
+    "lib/services/marketing.js",
+    "lib/services/order.js"
   ],
   "exclude": ["node_modules"],
   "typeRoots": ["./typings", "./node_modules/@types"]

@@ -53,6 +53,11 @@ export const getCurrentDate = () => {
   return format(date, 'PP', { locale: fr })
 }
 
+export const getCurrentHour = () => {
+  const date = new Date()
+  return format(date, 'HH:MM', { locale: fr })
+}
+
 export const firebaseDateToJsDate = (firebaseDate) => {
   return new Date(firebaseDate.seconds * 1000)
 }

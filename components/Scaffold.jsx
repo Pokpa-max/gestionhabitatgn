@@ -11,6 +11,7 @@ import {
   RiGroupFill,
   RiDashboard2Fill,
   RiNewspaperFill,
+  RiMotorbikeFill,
 } from 'react-icons/ri'
 
 import NavItem from './NavItem'
@@ -20,6 +21,7 @@ import { useAuthUser } from 'next-firebase-auth'
 const navigation = [
   { name: 'Acceuil', href: '/', icon: RiDashboard2Fill },
   { name: 'Restaurants', href: '/restaurants', icon: RiStore3Fill },
+  { name: 'Commandes', href: '/orders', icon: RiMotorbikeFill },
   { name: 'Rapports', href: '/reports', icon: RiNewspaperFill },
   { name: 'Paiements', href: '/payments', icon: RiSafe2Fill },
   { name: 'Promotions', href: '/marketing', icon: RiAlarmWarningFill },

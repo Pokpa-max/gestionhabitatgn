@@ -113,6 +113,118 @@ export const foodGenerics = [
   { label: 'Pizza', value: 'Pizza' },
   { label: 'Poisson', value: 'Poisson' },
   { label: 'Riz gras', value: 'Riz gras' },
-
-
 ]
+
+
+
+export const orders = [{
+  completed: true,
+  createdAt: new Date(),
+  deliveryLocation: {
+    contactNumber: "627 47 16 55",
+    createdAt: '18 août 2022 à 18: 18: 58 UTC',
+    description: "Attendre à la station Service de Total ENergies",
+    district: "Dixinn",
+    isDefault: false,
+    latLng: {
+      geohash:
+        "e9wq2gyct",
+      geopoint:
+        [9.55703085904033, 13.668476454913616]
+    },
+    name:
+      "Maisons 🏠 ",
+    plusCode:
+      "",
+    updatedAt:
+      '18 août 2022 à 18: 18: 58 UTC',
+    zone:
+      "Dixinn Stade",
+  },
+  pickupLocation: {
+    contactNumber: "627 47 16 55",
+    createdAt: '18 août 2022 à 18: 18: 58 UTC',
+    description: "Attendre à la station Service de Total ENergies",
+    district: "Dixinn",
+    isDefault: false,
+    latLng: {
+      geohash:
+        "e9wq2gyct",
+      geopoint:
+        [9.55703085904033, 13.668476454913616]
+    },
+    name:
+      "Maisons 🏠 ",
+    plusCode:
+      "",
+    updatedAt:
+      '18 août 2022 à 18: 18: 58 UTC',
+    zone:
+      "Dixinn Stade",
+  },
+  isDelivery:
+    true,
+  orderDeliveryDay:
+    '',
+  orderDeliveryTime:
+    '',
+  orderNote:
+    'Merci de me rajouter deux sauce blanche en plus et eviter le piments et des oignons. je suis alergique',
+  orderTime:
+    '',
+  paymentId:
+    '',
+  products: [
+    {
+      alias:
+        "Coca-Cola 33 cL",
+      id:
+        "rPVPxBLwBUbnpFQfEwg9",
+      price:
+        25000,
+      quantity:
+        2
+    },
+    {
+      alias:
+        "Sprite citron citron vert 33 cL",
+      id:
+        "KoXpEDsfBcJcs0IXjjtM",
+      price:
+        25000,
+      quantity:
+        1
+    }, {
+      alias:
+        "Häagen-Dazs 100 mL",
+      id:
+        "akxrubDIT91b3AdmmwJ6",
+      price:
+        45000,
+      quantity:
+        3
+    }, {
+      alias:
+        "Salade Cesar",
+      id:
+        "Zq9m3IySodiOa1CrC86Q",
+      price:
+        75000,
+      quantity:
+        1
+    }
+  ],
+  restaurantId:
+    "0FGepFt1nbHA4GKuPPgd",
+  restaurantName:
+    "Mims Burger",
+  status:
+    6,
+  total:
+    797000,
+  userId: 'lZkE3lqYQvVisVOD0doZP4HCEYC3'
+}]
+
+
+
+

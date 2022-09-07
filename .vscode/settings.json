@@ -4,7 +4,7 @@
   "editor.fontFamily": "Fira Code",
   "editor.fontLigatures": true,
   "files.autoSave": "onFocusChange",
-  "window.zoomLevel": 1,
+  "window.zoomLevel": 0,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
