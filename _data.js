@@ -117,113 +117,433 @@ export const foodGenerics = [
 
 
 
-export const orders = [{
-  completed: true,
-  createdAt: new Date(),
-  deliveryLocation: {
-    contactNumber: "627 47 16 55",
-    createdAt: '18 août 2022 à 18: 18: 58 UTC',
-    description: "Attendre à la station Service de Total ENergies",
-    district: "Dixinn",
-    isDefault: false,
-    latLng: {
-      geohash:
-        "e9wq2gyct",
-      geopoint:
-        [9.55703085904033, 13.668476454913616]
+export const orders = [
+  {
+    completed: false,
+    createdAt: new Date(),
+    deliveryLocation: {
+      contactNumber: "627 47 16 55",
+      createdAt: '18 août 2022 à 18: 18: 58 UTC',
+      description: "Attendre à la station Service de Total ENergies",
+      district: "Dixinn",
+      isDefault: false,
+      latLng: {
+        geohash:
+          "e9wq2gyct",
+        geopoint:
+          [9.55703085904033, 13.668476454913616]
+      },
+      name:
+        "Maisons 🏠 ",
+      plusCode:
+        "",
+      updatedAt:
+        '18 août 2022 à 18: 18: 58 UTC',
+      zone:
+        "Dixinn Stade",
     },
-    name:
-      "Maisons 🏠 ",
-    plusCode:
-      "",
-    updatedAt:
-      '18 août 2022 à 18: 18: 58 UTC',
-    zone:
-      "Dixinn Stade",
+    pickupLocation: {
+      contactNumber: "627 47 16 55",
+      createdAt: '18 août 2022 à 18: 18: 58 UTC',
+      description: "Attendre à la station Service de Total ENergies",
+      district: "Dixinn",
+      isDefault: false,
+      latLng: {
+        geohash:
+          "e9wq2gyct",
+        geopoint:
+          [9.55703085904033, 13.668476454913616]
+      },
+      name:
+        "Maisons 🏠 ",
+      plusCode:
+        "",
+      updatedAt:
+        '18 août 2022 à 18: 18: 58 UTC',
+      zone:
+        "Dixinn Stade",
+    },
+    isDelivery:
+      true,
+    orderDeliveryDay:
+      '',
+    orderDeliveryTime:
+      '',
+    orderNote:
+      'Merci de me rajouter deux sauce blanche en plus et eviter le piments et des oignons. je suis alergique',
+    orderTime:
+      '',
+    paymentId:
+      '',
+    products: [
+      {
+        alias:
+          "Coca-Cola 33 cL",
+        id:
+          "rPVPxBLwBUbnpFQfEwg9",
+        price:
+          25000,
+        quantity:
+          2
+      },
+      {
+        alias:
+          "Sprite citron citron vert 33 cL",
+        id:
+          "KoXpEDsfBcJcs0IXjjtM",
+        price:
+          25000,
+        quantity:
+          1
+      }, {
+        alias:
+          "Häagen-Dazs 100 mL",
+        id:
+          "akxrubDIT91b3AdmmwJ6",
+        price:
+          45000,
+        quantity:
+          3
+      }, {
+        alias:
+          "Salade Cesar",
+        id:
+          "Zq9m3IySodiOa1CrC86Q",
+        price:
+          75000,
+        quantity:
+          1
+      }
+    ],
+    restaurantId:
+      "0FGepFt1nbHA4GKuPPgd",
+    restaurantName:
+      "Mims Burger",
+    status:
+      6,
+    total:
+      797000,
+    userId: 'lZkE3lqYQvVisVOD0doZP4HCEYC3'
   },
-  pickupLocation: {
-    contactNumber: "627 47 16 55",
-    createdAt: '18 août 2022 à 18: 18: 58 UTC',
-    description: "Attendre à la station Service de Total ENergies",
-    district: "Dixinn",
-    isDefault: false,
-    latLng: {
-      geohash:
-        "e9wq2gyct",
-      geopoint:
-        [9.55703085904033, 13.668476454913616]
+  {
+    completed: true,
+    createdAt: new Date(),
+    deliveryLocation: {
+      contactNumber: "627 47 16 55",
+      createdAt: '18 août 2022 à 18: 18: 58 UTC',
+      description: "Attendre à la station Service de Total ENergies",
+      district: "Dixinn",
+      isDefault: false,
+      latLng: {
+        geohash:
+          "e9wq2gyct",
+        geopoint:
+          [9.55703085904033, 13.668476454913616]
+      },
+      name:
+        "Maisons 🏠 ",
+      plusCode:
+        "",
+      updatedAt:
+        '18 août 2022 à 18: 18: 58 UTC',
+      zone:
+        "Dixinn Stade",
     },
-    name:
-      "Maisons 🏠 ",
-    plusCode:
-      "",
-    updatedAt:
-      '18 août 2022 à 18: 18: 58 UTC',
-    zone:
-      "Dixinn Stade",
-  },
-  isDelivery:
-    true,
-  orderDeliveryDay:
-    '',
-  orderDeliveryTime:
-    '',
-  orderNote:
-    'Merci de me rajouter deux sauce blanche en plus et eviter le piments et des oignons. je suis alergique',
-  orderTime:
-    '',
-  paymentId:
-    '',
-  products: [
-    {
-      alias:
-        "Coca-Cola 33 cL",
-      id:
-        "rPVPxBLwBUbnpFQfEwg9",
-      price:
-        25000,
-      quantity:
-        2
+    pickupLocation: {
+      contactNumber: "627 47 16 55",
+      createdAt: '18 août 2022 à 18: 18: 58 UTC',
+      description: "Attendre à la station Service de Total ENergies",
+      district: "Dixinn",
+      isDefault: false,
+      latLng: {
+        geohash:
+          "e9wq2gyct",
+        geopoint:
+          [9.55703085904033, 13.668476454913616]
+      },
+      name:
+        "Maisons 🏠 ",
+      plusCode:
+        "",
+      updatedAt:
+        '18 août 2022 à 18: 18: 58 UTC',
+      zone:
+        "Dixinn Stade",
     },
-    {
-      alias:
-        "Sprite citron citron vert 33 cL",
-      id:
-        "KoXpEDsfBcJcs0IXjjtM",
-      price:
-        25000,
-      quantity:
-        1
-    }, {
-      alias:
-        "Häagen-Dazs 100 mL",
-      id:
-        "akxrubDIT91b3AdmmwJ6",
-      price:
-        45000,
-      quantity:
-        3
-    }, {
-      alias:
-        "Salade Cesar",
-      id:
-        "Zq9m3IySodiOa1CrC86Q",
-      price:
-        75000,
-      quantity:
-        1
-    }
-  ],
-  restaurantId:
-    "0FGepFt1nbHA4GKuPPgd",
-  restaurantName:
-    "Mims Burger",
-  status:
-    6,
-  total:
-    797000,
-  userId: 'lZkE3lqYQvVisVOD0doZP4HCEYC3'
-}]
+    isDelivery:
+      true,
+    orderDeliveryDay:
+      '',
+    orderDeliveryTime:
+      '',
+    orderNote:
+      'Merci de me rajouter deux sauce blanche en plus et eviter le piments et des oignons. je suis alergique',
+    orderTime:
+      '',
+    paymentId:
+      '',
+    products: [
+      {
+        alias:
+          "Coca-Cola 33 cL",
+        id:
+          "rPVPxBLwBUbnpFQfEwg9",
+        price:
+          25000,
+        quantity:
+          2
+      },
+      {
+        alias:
+          "Sprite citron citron vert 33 cL",
+        id:
+          "KoXpEDsfBcJcs0IXjjtM",
+        price:
+          25000,
+        quantity:
+          1
+      }, {
+        alias:
+          "Häagen-Dazs 100 mL",
+        id:
+          "akxrubDIT91b3AdmmwJ6",
+        price:
+          45000,
+        quantity:
+          3
+      }, {
+        alias:
+          "Salade Cesar",
+        id:
+          "Zq9m3IySodiOa1CrC86Q",
+        price:
+          75000,
+        quantity:
+          1
+      }
+    ],
+    restaurantId:
+      "0FGepFt1nbHA4GKuPPgd",
+    restaurantName:
+      "Le Costo",
+    status:
+      5,
+    total:
+      797000,
+    userId: 'lZkE3lqYQvVisVOD0doZP4HCEYC3'
+  }, {
+    completed: true,
+    createdAt: new Date(),
+    deliveryLocation: {
+      contactNumber: "627 47 16 55",
+      createdAt: '18 août 2022 à 18: 18: 58 UTC',
+      description: "Attendre à la station Service de Total ENergies",
+      district: "Dixinn",
+      isDefault: false,
+      latLng: {
+        geohash:
+          "e9wq2gyct",
+        geopoint:
+          [9.55703085904033, 13.668476454913616]
+      },
+      name:
+        "Maisons 🏠 ",
+      plusCode:
+        "",
+      updatedAt:
+        '18 août 2022 à 18: 18: 58 UTC',
+      zone:
+        "Dixinn Stade",
+    },
+    pickupLocation: {
+      contactNumber: "627 47 16 55",
+      createdAt: '18 août 2022 à 18: 18: 58 UTC',
+      description: "Attendre à la station Service de Total ENergies",
+      district: "Dixinn",
+      isDefault: false,
+      latLng: {
+        geohash:
+          "e9wq2gyct",
+        geopoint:
+          [9.55703085904033, 13.668476454913616]
+      },
+      name:
+        "Maisons 🏠 ",
+      plusCode:
+        "",
+      updatedAt:
+        '18 août 2022 à 18: 18: 58 UTC',
+      zone:
+        "Dixinn Stade",
+    },
+    isDelivery:
+      true,
+    orderDeliveryDay:
+      '',
+    orderDeliveryTime:
+      '',
+    orderNote:
+      'Merci de me rajouter deux sauce blanche en plus et eviter le piments et des oignons. je suis alergique',
+    orderTime:
+      '',
+    paymentId:
+      '',
+    products: [
+      {
+        alias:
+          "Coca-Cola 33 cL",
+        id:
+          "rPVPxBLwBUbnpFQfEwg9",
+        price:
+          25000,
+        quantity:
+          2
+      },
+      {
+        alias:
+          "Sprite citron citron vert 33 cL",
+        id:
+          "KoXpEDsfBcJcs0IXjjtM",
+        price:
+          25000,
+        quantity:
+          1
+      }, {
+        alias:
+          "Häagen-Dazs 100 mL",
+        id:
+          "akxrubDIT91b3AdmmwJ6",
+        price:
+          45000,
+        quantity:
+          3
+      }, {
+        alias:
+          "Salade Cesar",
+        id:
+          "Zq9m3IySodiOa1CrC86Q",
+        price:
+          75000,
+        quantity:
+          1
+      }
+    ],
+    restaurantId:
+      "0FGepFt1nbHA4GKuPPgd",
+    restaurantName:
+      "Terrasse de Cosa",
+    status:
+      3,
+    total:
+      797000,
+    userId: 'lZkE3lqYQvVisVOD0doZP4HCEYC3'
+  }, {
+    completed: true,
+    createdAt: new Date(),
+    deliveryLocation: {
+      contactNumber: "627 47 16 55",
+      createdAt: '18 août 2022 à 18: 18: 58 UTC',
+      description: "Attendre à la station Service de Total ENergies",
+      district: "Dixinn",
+      isDefault: false,
+      latLng: {
+        geohash:
+          "e9wq2gyct",
+        geopoint:
+          [9.55703085904033, 13.668476454913616]
+      },
+      name:
+        "Maisons 🏠 ",
+      plusCode:
+        "",
+      updatedAt:
+        '18 août 2022 à 18: 18: 58 UTC',
+      zone:
+        "Dixinn Stade",
+    },
+    pickupLocation: {
+      contactNumber: "627 47 16 55",
+      createdAt: '18 août 2022 à 18: 18: 58 UTC',
+      description: "Attendre à la station Service de Total ENergies",
+      district: "Dixinn",
+      isDefault: false,
+      latLng: {
+        geohash:
+          "e9wq2gyct",
+        geopoint:
+          [9.55703085904033, 13.668476454913616]
+      },
+      name:
+        "Maisons 🏠 ",
+      plusCode:
+        "",
+      updatedAt:
+        '18 août 2022 à 18: 18: 58 UTC',
+      zone:
+        "Dixinn Stade",
+    },
+    isDelivery:
+      true,
+    orderDeliveryDay:
+      '',
+    orderDeliveryTime:
+      '',
+    orderNote:
+      'Merci de me rajouter deux sauce blanche en plus et eviter le piments et des oignons. je suis alergique',
+    orderTime:
+      '',
+    paymentId:
+      '',
+    products: [
+      {
+        alias:
+          "Coca-Cola 33 cL",
+        id:
+          "rPVPxBLwBUbnpFQfEwg9",
+        price:
+          25000,
+        quantity:
+          2
+      },
+      {
+        alias:
+          "Sprite citron citron vert 33 cL",
+        id:
+          "KoXpEDsfBcJcs0IXjjtM",
+        price:
+          25000,
+        quantity:
+          1
+      }, {
+        alias:
+          "Häagen-Dazs 100 mL",
+        id:
+          "akxrubDIT91b3AdmmwJ6",
+        price:
+          45000,
+        quantity:
+          3
+      }, {
+        alias:
+          "Salade Cesar",
+        id:
+          "Zq9m3IySodiOa1CrC86Q",
+        price:
+          75000,
+        quantity:
+          1
+      }
+    ],
+    restaurantId:
+      "0FGepFt1nbHA4GKuPPgd",
+    restaurantName:
+      "Mims Burger",
+    status:
+      4,
+    total:
+      797000,
+    userId: 'lZkE3lqYQvVisVOD0doZP4HCEYC3'
+  }]
 
 
 

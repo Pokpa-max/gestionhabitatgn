@@ -19,10 +19,10 @@ const statuses = [
   <p className="px-2 py-1 text-xs text-orange-500 rounded-full bg-orange-1 w-min00 whitespace-nowrap">
     En cours de livraison
   </p>,
-  <p className="px-2 py-1 text-xs text-green-500 rounded-full bg-green-1 w-min00 whitespace-nowrap">
+  <p className="px-2 py-1 text-xs text-green-500 bg-green-100 rounded-full w-min whitespace-nowrap">
     Commande terminé
   </p>,
-  <p className="px-2 py-1 text-xs text-red-500 rounded-full bg-red-1 w-min00 whitespace-nowrap">
+  <p className="px-2 py-1 text-xs text-red-500 bg-red-100 rounded-full w-min whitespace-nowrap">
     Rejete par le restaurant
   </p>,
   <p className="px-2 py-1 text-xs text-red-500 bg-red-100 rounded-full w-min whitespace-nowrap">

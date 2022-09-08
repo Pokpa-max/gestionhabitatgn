@@ -6,21 +6,20 @@ import {
   withAuthUser,
   withAuthUserTokenSSR,
 } from 'next-firebase-auth'
-import OrdersStats from '../../components/Orders/OrdersStats'
-import OrdersList from '../../components/Orders/OrdersList'
+import PaymentsStats from '../../components/Payments/PaymentsStats'
 
-function Orders() {
+function Payments() {
   return (
     <Scaffold>
-      <Header title={'Commandes'} />
-      <OrdersList />
+      <Header title={'Paiements'} />
+      <PaymentsStats />
     </Scaffold>
   )
 }
 
-const OrdersPage = () => (
-  <Page name="Eat224 Admin | Commandes">
-    <Orders />
+const PaymentsPage = () => (
+  <Page name="Eat224 Admin | paiements">
+    <Payments />
   </Page>
 )
 
@@ -31,4 +30,4 @@ export const getServerSideProps = withAuthUserTokenSSR({
 export default withAuthUser({
   whenAuthedBeforeRedirect: AuthAction.RENDER,
   // whenAuthed: AuthAction.REDIRECT_TO_APP,
-})(OrdersPage)
+})(PaymentsPage)
