@@ -50,7 +50,7 @@ function PaymentsStats() {
         </div>
         <div className="grid grid-cols-8 col-span-12 gap-4 lg:col-span-8">
           <div className="flex flex-col col-span-8 gap-4 sm:col-span-4">
-            <div className="h-32 col-span-4 p-4 space-y-4 border border-gray-100 bg-slate-100 sm:col-span-2">
+            <div className="h-32 col-span-4 p-4 py-6 space-y-4 border border-gray-100 bg-slate-100 sm:col-span-2">
               <div className="flex items-center space-x-2">
                 <RiRestaurantFill className="text-gray-500" />
                 <h1 className="text-sm text-gray-500">Paiements restaurants</h1>
@@ -63,7 +63,7 @@ function PaymentsStats() {
               </p>
             </div>
 
-            <div className="h-32 col-span-4 p-4 space-y-4 border border-gray-100 bg-slate-100 sm:col-span-2">
+            <div className="h-32 col-span-4 p-4 py-6 space-y-4 border border-gray-100 bg-slate-100 sm:col-span-2">
               <div className="flex items-center space-x-2">
                 <RiServiceFill className="text-gray-500" />
                 <h1 className="text-sm text-gray-500">Frais de service</h1>
@@ -77,7 +77,7 @@ function PaymentsStats() {
             </div>
           </div>
           <div className="flex flex-col col-span-8 gap-4 sm:col-span-4">
-            <div className="h-32 col-span-4 p-4 space-y-4 border border-gray-100 bg-slate-100 sm:col-span-2">
+            <div className="h-32 col-span-4 p-4 py-6 space-y-4 border border-gray-100 bg-slate-100 sm:col-span-2">
               <div className="flex items-center space-x-2">
                 <RiTakeawayFill className="text-gray-500" />
                 <h1 className="text-sm text-gray-500">Paiements livraisons</h1>
@@ -90,7 +90,7 @@ function PaymentsStats() {
                 </span>
               </p>
             </div>
-            <div className="h-32 col-span-4 p-4 space-y-4 border border-gray-100 bg-slate-100 sm:col-span-2">
+            <div className="h-32 col-span-4 p-4 py-6 space-y-4 border border-gray-100 bg-slate-100 sm:col-span-2">
               <div className="flex items-center space-x-2">
                 <RiHandCoinFill className="text-gray-500" />
                 <h1 className="text-sm text-gray-500">

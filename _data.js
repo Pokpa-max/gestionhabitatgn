@@ -545,6 +545,109 @@ export const orders = [
     userId: 'lZkE3lqYQvVisVOD0doZP4HCEYC3'
   }]
 
-
+export const payments = [
+  {
+    id: 'PYM/OD001',
+    paymentDescription: {
+      sourceDescription: 'CMD N˚MMSB3211 - Mims Burger',
+      sourceId: '5497yyr23ebfsvbdb', nature: 'entree', type: 'commande'
+    },
+    initiator: {
+      name: 'Ousmane Diallo',
+      id: '35dfhvbdvrbvrrfs'
+    },
+    paymentReference: {
+      paymentMethod: 'Ecobank Pay',
+      paymentReference: 'WD44/VF55500D-54'
+    },
+    paymentAmount: { total: 779000, cartCost: 750000, deliveryCost: 20000, serviceFee: 9000 },
+    createdAt: new Date()
+  },
+  {
+    id: 'PYM/RZ002',
+    paymentDescription: {
+      sourceDescription: 'CMD N˚MMSB3211 - Mims Burger',
+      sourceId: 'fwfeRTHTAfdb55', nature: 'sortie', type: 'regularisation'
+    },
+    initiator: {
+      name: 'Madifood',
+      id: '35dfhvbdvrbvrrfs'
+    },
+    paymentReference: {
+      paymentMethod: 'OM/Marchand',
+      paymentReference: 'WD44/VF55500D-54'
+    },
+    paymentAmount: { total: 750000, paymentFee: 12000 },
+    createdAt: new Date()
+  },
+  {
+    id: 'PYM/RZ003',
+    paymentDescription: {
+      sourceDescription: 'CMD N˚MMSB3211 - Mims Burger',
+      sourceId: '5497yyr23ebfsvbdb', nature: 'sortie', type: 'livraison'
+    },
+    initiator: {
+      name: 'Madifood',
+      id: '35dfhvbdvrbvrrfs'
+    },
+    paymentReference: {
+      paymentMethod: 'OM/Marchand',
+      paymentReference: 'WD44/VF55500D-54'
+    },
+    paymentAmount: { total: 20000, paymentFee: 2000, },
+    createdAt: new Date()
+  },
+  {
+    id: 'PYM/OD001',
+    paymentDescription: {
+      sourceDescription: 'CMD N˚MMSB3212 - Bamboo',
+      sourceId: '5497yyr23ebfsvbdb', nature: 'entree', type: 'commande'
+    },
+    initiator: {
+      name: 'Mamoudou Cissé',
+      id: '35dfhvbdvrbvrrfs'
+    },
+    paymentReference: {
+      paymentMethod: 'CASH',
+      paymentReference: 'GNF'
+    },
+    paymentAmount: { total: 779000, cartCost: 750000, deliveryCost: 20000, serviceFee: 9000 },
+    createdAt: new Date()
+  },
+  {
+    id: 'PYM/RZ002',
+    paymentDescription: {
+      sourceDescription: 'CMD N˚MMSB3212 - Bamboo',
+      sourceId: 'fwfeRTHTAfdb55', nature: 'sortie', type: 'regularisation'
+    },
+    initiator: {
+      name: 'Madifood',
+      id: '35dfhvbdvrbvrrfs'
+    },
+    paymentReference: {
+      paymentMethod: 'OM/Marchand',
+      paymentReference: 'WD44/VF55500D-54'
+    },
+    paymentAmount: { total: 750000, paymentFee: 12000 },
+    createdAt: new Date()
+  },
+  {
+    id: 'PYM/RZ003',
+    paymentDescription: {
+      sourceDescription: 'CMD N˚MMSB3212 - Bamboo',
+      sourceId: '5497yyr23ebfsvbdb', nature: 'sortie', type: 'livraison'
+    },
+    initiator: {
+      name: 'Madifood',
+      id: '35dfhvbdvrbvrrfs'
+    },
+    paymentReference: {
+      paymentMethod: 'OM/Marchand',
+      paymentReference: 'WD44/VF55500D-54'
+    },
+    paymentAmount: { total: 20000, paymentFee: 2000, },
+    createdAt: new Date()
+  },
+]
 
 

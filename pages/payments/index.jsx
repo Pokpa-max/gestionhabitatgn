@@ -6,13 +6,13 @@ import {
   withAuthUser,
   withAuthUserTokenSSR,
 } from 'next-firebase-auth'
-import PaymentsStats from '../../components/Payments/PaymentsStats'
+import PaymentsList from '../../components/Payments/PaymentsList'
 
 function Payments() {
   return (
     <Scaffold>
       <Header title={'Paiements'} />
-      <PaymentsStats />
+      <PaymentsList />
     </Scaffold>
   )
 }

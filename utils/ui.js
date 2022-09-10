@@ -10,3 +10,5 @@ export const stringToColour = function (str) {
     }
     return colour;
 }
+
+export const currencyFormatter = new Intl.NumberFormat('fr', { currency: 'GNF', style: 'currency' }).format
