@@ -97,7 +97,7 @@ export const columnsPayment = [
     Cell: (data) => {
       return (
         <div className="flex flex-col items-start justify-start py-4 space-x-1 ">
-          <p className="text-lg font-bold text-gray-900 whitespace-nowrap sm:pl-6">
+          <p className="font-bold text-gray-900 text-md whitespace-nowrap sm:pl-6">
             {currencyFormatter(data?.total)}
           </p>
         </div>

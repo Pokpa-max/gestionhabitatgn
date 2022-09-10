@@ -9,6 +9,7 @@ import {
 } from 'react-icons/ri'
 import { payments } from '../../_data'
 import PaymentsStats from './PaymentsStats'
+import PaymentDetailsModal from './PaymentDetailsModal'
 
 function PaymentsList() {
   const [selectedOrder, setSelectedOrder] = useState(null)
@@ -23,9 +24,14 @@ function PaymentsList() {
 }
 
 function OrdersTable({ selectedOrder, setSelectedOrder, payments }) {
-  const [openDrawer, setOpenDrawer] = useState(false)
+  const [openPaymentDetailsModal, setOpenPaymentDetailsModal] = useState(false)
+
   return (
     <div className="">
+      <PaymentDetailsModal
+        open={openPaymentDetailsModal}
+        setOpen={setOpenPaymentDetailsModal}
+      />
       <div className="mb-8 sm:flex sm:items-center">
         <div className="flex-auto space-y-2 lg:flex">
           <div className="flex items-center flex-1 ">
@@ -88,10 +94,7 @@ function OrdersTable({ selectedOrder, setSelectedOrder, payments }) {
 
                       <td className="relative flex items-center py-4 pl-3 pr-4 space-x-2 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
                         <button
-                          onClick={() => {
-                            setSelectedOrder(row)
-                            setOpenDrawer(true)
-                          }}
+                          onClick={() => setOpenPaymentDetailsModal(true)}
                           type="button"
                           className="inline-flex items-center p-3 bg-gray-100 border border-transparent rounded-full shadow-sm text-black-900 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                         >

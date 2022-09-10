@@ -34,7 +34,6 @@ const statuses = [
 ]
 
 function OrderDetailsDrawer({ order, open, setOpen }) {
-  const [loading, setLoading] = useState(false)
   const [openPaymentDetailsModal, setOpenPaymentDetailsModal] = useState(false)
 
   return (
