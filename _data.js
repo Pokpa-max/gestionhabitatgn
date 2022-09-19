@@ -107,6 +107,12 @@ export const restaurantsOptions = [
 
 ]
 
+export const getCategoriesOptions = (categories) => {
+  return categories.map(category => {
+    return { label: category.name, value: category.id }
+  })
+}
+
 export const foodGenerics = [
   { label: 'Attieke', value: 'Attieke' },
   { label: 'Poulet', value: 'Poulet' },
