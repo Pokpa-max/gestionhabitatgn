@@ -1,19 +1,19 @@
 import Page from '@/components/Page'
 import Scaffold from '@/components/Scaffold'
-import Header from '@/components/Header'
 import {
   AuthAction,
   withAuthUser,
   withAuthUserTokenSSR,
 } from 'next-firebase-auth'
-import OrdersStats from '../../components/Orders/OrdersStats'
 import OrdersList from '../../components/Orders/OrdersList'
+import OrdersPageHeader from '../../components/Orders/OrdersPageHeader'
+import { orders } from '../../_data'
 
 function Orders() {
   return (
     <Scaffold>
-      <Header title={'Commandes'} />
-      <OrdersList />
+      <OrdersPageHeader />
+      <OrdersList orders={orders} />
     </Scaffold>
   )
 }

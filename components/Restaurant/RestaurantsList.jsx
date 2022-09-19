@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { columnsRestaurant } from './_dataTable'
 
-import { RiDeleteRow, RiFileCopy2Line, RiSearchLine } from 'react-icons/ri'
+import { RiFileEditLine, RiProfileLine, RiSearchLine } from 'react-icons/ri'
 import RestaurantFormDrawer from './RestaurantFormDrawer'
 import { getRestaurants } from '@/lib/services/restaurant'
+import { Router, useRouter } from 'next/router'
 
 function RestaurantsList() {
   const [restaurants, setRestaurants] = useState([])
@@ -31,6 +32,8 @@ function RestaurantsTable({
   restaurants,
 }) {
   const [openDrawer, setOpenDrawer] = useState(false)
+  const router = useRouter()
+
   return (
     <div className="">
       <RestaurantFormDrawer
@@ -117,16 +120,22 @@ function RestaurantsTable({
                           type="button"
                           className="inline-flex items-center p-3 bg-gray-200 border border-transparent rounded-full shadow-sm text-black-900 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                         >
-                          <RiFileCopy2Line
+                          <RiFileEditLine
                             className="w-4 h-4"
                             aria-hidden="true"
                           />
                         </button>
                         <button
+                          onClick={() => {
+                            router?.push(`${router.pathname}/${row.id}`)
+                          }}
                           type="button"
-                          className="inline-flex items-center p-3 text-white bg-red-500 border border-transparent rounded-full shadow-sm hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                          className="inline-flex items-center p-3 bg-gray-200 border border-transparent rounded-full shadow-sm text-black-900 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                         >
-                          <RiDeleteRow className="w-4 h-4" aria-hidden="true" />
+                          <RiProfileLine
+                            className="w-4 h-4"
+                            aria-hidden="true"
+                          />
                         </button>
                       </td>
                     </tr>

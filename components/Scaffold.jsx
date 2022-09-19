@@ -12,6 +12,7 @@ import {
   RiDashboard2Fill,
   RiNewspaperFill,
   RiMotorbikeFill,
+  RiStarFill,
 } from 'react-icons/ri'
 
 import NavItem from './NavItem'
@@ -25,6 +26,11 @@ const navigation = [
   { name: 'Rapports', href: '/reports', icon: RiNewspaperFill },
   { name: 'Paiements', href: '/payments', icon: RiSafe2Fill },
   { name: 'Promotions', href: '/marketing', icon: RiAlarmWarningFill },
+  {
+    name: 'Feedback',
+    href: '/feedbacks',
+    icon: RiStarFill,
+  },
   {
     name: 'Utilisateurs',
     href: '/users',

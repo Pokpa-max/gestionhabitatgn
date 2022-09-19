@@ -11,14 +11,14 @@ export const columnsRestaurant = [
     accessor: 'restaurant',
     Cell: (data) => {
       return (
-        <div className="flex items-center justify-start space-x-1 py-4 pl-4 pr-3 ">
-          <div className="group whitespace-pre-wrap text-sm font-bold text-gray-900 sm:pl-6">
+        <div className="flex items-center justify-start py-4 pl-4 pr-3 space-x-1 ">
+          <div className="text-sm font-bold text-gray-900 whitespace-pre-wrap group sm:pl-6">
             <Link href={'/'}>
               <a className="group-hover:text-primary group-hover:underline">
                 {data.name}
               </a>
             </Link>
-            <p className="w-2/4 truncate whitespace-nowrap font-stratos-light text-sm text-gray-500">
+            <p className="w-2/4 text-sm text-gray-500 truncate whitespace-nowrap font-stratos-light">
               {data.description}
             </p>
           </div>
@@ -32,10 +32,10 @@ export const columnsRestaurant = [
     Cell: (data) => {
       return (
         <div className="flex-col py-4">
-          <div className="text-black-900 whitespace-nowrap px-3 text-sm font-bold">
+          <div className="px-3 text-sm font-bold text-black-900 whitespace-nowrap">
             {data.firstname} {data.lastname}
           </div>
-          <div className="whitespace-nowrap px-3 text-sm text-gray-500">
+          <div className="px-3 text-sm text-gray-500 whitespace-nowrap">
             {data.phoneNumber}
           </div>
         </div>
@@ -48,10 +48,10 @@ export const columnsRestaurant = [
     Cell: (data) => {
       return (
         <div className="flex-col py-4">
-          <div className="text-black-900 w-2/4 truncate whitespace-nowrap px-3 text-sm font-bold">
+          <div className="w-2/4 px-3 text-sm font-bold truncate text-black-900 whitespace-nowrap">
             {data.description}
           </div>
-          <div className="whitespace-nowrap px-3 font-stratos-light text-sm text-gray-500">
+          <div className="px-3 text-sm text-gray-500 whitespace-nowrap font-stratos-light">
             {data.zone}
           </div>
         </div>
@@ -65,7 +65,7 @@ export const columnsRestaurant = [
     Cell: (data) => {
       return (
         <div className="flex-col py-4">
-          <div className="whitespace-nowrap px-3 font-stratos-light text-sm text-gray-500">
+          <div className="px-3 text-sm text-gray-500 whitespace-nowrap font-stratos-light">
             {firebaseDateFormat(data)}
           </div>
         </div>

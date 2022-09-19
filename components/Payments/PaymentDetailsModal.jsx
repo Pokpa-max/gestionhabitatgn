@@ -42,7 +42,7 @@ function PaymentDetailsModal({ open, setOpen }) {
           </div>
           <div className="flex items-center justify-between ">
             <p className="text-sm text-gray-500">Montant Payé</p>
-            <p className="text-sm text-gray-700">779 000 GNF </p>
+            <p className="text-sm text-gray-900">779 000 GNF </p>
           </div>
           {/* seulement si le payment est de type commande */}
           {true && (
@@ -107,7 +107,7 @@ function PaymentDetailsHeader() {
             </div>
           </div>
           <div className="flex items-end justify-between space-x-4">
-            <td className="text-sm text-gray-500 ">Initiateur</td>
+            <td className="text-sm text-gray-500 ">Beneficiaire</td>
             <div className="flex items-center">
               <p className="text-sm">Ousmane Diallo</p>
               <p className="ml-auto text-xs text-gray-400">/dfjkvbdfjbv</p>

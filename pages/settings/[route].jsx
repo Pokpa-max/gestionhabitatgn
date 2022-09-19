@@ -4,6 +4,8 @@ import {
   RiAppsFill,
   RiDiscFill,
   RiFunctionFill,
+  RiHome2Fill,
+  RiHomeFill,
   RiInformationFill,
 } from 'react-icons/ri'
 
@@ -21,6 +23,7 @@ import CategoriesPage from '../../components/Settings/Categories/CategoriesPage'
 import BundlesPage from '../../components/Settings/Bundles/BundlesPage'
 import DishesPage from '../../components/Settings/Dishes/DishesPage'
 import AppInfo from '../../components/Settings/AppInfo'
+import HomeInfo from '../../components/Settings/HomeInfo'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -58,6 +61,13 @@ function Settings() {
       icon: RiInformationFill,
       current: currentPath === `infos`,
       component: <AppInfo />,
+    },
+    {
+      name: 'Element d acceuil',
+      href: `homesettings`,
+      icon: RiHomeFill,
+      current: currentPath === `homesettings`,
+      component: <HomeInfo />,
     },
   ]
 
@@ -123,12 +133,12 @@ const SettingsPage = () => (
 )
 
 export const getServerSideProps = withAuthUserTokenSSR({
-  whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
+  // whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
 })(async () => {
   return {
     props: {},
   }
 })
 export default withAuthUser({
-  whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
+  // whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
 })(SettingsPage)
