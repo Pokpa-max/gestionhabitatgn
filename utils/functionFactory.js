@@ -1,7 +1,6 @@
 // Entity constructor for the data model
 
 import { serverTimestamp, GeoPoint, Timestamp } from 'firebase/firestore'
-import { firestoreAutoId } from './firebase/firestore';
 import { encode } from './geoHash';
 import { firebaseDateToJsDate } from '../utils/date'
 import { stringToColour } from '../utils/ui'
@@ -98,10 +97,10 @@ export const sliderConstructorCreate = (data, edit) => {
   if (data.type.value !== 'social') {
     typeValue[data.type.value] = data[data.type.value].value
   } else {
-
     typeValue.externalLink = data.externalLink
     typeValue.externalLinkFallback = data.externalLinkFallback
   }
+
 
   const conditionalProps = edit ? {
     updatedAt: serverTimestamp(),
@@ -136,8 +135,8 @@ export const sponsorConstructorCreate = (data, edit) => {
 
   return {
     restaurant: {
-      name: data.restaurant.value,
-      id: firestoreAutoId()
+      name: data.restaurant.label,
+      id: data.restaurant.value,
     },
     type: data.type.value,
     periode: {
@@ -150,17 +149,17 @@ export const sponsorConstructorCreate = (data, edit) => {
 }
 
 export const collectionConstructorCreate = (data, edit) => {
-
   const conditionalProps = edit ? {
     updatedAt: serverTimestamp(),
   } : {
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
   }
-
+  console.log('data', data)
   return {
     title: data.title,
-    restaurantsId: data.restaurants,
+    restaurantIds: data.restaurants.map(restaurant => restaurant.value),
+    restaurants: data.restaurants,
     color: stringToColour(data.title),
     isDefault: false,
     nbPlaces: data.restaurants?.length,
@@ -314,13 +313,19 @@ export const autoFillSliderForm = (reset, setValue, slider) => {
     typeLabel,
     isActive,
     imageHash,
+    externalLink,
+    externalLinkFallback,
   } = slider
   setValue('title', sliderDetails.title)
   setValue('description', sliderDetails.description)
   setValue('type', { value: type, label: typeLabel })
-  setValue(type, { value: slider[type], label: slider[type] })
+  setValue('restaurant', { value: slider[type], label: slider[type]?.name })
+  setValue('collection', { value: slider[type], label: slider[type]?.title })
+  setValue('social', { value: slider[type], label: slider[type] })
   setValue('isActive', isActive)
   setValue('imageHash', imageHash)
+  setValue('externalLink', externalLink)
+  setValue('externalLinkFallback', externalLinkFallback)
 }
 
 export const autoFillSponsorForm = (reset, setValue, sponsor) => {
@@ -374,10 +379,10 @@ export const autoFillCollectionForm = (reset, setValue, collection) => {
 
   const {
     title,
-    restaurantsId
+    restaurants
   } = collection
   setValue('title', title)
-  setValue('restaurants', restaurantsId)
+  setValue('restaurants', restaurants)
 
 }
 

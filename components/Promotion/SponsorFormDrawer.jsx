@@ -8,6 +8,7 @@ import Loader from '../Loader'
 import SimpleSelect from '../SimpleSelect'
 import Toggle from '../Toggle'
 import { autoFillSponsorForm } from '../../utils/functionFactory'
+import RestaurantSelect, { collectionFormatData } from '../restaurantSelect'
 
 function SponsorFormDrawer({ sponsor, open, setOpen }) {
   const [loading, setLoading] = useState(false)
@@ -95,12 +96,10 @@ function SponsorFormDrawer({ sponsor, open, setOpen }) {
                 </label>
 
                 <div className="mt-1">
-                  <SimpleSelect
+                  <RestaurantSelect
                     required={'Champs requis'}
-                    name="restaurant"
                     control={control}
-                    options={restaurantsOptions}
-                    placeholder="Selectionner un restaurant"
+                    formatData={collectionFormatData}
                   />
                 </div>
                 <p className="pt-1 font-stratos-light text-xs text-red-600">

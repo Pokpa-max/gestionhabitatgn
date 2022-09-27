@@ -13,7 +13,7 @@ export const columnsSlider = [
     Cell: (data) => {
       return (
         <div className="flex-col p-4 line-clamp-2">
-          <p className="text-sm text-gray-500 truncate whitespace-nowrap font-stratos-light">
+          <p className="truncate whitespace-nowrap font-stratos-light text-sm text-gray-500">
             {data}
           </p>
         </div>
@@ -25,14 +25,14 @@ export const columnsSlider = [
     accessor: 'sliderDetails',
     Cell: (data) => {
       return (
-        <div className="flex items-center justify-start py-4 pl-4 pr-3 space-x-1 ">
-          <div className="text-sm font-bold text-gray-900 group whitespace-nowrap sm:pl-6">
+        <div className="flex items-center justify-start space-x-1 py-4 pl-4 pr-3 ">
+          <div className="group whitespace-nowrap text-sm font-bold text-gray-900 sm:pl-6">
             <Link href={'/'}>
               <a className="group-hover:text-primary group-hover:underline">
                 {data.title}
               </a>
             </Link>
-            <p className="text-sm text-gray-500 truncate whitespace-nowrap font-stratos-light">
+            <p className="truncate whitespace-nowrap font-stratos-light text-sm text-gray-500">
               {data.description}
             </p>
           </div>
@@ -46,7 +46,7 @@ export const columnsSlider = [
     accessor: 'type',
     Cell: (data) => {
       return (
-        <div className="px-3 text-sm text-gray-500 capitalize whitespace-nowrap font-stratos-light">
+        <div className="whitespace-nowrap px-3 font-stratos-light text-sm capitalize text-gray-500">
           {data}
         </div>
       )
@@ -88,7 +88,7 @@ export const columnsSlider = [
     Cell: (data) => {
       return (
         <div className="flex-col py-4">
-          <div className="px-3 text-sm text-gray-500 whitespace-nowrap font-stratos-light">
+          <div className="whitespace-nowrap px-3 font-stratos-light text-sm text-gray-500">
             {firebaseDateFormat(data)}
           </div>
         </div>
@@ -104,7 +104,7 @@ export const columnsSponsor = [
     Cell: (data) => {
       return (
         <div className="flex-col p-4 line-clamp-2">
-          <p className="text-sm text-gray-500 truncate whitespace-nowrap font-stratos-light">
+          <p className="truncate whitespace-nowrap font-stratos-light text-sm text-gray-500">
             {data}
           </p>
         </div>
@@ -116,14 +116,14 @@ export const columnsSponsor = [
     accessor: 'restaurant',
     Cell: (data) => {
       return (
-        <div className="flex items-center justify-start py-4 pl-4 pr-3 space-x-1 ">
-          <div className="text-sm font-bold text-gray-900 group whitespace-nowrap sm:pl-6">
+        <div className="flex items-center justify-start space-x-1 py-4 pl-4 pr-3 ">
+          <div className="group whitespace-nowrap text-sm font-bold text-gray-900 sm:pl-6">
             <Link href={'/'}>
               <a className="group-hover:text-primary group-hover:underline">
                 {data.name}
               </a>
             </Link>
-            <p className="text-sm text-gray-500 truncate whitespace-nowrap font-stratos-light">
+            <p className="truncate whitespace-nowrap font-stratos-light text-sm text-gray-500">
               {data.id}
             </p>
           </div>
@@ -136,7 +136,7 @@ export const columnsSponsor = [
     accessor: 'type',
     Cell: (data) => {
       return (
-        <div className="px-3 text-sm text-gray-500 capitalize whitespace-nowrap font-stratos-light">
+        <div className="whitespace-nowrap px-3 font-stratos-light text-sm capitalize text-gray-500">
           {data}
         </div>
       )
@@ -148,7 +148,7 @@ export const columnsSponsor = [
     Cell: (data) => {
       return (
         <div className="flex-col py-4">
-          <div className="px-3 text-sm text-gray-500 whitespace-nowrap font-stratos-light">
+          <div className="whitespace-nowrap px-3 font-stratos-light text-sm text-gray-500">
             {firebaseDateFormat(data.startDate)}
           </div>
         </div>
@@ -160,7 +160,7 @@ export const columnsSponsor = [
     accessor: 'periode',
     Cell: (data) => {
       return (
-        <div className="px-3 text-sm text-gray-500 capitalize whitespace-nowrap font-stratos-light">
+        <div className="whitespace-nowrap px-3 font-stratos-light text-sm capitalize text-gray-500">
           {timeBetween(Timestamp.fromDate(new Date()), data.endDate)}/
           <span className="font-semibold text-gray-900">
             {timeBetween(data.startDate, data.endDate)} jours
@@ -204,7 +204,7 @@ export const columnsSponsor = [
     Cell: (data) => {
       return (
         <div className="flex-col py-4">
-          <div className="px-3 text-sm text-gray-500 whitespace-nowrap font-stratos-light">
+          <div className="whitespace-nowrap px-3 font-stratos-light text-sm text-gray-500">
             {firebaseDateFormat(data)}
           </div>
         </div>
@@ -220,7 +220,7 @@ export const columnsCommercial = [
     Cell: (data) => {
       return (
         <div className="flex-col p-4 line-clamp-2">
-          <p className="text-sm text-gray-500 truncate whitespace-nowrap font-stratos-light">
+          <p className="truncate whitespace-nowrap font-stratos-light text-sm text-gray-500">
             {data}
           </p>
         </div>
@@ -232,8 +232,8 @@ export const columnsCommercial = [
     accessor: 'title',
     Cell: (data) => {
       return (
-        <div className="flex items-center justify-start py-4 pl-4 pr-3 space-x-1 ">
-          <div className="text-sm font-bold text-gray-900 group whitespace-nowrap sm:pl-6">
+        <div className="flex items-center justify-start space-x-1 py-4 pl-4 pr-3 ">
+          <div className="group whitespace-nowrap text-sm font-bold text-gray-900 sm:pl-6">
             <Link href={'/'}>
               <a className="group-hover:text-primary group-hover:underline">
                 {data}
@@ -249,8 +249,8 @@ export const columnsCommercial = [
     accessor: 'subtitle',
     Cell: (data) => {
       return (
-        <div className="flex items-center justify-start py-4 pl-4 pr-3 space-x-1 ">
-          <div className="text-sm font-bold text-gray-900 group whitespace-nowrap sm:pl-6">
+        <div className="flex items-center justify-start space-x-1 py-4 pl-4 pr-3 ">
+          <div className="group whitespace-nowrap text-sm font-bold text-gray-900 sm:pl-6">
             {data}
           </div>
         </div>
@@ -262,8 +262,8 @@ export const columnsCommercial = [
     accessor: 'externalLink',
     Cell: (data) => {
       return (
-        <div className="flex items-center justify-start py-4 pl-4 pr-3 space-x-1 ">
-          <div className="text-sm font-bold text-gray-900 group whitespace-nowrap sm:pl-6">
+        <div className="flex items-center justify-start space-x-1 py-4 pl-4 pr-3 ">
+          <div className="group whitespace-nowrap text-sm font-bold text-gray-900 sm:pl-6">
             <Link href={data}>
               <a className="group-hover:text-primary group-hover:underline">
                 Lien Externe
@@ -308,7 +308,7 @@ export const columnsCommercial = [
     Cell: (data) => {
       return (
         <div className="flex-col py-4">
-          <div className="px-3 text-sm text-gray-500 whitespace-nowrap font-stratos-light">
+          <div className="whitespace-nowrap px-3 font-stratos-light text-sm text-gray-500">
             {firebaseDateFormat(data)}
           </div>
         </div>
@@ -324,7 +324,7 @@ export const columnsCollection = [
     Cell: (data) => {
       return (
         <div className="flex-col p-4 line-clamp-2">
-          <p className="text-sm text-gray-500 truncate whitespace-nowrap font-stratos-light">
+          <p className="truncate whitespace-nowrap font-stratos-light text-sm text-gray-500">
             {data}
           </p>
         </div>
@@ -336,8 +336,8 @@ export const columnsCollection = [
     accessor: 'title',
     Cell: (data) => {
       return (
-        <div className="flex items-center justify-start py-4 pl-4 pr-3 space-x-1 ">
-          <div className="text-sm font-bold text-gray-900 group whitespace-nowrap sm:pl-6">
+        <div className="flex items-center justify-start space-x-1 py-4 pl-4 pr-3 ">
+          <div className="group whitespace-nowrap text-sm font-bold text-gray-900 sm:pl-6">
             <Link href={'/'}>
               <a className="group-hover:text-primary group-hover:underline">
                 {data}
@@ -350,14 +350,14 @@ export const columnsCollection = [
   },
   {
     Header: 'Restaurants',
-    accessor: 'restaurantsId',
+    accessor: 'restaurants',
     Cell: (data) => {
       return (
         <div className="flex-col py-4">
-          <div className="px-3 text-sm font-bold text-black-900 whitespace-nowrap">
-            {data[0]}
+          <div className="text-black-900 whitespace-nowrap px-3 text-sm font-bold">
+            {data[0].label}
           </div>
-          <div className="px-3 text-sm font-light text-gray-500 whitespace-nowrap">
+          <div className="whitespace-nowrap px-3 text-sm font-light text-gray-500">
             + {data.length - 1} autres restaurants
           </div>
         </div>
@@ -370,7 +370,7 @@ export const columnsCollection = [
     Cell: (data) => {
       return (
         <div className="flex-col py-4">
-          <div className="px-3 text-sm text-gray-500 whitespace-nowrap font-stratos-light">
+          <div className="whitespace-nowrap px-3 font-stratos-light text-sm text-gray-500">
             {firebaseDateFormat(data)}
           </div>
         </div>

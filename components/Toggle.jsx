@@ -43,7 +43,7 @@ export default function Toggle({
       />
 
       <Switch.Group as="div" className="flex items-center justify-between">
-        <span className="flex flex-col flex-grow">
+        <span className="flex flex-grow flex-col">
           <Switch.Label
             as="span"
             className="text-sm font-medium text-gray-900 "
@@ -58,6 +58,7 @@ export default function Toggle({
         <Controller
           control={control}
           name={name}
+          defaultValue={false}
           render={({ field }) => {
             return (
               <Switch

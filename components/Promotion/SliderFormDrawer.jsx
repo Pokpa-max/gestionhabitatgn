@@ -9,8 +9,9 @@ import Loader from '../Loader'
 import SimpleSelect from '../SimpleSelect'
 import Toggle from '../Toggle'
 import { autoFillSliderForm } from '../../utils/functionFactory'
+import RestaurantSelect from '../restaurantSelect'
 
-function SliderFormDrawer({ slider, open, setOpen }) {
+function SliderFormDrawer({ slider, open, setOpen, collections }) {
   const [loading, setLoading] = useState(false)
 
   const {
@@ -75,14 +76,14 @@ function SliderFormDrawer({ slider, open, setOpen }) {
               <>
                 <button
                   type="button"
-                  className="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                  className="border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                   onClick={() => setOpen(false)}
                 >
                   Annuler
                 </button>
                 <button
                   type="submit"
-                  className="inline-flex justify-center px-4 py-2 ml-4 text-sm font-medium text-white border border-transparent bg-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                  className="ml-4 inline-flex justify-center border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                 >
                   Enregistrer
                 </button>
@@ -92,9 +93,9 @@ function SliderFormDrawer({ slider, open, setOpen }) {
         }
       >
         <div className="mt-5 md:col-span-2 md:mt-0">
-          <div className="px-4 py-5 space-y-6 bg-white sm:p-6">
+          <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
             <div className="grid grid-cols-2 gap-6">
-              <div className="col-span-1 group sm:col-span-1">
+              <div className="group col-span-1 sm:col-span-1">
                 <label
                   htmlFor="title"
                   className="block text-sm font-medium text-gray-700"
@@ -108,10 +109,10 @@ function SliderFormDrawer({ slider, open, setOpen }) {
                       required: 'Champs requis',
                     })}
                     id="title"
-                    className="flex-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                    className="block w-full flex-1 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                     placeholder="Titre du slider"
                   />
-                  <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                  <p className="pt-1 font-stratos-light text-xs text-red-600">
                     {errors?.title?.message}
                   </p>
                 </div>
@@ -130,10 +131,10 @@ function SliderFormDrawer({ slider, open, setOpen }) {
                       required: 'Champs requis',
                     })}
                     id="description"
-                    className="flex-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                    className="block w-full flex-1 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                     placeholder="Petite description"
                   />
-                  <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                  <p className="pt-1 font-stratos-light text-xs text-red-600">
                     {errors?.description?.message}
                   </p>
                 </div>
@@ -156,7 +157,7 @@ function SliderFormDrawer({ slider, open, setOpen }) {
                     placeholder="Selectionner le type"
                   />
                 </div>
-                <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                <p className="pt-1 font-stratos-light text-xs text-red-600">
                   {errors?.type?.message}
                 </p>
               </div>
@@ -174,11 +175,16 @@ function SliderFormDrawer({ slider, open, setOpen }) {
                       required={'Champs requis'}
                       name="collection"
                       control={control}
-                      options={collections}
+                      options={collections.map((collection) => {
+                        return {
+                          label: collection.title,
+                          value: collection,
+                        }
+                      })}
                       placeholder="Selectionner la collection"
                     />
                   </div>
-                  <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                  <p className="pt-1 font-stratos-light text-xs text-red-600">
                     {errors?.collection?.message}
                   </p>
                 </div>
@@ -193,15 +199,12 @@ function SliderFormDrawer({ slider, open, setOpen }) {
                   </label>
 
                   <div className="mt-1">
-                    <SimpleSelect
+                    <RestaurantSelect
                       required={'Champs requis'}
-                      name="restaurant"
                       control={control}
-                      options={restaurantsOptions}
-                      placeholder="Selectionner un restaurant"
                     />
                   </div>
-                  <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                  <p className="pt-1 font-stratos-light text-xs text-red-600">
                     {errors?.restaurant?.message}
                   </p>
                 </div>
@@ -211,7 +214,7 @@ function SliderFormDrawer({ slider, open, setOpen }) {
             {formData?.type?.value &&
               !['restaurant', 'collection'].includes(formData?.type?.value) && (
                 <div className="space-y-6">
-                  <div className="col-span-1 group sm:col-span-1">
+                  <div className="group col-span-1 sm:col-span-1">
                     <label
                       htmlFor="externalLink"
                       className="block text-sm font-medium text-gray-700"
@@ -225,15 +228,15 @@ function SliderFormDrawer({ slider, open, setOpen }) {
                           required: 'Champs requis',
                         })}
                         id="externalLink"
-                        className="flex-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                        className="block w-full flex-1 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                         placeholder="Lien Externe de redirection"
                       />
-                      <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                      <p className="pt-1 font-stratos-light text-xs text-red-600">
                         {errors?.externalLink?.message}
                       </p>
                     </div>
                   </div>
-                  <div className="col-span-1 group sm:col-span-1">
+                  <div className="group col-span-1 sm:col-span-1">
                     <label
                       htmlFor="externalLinkFallback"
                       className="block text-sm font-medium text-gray-700"
@@ -247,10 +250,10 @@ function SliderFormDrawer({ slider, open, setOpen }) {
                           required: 'Champs requis',
                         })}
                         id="externalLinkFallback"
-                        className="flex-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                        className="block w-full flex-1 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                         placeholder="Lien Externe de redirection"
                       />
-                      <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                      <p className="pt-1 font-stratos-light text-xs text-red-600">
                         {errors?.externalLinkFallback?.message}
                       </p>
                     </div>
@@ -265,7 +268,7 @@ function SliderFormDrawer({ slider, open, setOpen }) {
                 Image du slider
               </label>
               <div className="mt-1 sm:col-span-2 sm:mt-0">
-                <div className="flex justify-center max-w-lg px-2 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-xs">
+                <div className="rounded-xs flex max-w-lg justify-center border-2 border-dashed border-gray-300 px-2 pt-5 pb-6">
                   <div className="space-y-1 text-center">
                     {formData?.imageUrl?.length > 0 ? (
                       <img
@@ -275,12 +278,12 @@ function SliderFormDrawer({ slider, open, setOpen }) {
                     ) : slider ? (
                       <img src={slider.imageUrl1000} alt="preview" />
                     ) : (
-                      <RiImage2Fill className="w-12 h-12 mx-auto text-gray-400" />
+                      <RiImage2Fill className="mx-auto h-12 w-12 text-gray-400" />
                     )}
                     <div className="flex text-sm text-gray-600">
                       <label
                         htmlFor="file-upload"
-                        className="relative font-medium bg-white rounded-sm cursor-pointer text-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-primary-500 focus-within:ring-offset-2 hover:text-primary-500"
+                        className="relative cursor-pointer rounded-sm bg-white font-medium text-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-primary-500 focus-within:ring-offset-2 hover:text-primary-500"
                       >
                         <span>Charger image</span>
                         <input
@@ -300,7 +303,7 @@ function SliderFormDrawer({ slider, open, setOpen }) {
                       PNG, JPG, GIF up to 10MB
                     </p>
                   </div>
-                  <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                  <p className="pt-1 font-stratos-light text-xs text-red-600">
                     {errors?.imageUrl && 'veuillez selectionnez une image'}
                   </p>
                 </div>

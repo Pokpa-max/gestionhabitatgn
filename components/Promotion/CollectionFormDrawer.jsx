@@ -7,6 +7,7 @@ import DrawerForm from '../DrawerForm'
 import Loader from '../Loader'
 import { autoFillCollectionForm } from '../../utils/functionFactory'
 import MultiSelect from '../MultiSelect'
+import RestaurantSelect, { collectionFormatData } from '../restaurantSelect'
 
 function CollectionFormDrawer({ collection, open, setOpen }) {
   const [loading, setLoading] = useState(false)
@@ -25,7 +26,7 @@ function CollectionFormDrawer({ collection, open, setOpen }) {
     shouldUnregister: false,
   })
 
-  const formData = watch()
+  const formData = watch('restaurants')
 
   useEffect(() => {
     const setFormvalue = () => {
@@ -54,7 +55,7 @@ function CollectionFormDrawer({ collection, open, setOpen }) {
         open={open}
         setOpen={setOpen}
         onSubmit={handleSubmit(onSubmit)}
-        title={'Ajouter un Collection'}
+        title={'Ajouter une Collection'}
         description={"Formulaire de Collectioning d'un restaurant"}
         footerButtons={
           <>
@@ -66,14 +67,14 @@ function CollectionFormDrawer({ collection, open, setOpen }) {
               <>
                 <button
                   type="button"
-                  className="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                  className="border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                   onClick={() => setOpen(false)}
                 >
                   Annuler
                 </button>
                 <button
                   type="submit"
-                  className="inline-flex justify-center px-4 py-2 ml-4 text-sm font-medium text-white border border-transparent bg-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                  className="ml-4 inline-flex justify-center border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                 >
                   Enregistrer
                 </button>
@@ -83,10 +84,9 @@ function CollectionFormDrawer({ collection, open, setOpen }) {
         }
       >
         <div className="mt-5 md:col-span-2 md:mt-0">
-          {/* <pre>{JSON.stringify(formData, null, 4)}</pre> */}
-          <div className="px-4 py-5 space-y-6 bg-white sm:p-6">
+          <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
             <div className="grid grid-cols-2 gap-6">
-              <div className="col-span-1 group sm:col-span-1">
+              <div className="group col-span-1 sm:col-span-1">
                 <label
                   htmlFor="title"
                   className="block text-sm font-medium text-gray-700"
@@ -100,10 +100,10 @@ function CollectionFormDrawer({ collection, open, setOpen }) {
                       required: 'Champs requis',
                     })}
                     id="title"
-                    className="flex-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                    className="block w-full flex-1 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                     placeholder="Titre du commercial"
                   />
-                  <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                  <p className="pt-1 font-stratos-light text-xs text-red-600">
                     {errors?.title?.message}
                   </p>
                 </div>
@@ -117,15 +117,14 @@ function CollectionFormDrawer({ collection, open, setOpen }) {
                 </label>
 
                 <div className="mt-1">
-                  <MultiSelect
-                    required={'Champs requis'}
-                    name="restaurants"
+                  <RestaurantSelect
                     control={control}
-                    options={restaurantsOptions}
-                    placeholder="Selectionner un restaurant"
+                    formatData={collectionFormatData}
+                    selectOptions={{ isMulti: true }}
+                    name="restaurants"
                   />
                 </div>
-                <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                <p className="pt-1 font-stratos-light text-xs text-red-600">
                   {errors?.restaurants?.message}
                 </p>
               </div>

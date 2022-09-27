@@ -46,7 +46,7 @@ function HomeInfo() {
 
   return (
     <div className="flex-1 py-6">
-      <div className="px-4 mx-auto sm:px-6 md:px-8">
+      <div className="mx-auto px-4 sm:px-6 md:px-8">
         <Header title={'Info'} />
         <div className="divide-y divide-gray-200 ">
           <div className="flex ">
@@ -113,7 +113,7 @@ function HomeInfo() {
                 errors={errors}
                 control={control}
                 onSubmit={handleSubmit(async (data) => {
-                  await addHomeInfo(data?.installations, 'sliders')
+                  await addHomeInfo(data?.sliders, 'sliders')
                   reset()
                 })}
                 elements={
@@ -146,7 +146,7 @@ const CategoryPageSelect = ({
   return (
     <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
       <dt className="text-sm font-medium text-gray-500">{label}</dt>
-      <dd className="flex justify-between mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+      <dd className="mt-1 flex justify-between text-sm text-gray-900 sm:col-span-2 sm:mt-0">
         <div className="flex flex-col">
           <form onSubmit={onSubmit}>
             <div className="mt-1 ">
@@ -155,37 +155,39 @@ const CategoryPageSelect = ({
                   name={inputName}
                   control={control}
                   options={options}
-                  className="flex-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                  className="block w-full flex-1 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                   placeholder="Selectionner le type"
                 />
                 <button
                   type="submit"
-                  className="inline-flex justify-center px-4 py-2 ml-4 text-sm font-medium text-white border border-transparent bg-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                  className="ml-4 inline-flex justify-center border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                 >
                   Ajouter
                 </button>
               </div>
-              <p className="pt-1 text-xs text-red-600 font-stratos-light">
+              <p className="pt-1 font-stratos-light text-xs text-red-600">
                 {errors[inputName]?.message}
               </p>
             </div>
           </form>
 
-          <div className="flex flex-wrap my-6 space-x-2">
+          <div className="my-6 flex flex-wrap space-x-2">
             {elements?.length === 0
               ? 'Rien à afficher pour le moment'
               : elements?.map((el) => (
                   <div
-                    key={el.id || el.name || el.title}
-                    className="flex items-center px-4 py-2 my-1 space-x-1 text-white rounded-full whitespace-nowrap border-primary-500 bg-primary"
+                    key={el.id || el.name || el.title || el.sliderDetails.title}
+                    className="my-1 flex items-center space-x-1 whitespace-nowrap rounded-full border-primary-500 bg-primary px-4 py-2 text-white"
                   >
-                    <p className="">{el.name || el.title}</p>
+                    <p className="">
+                      {el.name || el.title || el.sliderDetails.title}
+                    </p>
                     <button
                       onClick={() => {
                         deleteHomeInfo(el, inputName)
                       }}
                     >
-                      <RiCloseLine className="w-5 h-5 rounded-full hover:bg-gray-600" />
+                      <RiCloseLine className="h-5 w-5 rounded-full hover:bg-gray-600" />
                     </button>
                   </div>
                 ))}
