@@ -1,7 +1,10 @@
 import Link from 'next/link'
 import {
   firebaseDateFormat,
+  firebaseDateHour,
+  firebaseDateToJsDate,
   getCurrentDate,
+  getCurrentDateHour,
   getCurrentHour,
 } from '../../utils/date'
 
@@ -10,25 +13,25 @@ function classNames(...classes) {
 }
 
 const statuses = [
-  <p className="px-2 py-1 text-xs text-orange-500 bg-orange-100 rounded-full w-min whitespace-nowrap">
+  <p className="w-min whitespace-nowrap rounded-full bg-orange-100 px-2 py-1 text-xs text-orange-500">
     En cours de confirmation
   </p>,
-  <p className="px-2 py-1 text-xs text-orange-500 bg-orange-100 rounded-full w-min whitespace-nowrap">
+  <p className="w-min whitespace-nowrap rounded-full bg-orange-100 px-2 py-1 text-xs text-orange-500">
     En cours de préparation
   </p>,
-  <p className="px-2 py-1 text-xs text-orange-500 rounded-full bg-orange-1 w-min00 whitespace-nowrap">
+  <p className="bg-orange-1 w-min00 whitespace-nowrap rounded-full px-2 py-1 text-xs text-orange-500">
     En cours de livraison
   </p>,
-  <p className="px-2 py-1 text-xs text-green-500 bg-green-100 rounded-full w-min whitespace-nowrap">
+  <p className="w-min whitespace-nowrap rounded-full bg-green-100 px-2 py-1 text-xs text-green-500">
     Commande terminé
   </p>,
-  <p className="px-2 py-1 text-xs text-red-500 bg-red-100 rounded-full w-min whitespace-nowrap">
+  <p className="w-min whitespace-nowrap rounded-full bg-red-100 px-2 py-1 text-xs text-red-500">
     Rejete par le restaurant
   </p>,
-  <p className="px-2 py-1 text-xs text-red-500 bg-red-100 rounded-full w-min whitespace-nowrap">
+  <p className="w-min whitespace-nowrap rounded-full bg-red-100 px-2 py-1 text-xs text-red-500">
     Commande annulé
   </p>,
-  <p className="px-2 py-1 text-xs text-orange-500 bg-orange-100 rounded-full w-min whitespace-nowrap">
+  <p className="w-min whitespace-nowrap rounded-full bg-orange-100 px-2 py-1 text-xs text-orange-500">
     Pres pour recupération
   </p>,
 ]
@@ -39,8 +42,8 @@ export const columnsOrder = [
     accessor: 'id',
     Cell: (data) => {
       return (
-        <div className="flex items-center justify-start py-4 pl-4 pr-3 space-x-1 ">
-          <p className="text-sm text-gray-500 truncate whitespace-nowrap font-stratos-light">
+        <div className="flex items-center justify-start space-x-1 py-4 pl-4 pr-3 ">
+          <p className="truncate whitespace-nowrap font-stratos-light text-sm text-gray-500">
             #{data}
           </p>
         </div>
@@ -52,8 +55,8 @@ export const columnsOrder = [
     accessor: 'restaurantName',
     Cell: (data) => {
       return (
-        <div className="flex items-center justify-start py-4 pl-4 pr-3 space-x-1 ">
-          <p className="text-sm font-bold text-gray-900 whitespace-nowrap sm:pl-6">
+        <div className="flex items-center justify-start space-x-1 py-4 pl-4 pr-3 ">
+          <p className="whitespace-nowrap text-sm font-bold text-gray-900 sm:pl-6">
             {data}
           </p>
         </div>
@@ -101,12 +104,14 @@ export const columnsOrder = [
     accessor: 'createdAt',
     Cell: (data) => {
       return (
-        <div className="flex flex-col items-start justify-start py-4 pl-4 pr-3 space-x-1 ">
-          <p className="px-3 text-sm text-gray-500 whitespace-nowrap font-stratos-light">
-            {getCurrentDate()}
+        <div className="flex flex-col items-start justify-start space-x-1 py-4 pl-4 pr-3 ">
+          <p className="whitespace-nowrap px-3 font-stratos-light text-sm text-gray-500">
+            {/* {getCurrentDate()} */}
+            {firebaseDateFormat(data)}
           </p>
-          <p className="px-3 text-sm text-gray-500 whitespace-nowrap">
-            {getCurrentHour()}
+          <p className="whitespace-nowrap px-3 text-sm text-gray-500">
+            {/* {getCurrentHour()} */}
+            {firebaseDateHour(data.seconds)}
           </p>
         </div>
       )

@@ -43,22 +43,22 @@ function RestaurantsTable({
       />
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <div className="flex items-center flex-1 ">
+          <div className="flex flex-1 items-center ">
             <div className="w-full max-w-lg lg:max-w-xs">
               <label htmlFor="search" className="sr-only">
                 Search
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                   <RiSearchLine
-                    className="w-5 h-5 text-gray-400"
+                    className="h-5 w-5 text-gray-400"
                     aria-hidden="true"
                   />
                 </div>
                 <input
                   id="search"
                   name="search"
-                  className="block w-full py-2 pl-10 pr-3 leading-5 placeholder-gray-500 bg-white border border-gray-300 rounded-sm focus:border-primary-500 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary-500 sm:text-sm"
+                  className="block w-full rounded-sm border border-gray-300 bg-white py-2 pl-10 pr-3 leading-5 placeholder-gray-500 focus:border-primary-500 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary-500 sm:text-sm"
                   placeholder="Rechercher une categorie"
                   type="search"
                 />
@@ -73,17 +73,17 @@ function RestaurantsTable({
               setSelectedRestaurant(null)
             }}
             type="button"
-            className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-sm hover:bg-primary-700 bg-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:w-auto"
+            className="hover:bg-primary-700 inline-flex items-center justify-center rounded-sm border border-transparent bg-primary-500 px-4 py-2 text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:w-auto"
           >
             Ajouter un element
           </button>
         </div>
       </div>
-      <div className="flex flex-col mt-8">
+      <div className="mt-8 flex flex-col">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
             <div className="overflow-hidden ring-1 ring-black ring-opacity-5 md:rounded-sm">
-              <table className="min-w-full text-left divide-y divide-gray-300 table-auto">
+              <table className="min-w-full table-auto divide-y divide-gray-300 text-left">
                 <thead className="bg-gray-50">
                   <tr>
                     {columnsRestaurant.map((column, index) => (
@@ -103,7 +103,7 @@ function RestaurantsTable({
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="divide-y divide-gray-200 bg-white">
                   {restaurants?.map((row, index) => (
                     <tr key={index}>
                       {columnsRestaurant.map((column, index) => {
@@ -111,17 +111,17 @@ function RestaurantsTable({
                         const element = column.Cell?.(cell) ?? cell
                         return <td key={index}>{element}</td>
                       })}
-                      <td className="relative flex py-4 pl-3 pr-4 space-x-2 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
+                      <td className="relative flex space-x-2 whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                         <button
                           onClick={() => {
                             setSelectedRestaurant(row)
                             setOpenDrawer(true)
                           }}
                           type="button"
-                          className="inline-flex items-center p-3 bg-gray-200 border border-transparent rounded-full shadow-sm text-black-900 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                          className="text-black-900 inline-flex items-center rounded-full border border-transparent bg-gray-200 p-3 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                         >
                           <RiFileEditLine
-                            className="w-4 h-4"
+                            className="h-4 w-4"
                             aria-hidden="true"
                           />
                         </button>
@@ -130,10 +130,10 @@ function RestaurantsTable({
                             router?.push(`${router.pathname}/${row.id}`)
                           }}
                           type="button"
-                          className="inline-flex items-center p-3 bg-gray-200 border border-transparent rounded-full shadow-sm text-black-900 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                          className="text-black-900 inline-flex items-center rounded-full border border-transparent bg-gray-200 p-3 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                         >
                           <RiProfileLine
-                            className="w-4 h-4"
+                            className="h-4 w-4"
                             aria-hidden="true"
                           />
                         </button>

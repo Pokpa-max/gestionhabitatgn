@@ -13,8 +13,6 @@ import {
   restaurantConstructorCreate,
   restaurantConstructorUpdate,
 } from '../../utils/functionFactory'
-
-// Restaurants
 export const restaurantsCollectionRef = collection(db, `restaurants`)
 
 export const restaurantDocRef = (restaurantId) =>
