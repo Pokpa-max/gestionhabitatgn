@@ -1,16 +1,16 @@
 import React, { useRef } from 'react'
 import { RiBillFill } from 'react-icons/ri'
-import { getCurrentDate, getCurrentHour } from '../../utils/date'
+import { firebaseDateHour } from '../../utils/date'
 import Modal from '../Modal'
 
-function PaymentDetailsModal({ open, setOpen }) {
+function PaymentDetailsModal({ open, setOpen, order }) {
   const cancelButtonRef = useRef(null)
 
   return (
     <Modal open={open} setOpen={setOpen} cancelButtonRef={cancelButtonRef}>
-      <div className="relative inline-block w-3/12 space-y-4 overflow-hidden text-left align-bottom transition-all transform bg-white shadow-xl rounded-xs sm:my-8 sm:p-5 sm:align-middle">
-        <div className="flex items-center gap-2 pb-2 border-b border-gray-100">
-          <div className="p-2 bg-gray-100 rounded-full">
+      <div className="rounded-xs relative inline-block w-3/12 transform space-y-4 overflow-hidden bg-white text-left align-bottom shadow-xl transition-all sm:my-8 sm:p-5 sm:align-middle">
+        <div className="flex items-center gap-2 border-b border-gray-100 pb-2">
+          <div className="rounded-full bg-gray-100 p-2">
             <RiBillFill className="text-gray-400" />
           </div>
           <div className="">
@@ -21,7 +21,7 @@ function PaymentDetailsModal({ open, setOpen }) {
         <div className="space-y-2">
           <div className="flex items-center justify-between ">
             <p className="text-sm text-gray-500">Mode de paiement</p>
-            <p className="px-2 py-1 text-xs uppercase rounded-full w-min whitespace-nowrap bg-sky-100 text-sky-500">
+            <p className="w-min whitespace-nowrap rounded-full bg-sky-100 px-2 py-1 text-xs uppercase text-sky-500">
               Ecobank pay
             </p>
           </div>
@@ -40,7 +40,7 @@ function PaymentDetailsModal({ open, setOpen }) {
           <div className="flex items-center justify-between ">
             <p className="text-sm text-gray-500">Date</p>
             <p className="text-sm text-gray-700">
-              {getCurrentDate()} - {getCurrentHour()}
+              {firebaseDateHour(order?.createdAt)}
             </p>
           </div>
         </div>

@@ -3,6 +3,7 @@ import {
   firebaseDateFormat,
   firebaseDateHour,
   firebaseDateToJsDate,
+  firebaseHour,
   getCurrentDate,
   getCurrentDateHour,
   getCurrentHour,
@@ -106,12 +107,10 @@ export const columnsOrder = [
       return (
         <div className="flex flex-col items-start justify-start space-x-1 py-4 pl-4 pr-3 ">
           <p className="whitespace-nowrap px-3 font-stratos-light text-sm text-gray-500">
-            {/* {getCurrentDate()} */}
             {firebaseDateFormat(data)}
           </p>
           <p className="whitespace-nowrap px-3 text-sm text-gray-500">
-            {/* {getCurrentHour()} */}
-            {firebaseDateHour(data.seconds)}
+            {firebaseHour(data)}
           </p>
         </div>
       )

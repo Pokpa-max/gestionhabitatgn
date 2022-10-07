@@ -58,11 +58,19 @@ export const getCurrentHour = () => {
   return format(date, 'HH:MM', { locale: fr })
 }
 
-export const firebaseDateHour = (seconds) => {
+export const firebaseHour = (data) => {
   var date = new Date(0);
-  date.setSeconds(seconds);
+  date.setSeconds(data?.seconds);
   var timeString = date.toISOString().substring(11, 19);
   return timeString
+}
+
+export const firebaseDateHour = (data) => {
+
+  let options = { hour: "2-digit", minute: "2-digit", year: "numeric", month: "short", day: "numeric", weekday: "long", };
+  let dateHoure = new Date(data?.seconds * 1000).toLocaleDateString("fr-FR", options);
+  return dateHoure;
+
 }
 
 
