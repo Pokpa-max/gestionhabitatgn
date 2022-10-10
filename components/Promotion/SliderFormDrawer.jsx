@@ -9,7 +9,7 @@ import Loader from '../Loader'
 import SimpleSelect from '../SimpleSelect'
 import Toggle from '../Toggle'
 import { autoFillSliderForm } from '../../utils/functionFactory'
-import RestaurantSelect from '../restaurantSelect'
+import RestaurantSelect from '../RestaurantSelect'
 
 function SliderFormDrawer({ slider, open, setOpen, collections }) {
   const [loading, setLoading] = useState(false)

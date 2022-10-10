@@ -8,7 +8,7 @@ import Loader from '../Loader'
 import SimpleSelect from '../SimpleSelect'
 import Toggle from '../Toggle'
 import { autoFillSponsorForm } from '../../utils/functionFactory'
-import RestaurantSelect, { collectionFormatData } from '../restaurantSelect'
+import RestaurantSelect, { collectionFormatData } from '../RestaurantSelect'
 
 function SponsorFormDrawer({ sponsor, open, setOpen }) {
   const [loading, setLoading] = useState(false)
