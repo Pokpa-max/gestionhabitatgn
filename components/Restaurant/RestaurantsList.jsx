@@ -1,40 +1,52 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { columnsRestaurant } from './_dataTable'
 
 import { RiFileEditLine, RiProfileLine, RiSearchLine } from 'react-icons/ri'
 import RestaurantFormDrawer from './RestaurantFormDrawer'
-import { getRestaurants } from '@/lib/services/restaurant'
 import { Router, useRouter } from 'next/router'
+import { OrderSkleton } from '../Orders/OrdersList'
+import PaginationButton from '../Orders/PaginationButton'
 
-function RestaurantsList() {
-  const [restaurants, setRestaurants] = useState([])
+function RestaurantsList({
+  data,
+  restaurants,
+  showMore,
+  pagination,
+  isLoading,
+  isLoadingP,
+}) {
   const [selectedRestaurant, setSelectedRestaurant] = useState(null)
-
-  useEffect(() => {
-    const unsubscribe = getRestaurants(setRestaurants)
-    return () => {
-      unsubscribe()
-    }
-  }, [])
 
   return (
     <RestaurantsTable
+      isLoading={isLoading}
       selectedRestaurant={selectedRestaurant}
       setSelectedRestaurant={setSelectedRestaurant}
       restaurants={restaurants}
+      isLoadingP={isLoadingP}
+      showMore={showMore}
+      data={data}
+      pagination={pagination}
     />
   )
 }
 
 function RestaurantsTable({
+  isLoading,
   selectedRestaurant,
   setSelectedRestaurant,
   restaurants,
+  isLoadingP,
+  showMore,
+  data,
+  pagination,
 }) {
   const [openDrawer, setOpenDrawer] = useState(false)
   const router = useRouter()
 
-  return (
+  return isLoading ? (
+    <OrderSkleton />
+  ) : (
     <div className="">
       <RestaurantFormDrawer
         restaurant={selectedRestaurant}
@@ -143,6 +155,12 @@ function RestaurantsTable({
                 </tbody>
               </table>
             </div>
+          </div>
+          <div>
+            <p className="mt-5">{restaurants.length + ' Restaurants'}</p>
+            {pagination && restaurants.length > 0 && (
+              <PaginationButton getmoreData={showMore} />
+            )}
           </div>
         </div>
       </div>

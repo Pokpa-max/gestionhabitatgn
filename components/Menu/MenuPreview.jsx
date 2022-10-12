@@ -2,7 +2,8 @@ import { Disclosure } from '@headlessui/react'
 import React from 'react'
 import { RiArrowUpSLine } from 'react-icons/ri'
 
-function MenuPreview() {
+function MenuPreview({ restaurant }) {
+  console.log('voir menu ', restaurant)
   return (
     <div className="flex flex-col gap-2 text-teal-500">
       <p>Menu principal</p>
@@ -12,7 +13,7 @@ function MenuPreview() {
             <Disclosure>
               {({ open }) => (
                 <>
-                  <Disclosure.Button className="flex justify-between w-full px-4 py-2 text-left text-gray-900 border-b bg-slate-100 hover:bg-gray-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                  <Disclosure.Button className="flex w-full justify-between border-b bg-slate-100 px-4 py-2 text-left text-gray-900 hover:bg-gray-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                     <span>Plats 🍛</span>
                     <RiArrowUpSLine
                       className={`${
@@ -23,7 +24,7 @@ function MenuPreview() {
                   <Disclosure.Panel className="px-4 pt-4 pb-2 ">
                     {[1, 2, 3, 4, 5, 6].map((el) => {
                       return (
-                        <div className="p-2 border-b">
+                        <div className="border-b p-2">
                           <div className="flex items-center justify-between">
                             <p className="">Pizza Margarita Maxi</p>
                             <p className="">200 000 GNF</p>
