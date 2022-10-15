@@ -15,8 +15,11 @@ import Loader from '../Loader'
 import SimpleSelect from '../SimpleSelect'
 import Toggle from '../Toggle'
 
-function RestaurantFormDrawer({ restaurant, open, setOpen }) {
+function RestaurantFormDrawer({ restaurant, open, setOpen, setData, data }) {
   const [loading, setLoading] = useState(false)
+  data = data || {}
+  const { restaurants, lastElement } = data
+  console.log('voir doneee', data)
 
   const {
     handleSubmit,
@@ -46,15 +49,42 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
   const onSubmit = async (data) => {
     setLoading(true)
     try {
-      if (restaurant) await editRestaurant(restaurant.id, data)
-      else
-        await addRestaurant({
+      console.log('Modification successful!')
+      if (restaurant) {
+        await editRestaurant(restaurant.id, data)
+        const update = (data) => {
+          const restaurantCopy = JSON.parse(JSON.stringify(restaurants))
+          const newRestaurants = restaurantCopy.map((res) => {
+            console.log('before update: ', data)
+
+            if (restaurant.id === res.id) {
+              console.log('before update2222222: ', restaurant.id, res.id)
+
+              return {
+                ...res,
+                ...data,
+              }
+            }
+            return res
+          })
+
+          console.log('voir newRestaurants', newRestaurants)
+
+          setData({ restaurants: newRestaurants, lastElement })
+        }
+
+        update(data)
+      } else {
+        const {} = await addRestaurant({
           ...data,
           isActive: false,
           isAccountCreated: false,
         })
-      setOpen(false)
-      notify('Votre requète s est executée avec succès', 'success')
+
+        console.log('ajout dun response!')
+        setOpen(false)
+        notify('Votre requète s est executée avec succès', 'success')
+      }
     } catch (error) {
       console.log(error)
       notify('Une erreur est survenue', 'error')
@@ -439,6 +469,7 @@ function RestaurantFormDrawer({ restaurant, open, setOpen }) {
                   Email du compte a creer
                 </label>
                 <input
+                  // disabled={restaurant?.isAccountCreated || !restaurant}
                   type="email"
                   {...register('restaurantEmail', {
                     required: 'Champs requis',

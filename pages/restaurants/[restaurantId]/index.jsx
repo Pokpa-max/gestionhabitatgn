@@ -9,7 +9,6 @@ import {
   withAuthUserTokenSSR,
 } from 'next-firebase-auth'
 import OrdersList from '../../../components/Orders/OrdersList'
-import { ordersRestaurant } from '../../../_data'
 import { RiPieChart2Fill } from 'react-icons/ri'
 import MenuPreview from '../../../components/Menu/MenuPreview'
 import { useRouter } from 'next/router'
@@ -17,7 +16,6 @@ import { db } from '@/lib/firebase/client_config'
 import { parseDocsData } from '@/utils/firebase/firestore'
 import { useEffect, useState } from 'react'
 import {
-  collection,
   collectionGroup,
   doc,
   getDoc,
@@ -37,7 +35,6 @@ function RestaurantDetails() {
   const [isLoadingP, setIsLoadingP] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [restaurant, setRestaurant] = useState()
-  const { loadingRestaurant, setLoadingRestaurant } = useState(false)
 
   const [data, setData] = useState(null)
   const [pagination, setPagination] = useState({
@@ -51,13 +48,10 @@ function RestaurantDetails() {
     const restaurantRef = doc(db, 'restaurants', restaurantId)
 
     const fetchRestaurant = async () => {
-      // setLoadingRestaurant(true)
       const docSnap = await getDoc(restaurantRef)
       if (docSnap.exists()) {
         setRestaurant(docSnap.data())
-        console.log('voir les le restaurant', docSnap.data())
       }
-      // setLoadingRestaurant(false)
     }
 
     const fetchRestaurantOrder = async () => {
@@ -109,8 +103,6 @@ function RestaurantDetails() {
     setIsLoadingP(false)
   }
 
-  console.log('voir query', restaurant)
-
   return (
     <Scaffold>
       <div className="flex items-end justify-between">
@@ -127,7 +119,7 @@ function RestaurantDetails() {
       </div>
       <RestaurantStats />
       <p className="py-5 text-sm text-gray-500">Apercu du menu active</p>
-      <MenuPreview restaurant={restaurant} />
+      <MenuPreview restaurantId={restaurantId} />
       <p className="py-5 text-sm text-gray-500">Historique de commandes</p>
       <OrdersList
         data={data}

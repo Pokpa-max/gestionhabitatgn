@@ -82,6 +82,7 @@ function Restaurants() {
       <Header title={'Restaurants'} />
       <RestaurantsList
         data={data}
+        setData={setData}
         restaurants={restaurantsToShow}
         showMore={showMoreFirestore}
         pagination={pagination.showPagination}
