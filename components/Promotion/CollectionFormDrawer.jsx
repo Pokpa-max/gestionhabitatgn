@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { notify } from '../../utils/toast'
-import { restaurantsOptions } from '../../_data'
 import { addCollection, editCollection } from '../../lib/services/marketing'
 import DrawerForm from '../DrawerForm'
 import Loader from '../Loader'
 import { autoFillCollectionForm } from '../../utils/functionFactory'
-import MultiSelect from '../MultiSelect'
-import RestaurantSelect, { collectionFormatData } from '../restaurantSelect'
+import RestaurantSelect, { collectionFormatData } from '../RestaurantSelect'
 
 function CollectionFormDrawer({ collection, open, setOpen }) {
   const [loading, setLoading] = useState(false)
