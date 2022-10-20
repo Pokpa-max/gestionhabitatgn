@@ -1,5 +1,6 @@
 import fr from 'date-fns/locale/fr'
 import { Timestamp } from '@firebase/firestore'
+import fetcher from "./fetcher";
 import { format, formatDistance, differenceInCalendarDays } from 'date-fns'
 
 export const firebaseDateFormat = (date, formatString = 'PP') => {
@@ -40,6 +41,12 @@ const firebaseDateToTimestamp = (firebaseDate) => {
   const timestamp = new Timestamp(_seconds, _nanoseconds)
   return timestamp.toDate()
 }
+
+export const getCurrentDateOnline = async () => {
+  const data = await fetcher("/api/infos/getDate");
+  return Timestamp.fromDate(new Date(data.date));
+};
+
 
 export const getOnlineDate = async () => {
   const data = await fetcher(

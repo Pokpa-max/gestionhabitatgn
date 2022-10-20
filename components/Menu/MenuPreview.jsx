@@ -6,17 +6,23 @@ import { useState } from 'react'
 import { getSelectedMenu } from '../../lib/services/menu'
 import { OrderSkleton } from '../Orders/OrdersList'
 
-function MenuPreview({ restaurantId }) {
+function MenuPreview({ restaurantId, isAccountCreated }) {
   const [generatedMenu, setGeneratedMenu] = useState({ menuSections: [] })
+  const [isLoading, setIsLoading] = useState(false)
 
-  console.log('voir id restaurant ', restaurantId)
   useEffect(() => {
-    getSelectedMenu(restaurantId).then(setGeneratedMenu)
-  }, [])
+    const getCurrentMenu = async () => {
+      setIsLoading(true)
+      if (isAccountCreated) {
+        const menu = await getSelectedMenu(restaurantId)
+        setGeneratedMenu(menu)
+      }
+      setIsLoading(false)
+    }
+    getCurrentMenu()
+  }, [isAccountCreated])
 
-  console.log('generatedMenu', generatedMenu?.menuSections)
-
-  return generatedMenu?.menuSections == 0 ? (
+  return isLoading ? (
     <OrderSkleton />
   ) : (
     <div className="flex flex-col gap-2 text-teal-500">

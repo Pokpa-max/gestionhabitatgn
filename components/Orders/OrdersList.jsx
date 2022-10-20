@@ -13,7 +13,6 @@ function OrdersList({
   isLoadingP,
 }) {
   const [selectedOrder, setSelectedOrder] = useState(null)
-  console.log('voir orders ', orders)
 
   return (
     <OrdersTable

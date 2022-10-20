@@ -33,7 +33,9 @@ export const editRestaurant = async (restaurantId, data) => {
 }
 
 export const addRestaurant = async (data) => {
-  await addDoc(restaurantsCollectionRef, restaurantConstructorCreate(data))
+  const structuredData = restaurantConstructorCreate(data)
+  await addDoc(restaurantsCollectionRef, structuredData)
+  return structuredData
 }
 
 export const deleteRestaurant = async (restaurantId) => {

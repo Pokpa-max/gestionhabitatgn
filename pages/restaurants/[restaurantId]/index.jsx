@@ -106,7 +106,7 @@ function RestaurantDetails() {
   return (
     <Scaffold>
       <div className="flex items-end justify-between">
-        <Header title={'Mim s Burger'} />
+        <Header title={restaurant?.restaurant?.name} />
         <div className="py-5">
           <button
             onClick={() => router.push(`${router.asPath}/menustats`)}
@@ -117,9 +117,12 @@ function RestaurantDetails() {
           </button>
         </div>
       </div>
-      <RestaurantStats />
+      <RestaurantStats restantName={restaurant?.name} />
       <p className="py-5 text-sm text-gray-500">Apercu du menu active</p>
-      <MenuPreview restaurantId={restaurantId} />
+      <MenuPreview
+        restaurantId={restaurantId}
+        isAccountCreated={restaurant?.isAccountCreated}
+      />
       <p className="py-5 text-sm text-gray-500">Historique de commandes</p>
       <OrdersList
         data={data}

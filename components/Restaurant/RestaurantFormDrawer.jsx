@@ -5,7 +5,11 @@ import {
   createAccount,
   editRestaurant,
 } from '../../lib/services/restaurant'
-import { autoFillRestaurantForm } from '../../utils/functionFactory'
+import { getCurrentDateOnline } from '../../utils/date'
+import {
+  autoFillRestaurantForm,
+  restaurantConstructorUpdateOffline,
+} from '../../utils/functionFactory'
 import { notify } from '../../utils/toast'
 import { quartier, zones } from '../../_data'
 
@@ -19,7 +23,6 @@ function RestaurantFormDrawer({ restaurant, open, setOpen, setData, data }) {
   const [loading, setLoading] = useState(false)
   data = data || {}
   const { restaurants, lastElement } = data
-  console.log('voir doneee', data)
 
   const {
     handleSubmit,
@@ -49,39 +52,38 @@ function RestaurantFormDrawer({ restaurant, open, setOpen, setData, data }) {
   const onSubmit = async (data) => {
     setLoading(true)
     try {
-      console.log('Modification successful!')
       if (restaurant) {
         await editRestaurant(restaurant.id, data)
         const update = (data) => {
           const restaurantCopy = JSON.parse(JSON.stringify(restaurants))
           const newRestaurants = restaurantCopy.map((res) => {
-            console.log('before update: ', data)
-
             if (restaurant.id === res.id) {
-              console.log('before update2222222: ', restaurant.id, res.id)
-
               return {
                 ...res,
-                ...data,
+                ...restaurantConstructorUpdateOffline(data),
               }
             }
             return res
           })
-
-          console.log('voir newRestaurants', newRestaurants)
 
           setData({ restaurants: newRestaurants, lastElement })
         }
 
         update(data)
       } else {
-        const {} = await addRestaurant({
+        const newRestarant = await addRestaurant({
           ...data,
           isActive: false,
           isAccountCreated: false,
         })
 
-        console.log('ajout dun response!')
+        newRestarant['createdAt'] = await getCurrentDateOnline()
+
+        setData({
+          restaurants: [newRestarant, ...restaurants],
+          lastElement,
+        })
+
         setOpen(false)
         notify('Votre requète s est executée avec succès', 'success')
       }

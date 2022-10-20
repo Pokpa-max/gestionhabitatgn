@@ -50,6 +50,51 @@ export const restaurantConstructorUpdate = ({
   updatedAt: serverTimestamp(),
 })
 
+export const restaurantConstructorUpdateOffline = ({
+  storename: name,
+  firstname,
+  lastname,
+  email,
+  phoneNumber,
+  position,
+  indication: description,
+  long,
+  lat,
+  zone,
+  quartier,
+  rccm,
+  nif,
+  otherAcc,
+  isActive,
+  restaurantEmail,
+  restaurantPhoneNumber,
+}) => ({
+  restaurant: {
+    name,
+    rccm,
+    nif,
+    otherAcc,
+    email: restaurantEmail,
+    phoneNumber: restaurantPhoneNumber,
+  },
+  manager: {
+    firstname,
+    lastname,
+    phoneNumber,
+    position,
+    email,
+  },
+  isActive,
+  adress: {
+    description,
+    zone: zone.value,
+    quartier: quartier.value,
+    long: Number(long),
+    lat: Number(lat),
+    position: getGeoPoint(lat, long),
+  },
+  isAccountCreated: false,
+})
 export const restaurantConstructorCreate = ({
   storename: name,
   firstname,
