@@ -19,8 +19,21 @@ const reviews = {
   ],
 }
 
-function RestaurantStats() {
+function RestaurantStats({ restaurantStat }) {
   const router = useRouter()
+
+  const totalUser =
+    restaurantStat === undefined
+      ? 0
+      : restaurantStat?.visit?.nbUserWithAccount +
+        restaurantStat?.visit?.nbUserVisitor
+
+  const totalOrder =
+    restaurantStat === undefined
+      ? 0
+      : restaurantStat?.orders?.orderDelivered +
+        restaurantStat?.orders?.orderInprogress +
+        restaurantStat?.orders?.orderCanceled
 
   return (
     <div className="space-y-4">
@@ -30,17 +43,21 @@ function RestaurantStats() {
             <div className="space-y-2 text-gray-50/75 ">
               <p>CA Restaurant</p>
               <p className="text-3xl text-white sm:text-xl lg:text-3xl ">
-                154 000 000 <span className="text-sm">GNF</span>
+                {restaurantStat?.sells?.paymentInvoice}{' '}
+                <span className="text-sm">GNF</span>
               </p>
             </div>
             <div className="space-y-2 text-gray-50/75 ">
               <p>Commission payé</p>
               <p className="text-3xl text-white sm:text-xl lg:text-3xl ">
-                154 000 000 <span className="text-sm">GNF</span>
+                {restaurantStat?.sells?.nbComission}{' '}
+                <span className="text-sm">GNF</span>
               </p>
             </div>
           </div>
-          <p className="text-xs text-white">134 paiements</p>
+          <p className="text-xs text-white">
+            {restaurantStat?.sells?.nbPayment} paiements
+          </p>
         </div>
         <div className="col-span-12 grid grid-cols-12 gap-4 sm:col-span-12 sm:grid-cols-6 lg:col-span-6">
           <div className="col-span-6 bg-slate-100 sm:col-span-3">
@@ -48,16 +65,20 @@ function RestaurantStats() {
               <p className="text-sm text-gray-500">Visites restaurant</p>
               <div className="space-y-1">
                 <p className="text-sm text-gray-500">
-                  <span className="text-teal-500">143</span> utilisateurs avec
-                  compte
+                  <span className="text-teal-500">
+                    {restaurantStat?.visit?.nbUserWithAccount}
+                  </span>{' '}
+                  utilisateurs avec compte
                 </p>
                 <p className="text-sm text-gray-500">
-                  <span className="text-teal-500">332</span> utilisateurs
-                  invites
+                  <span className="text-teal-500">
+                    {restaurantStat?.visit?.nbUserVisitor}
+                  </span>{' '}
+                  utilisateurs invites
                 </p>
                 <p className="text-sm text-gray-500">
-                  <span className="text-teal-500">475</span> utilisateurs
-                  totales
+                  <span className="text-teal-500">{totalUser}</span>{' '}
+                  utilisateurs totales
                 </p>
               </div>
             </div>
@@ -82,10 +103,12 @@ function RestaurantStats() {
                         />
                       ))}
                     </div>
-                    <p className="sr-only">{reviews.average} sur 5 etoiles</p>
+                    <p className="sr-only">
+                      {restaurantStat?.customerReviews?.average} sur 5 etoiles
+                    </p>
                   </div>
                   <p className="text-sm text-gray-900 ">
-                    Basé sur {reviews.totalCount} avis
+                    Basé sur {restaurantStat?.customerReviews?.totalCount} avis
                   </p>
                   <button className="text-sm text-gray-900 hover:underline">
                     <a href={`${router.asPath}/feedbacks`}>voir les notes</a>
@@ -101,7 +124,7 @@ function RestaurantStats() {
           <div className="space-y-3 p-4">
             <p className="text-sm text-gray-500">Commandes totales</p>
             <div className="flex items-center gap-3 text-gray-600">
-              <p className="text-5xl text-black">125</p>
+              <p className="text-5xl text-black">{totalOrder}</p>
               <RiTakeawayFill className="h-5 w-5" />
             </div>
           </div>
@@ -110,7 +133,10 @@ function RestaurantStats() {
           <div className="space-y-3 p-4">
             <p className="text-sm text-gray-500">Commandes livre</p>
             <div className="flex items-center gap-3 text-green-300">
-              <p className="text-5xl text-green-400">120</p>
+              <p className="text-5xl text-green-400">
+                {' '}
+                {restaurantStat?.orders?.orderDelivered}
+              </p>
               <RiTakeawayFill className="h-5 w-5" />
             </div>
           </div>
@@ -119,7 +145,9 @@ function RestaurantStats() {
           <div className="space-y-3 p-4">
             <p className="text-sm text-gray-500">Commandes annule</p>
             <div className="flex items-center gap-3 text-red-300">
-              <p className="text-5xl text-red-400">5</p>
+              <p className="text-5xl text-red-400">
+                {restaurantStat?.orders?.orderCanceled}
+              </p>
               <RiTakeawayFill className="h-5 w-5" />
             </div>
           </div>
@@ -128,7 +156,9 @@ function RestaurantStats() {
           <div className="space-y-3 p-4">
             <p className="text-sm text-gray-500">Commandes en cour</p>
             <div className="flex items-center gap-3 text-orange-300">
-              <p className="text-5xl text-orange-400">6</p>
+              <p className="text-5xl text-orange-400">
+                {restaurantStat?.orders?.orderInprogress}
+              </p>
               <RiTakeawayFill className="h-5 w-5" />
             </div>
           </div>

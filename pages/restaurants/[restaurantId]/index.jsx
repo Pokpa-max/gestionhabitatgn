@@ -16,6 +16,7 @@ import { db } from '@/lib/firebase/client_config'
 import { parseDocsData } from '@/utils/firebase/firestore'
 import { useEffect, useState } from 'react'
 import {
+  collection,
   collectionGroup,
   doc,
   getDoc,
@@ -35,6 +36,7 @@ function RestaurantDetails() {
   const [isLoadingP, setIsLoadingP] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [restaurant, setRestaurant] = useState()
+  const [restaurantStat, setRestaurantStat] = useState()
 
   const [data, setData] = useState(null)
   const [pagination, setPagination] = useState({
@@ -46,6 +48,14 @@ function RestaurantDetails() {
   useEffect(() => {
     const orderRef = collectionGroup(db, 'orders')
     const restaurantRef = doc(db, 'restaurants', restaurantId)
+    const statRef = collection(db, `restaurants/${restaurantId}/stats`)
+
+    const fetchRestaurantStats = async () => {
+      const q = query(statRef)
+
+      const docSnapshot = await getDocs(q)
+      setRestaurantStat(docSnapshot?.docs?.map((d) => ({ ...d.data() }))[0])
+    }
 
     const fetchRestaurant = async () => {
       const docSnap = await getDoc(restaurantRef)
@@ -70,6 +80,7 @@ function RestaurantDetails() {
       })
       setIsLoading(false)
     }
+    fetchRestaurantStats()
     fetchRestaurant()
     fetchRestaurantOrder()
   }, [])
@@ -117,7 +128,7 @@ function RestaurantDetails() {
           </button>
         </div>
       </div>
-      <RestaurantStats restantName={restaurant?.name} />
+      <RestaurantStats restaurantStat={restaurantStat} />
       <p className="py-5 text-sm text-gray-500">Apercu du menu active</p>
       <MenuPreview
         restaurantId={restaurantId}
