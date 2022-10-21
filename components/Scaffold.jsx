@@ -13,6 +13,8 @@ import {
   RiNewspaperFill,
   RiMotorbikeFill,
   RiStarFill,
+  RiBookOpenFill,
+  RiDashboardFill,
 } from 'react-icons/ri'
 
 import NavItem from './NavItem'
@@ -20,17 +22,15 @@ import Link from 'next/link'
 import { useAuthUser } from 'next-firebase-auth'
 
 const navigation = [
-  { name: 'Acceuil', href: '/', icon: RiDashboard2Fill },
-  { name: 'Restaurants', href: '/restaurants', icon: RiStore3Fill },
-  { name: 'Commandes', href: '/orders', icon: RiMotorbikeFill },
-  { name: 'Rapports', href: '/reports', icon: RiNewspaperFill },
-  { name: 'Paiements', href: '/payments', icon: RiSafe2Fill },
-  { name: 'Promotions', href: '/marketing', icon: RiAlarmWarningFill },
-  {
-    name: 'Feedback',
-    href: '/feedbacks',
-    icon: RiStarFill,
-  },
+  { name: 'Acceuil', href: '/', icon: RiDashboardFill },
+  { name: 'Publicité', href: '/advertising', icon: RiBookOpenFill },
+  { name: 'Maisons', href: '/houses', icon: RiStore3Fill },
+  // { name: 'Restaurants', href: '/restaurants', icon: RiStore3Fill },
+  // { name: 'Commandes', href: '/orders', icon: RiMotorbikeFill },
+  // { name: 'Rapports', href: '/reports', icon: RiNewspaperFill },
+  // { name: 'Paiements', href: '/payments', icon: RiSafe2Fill },
+  // { name: 'Promotions', href: '/marketing', icon: RiAlarmWarningFill },
+
   {
     name: 'Utilisateurs',
     href: '/users',
@@ -155,16 +155,10 @@ export default function Scaffold({ children, title, subNav }) {
           <div className="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white">
             <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
               <div className="flex flex-shrink-0 items-center px-4">
-                <img
-                  className="h-auto w-10"
-                  src="/images/logo.png"
-                  alt="Eat224"
-                />
                 <h1 className="ml-2 text-2xl">
                   <span className="font-extrabold text-primary-accent">
-                    EAT224
+                    Meloger
                   </span>
-                  ADMIN
                 </h1>
               </div>
               <nav className="mt-5 flex-1 space-y-1 bg-white px-2">
@@ -177,13 +171,6 @@ export default function Scaffold({ children, title, subNav }) {
               <Link href={'/auth/signin'}>
                 <a className="group block w-full flex-shrink-0">
                   <div className="flex items-center">
-                    <div>
-                      <img
-                        className="inline-block h-9 w-9 rounded-full"
-                        src="https://pps.whatsapp.net/v/t61.24694-24/157381423_714662729958382_3255548508171682425_n.jpg?ccb=11-4&oh=66269bf17dc70b43bbcbd4949c6d81c9&oe=62B022BF"
-                        alt=""
-                      />
-                    </div>
                     <div className="ml-3">
                       <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
                         Amadou Tidiane Bah
@@ -205,7 +192,7 @@ export default function Scaffold({ children, title, subNav }) {
           <div className="sticky top-0 z-10 bg-white pt-1 pl-1 sm:pl-3 sm:pt-3 md:hidden">
             <button
               type="button"
-              className="focus:ring-black-500 -ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset"
+              className="-ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-500"
               onClick={() => setSidebarOpen(true)}
             >
               <span className="sr-only">Open sidebar</span>

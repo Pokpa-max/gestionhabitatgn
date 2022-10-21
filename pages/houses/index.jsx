@@ -1,5 +1,4 @@
 import Page from '@/components/Page'
-import RestaurantsList from '@/components/Restaurant/RestaurantsList'
 import Scaffold from '@/components/Scaffold'
 import Header from '@/components/Header'
 import { parseDocsData } from '@/utils/firebase/firestore'
@@ -20,8 +19,9 @@ import {
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { HITS_PER_PAGE } from '../../lib/constants'
+import HousesList from '../../components/houses/HouseList'
 
-function Restaurants() {
+function Houses() {
   const [data, setData] = useState(null)
   const [pagination, setPagination] = useState({
     page: 0,
@@ -79,8 +79,8 @@ function Restaurants() {
 
   return (
     <Scaffold>
-      <Header title={'Restaurants'} />
-      <RestaurantsList
+      <Header title={'Logement'} />
+      <HousesList
         data={data}
         setData={setData}
         restaurants={restaurantsToShow}
@@ -93,9 +93,9 @@ function Restaurants() {
   )
 }
 
-const RestaurantsPage = () => (
-  <Page name="Eat224 Admin | Restaurants">
-    <Restaurants />
+const HousesPage = () => (
+  <Page name="Meloger Admin | Maisons">
+    <Houses />
   </Page>
 )
 
@@ -106,4 +106,4 @@ export const getServerSideProps = withAuthUserTokenSSR({
 export default withAuthUser({
   whenAuthedBeforeRedirect: AuthAction.RENDER,
   // whenAuthed: AuthAction.REDIRECT_TO_APP,
-})(RestaurantsPage)
+})(HousesPage)
