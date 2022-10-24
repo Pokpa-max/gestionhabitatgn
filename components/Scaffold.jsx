@@ -47,7 +47,7 @@ const navigation = [
 export default function Scaffold({ children, title, subNav }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  const AuthUser = useAuthUser()
+  // const AuthUser = useAuthUser()
 
   return (
     <>
@@ -127,17 +127,17 @@ export default function Scaffold({ children, title, subNav }) {
                           alt=""
                         />
                       </div>
-                      <div className="ml-3">
+                      {/* <div className="ml-3">
                         <p className="text-base font-medium text-gray-700 group-hover:text-gray-900">
                           Amadou Tidiane Bah
                         </p>
                         <button
-                          onClick={AuthUser.signOut}
+                          // onClick={AuthUser.signOut}
                           className="text-sm font-medium text-gray-500 group-hover:text-gray-700"
                         >
                           Se deconnecter
                         </button>
-                      </div>
+                      </div> */}
                     </div>
                   </a>
                 </div>
@@ -156,9 +156,7 @@ export default function Scaffold({ children, title, subNav }) {
             <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
               <div className="flex flex-shrink-0 items-center px-4">
                 <h1 className="ml-2 text-2xl">
-                  <span className="font-extrabold text-primary-accent">
-                    Meloger
-                  </span>
+                  <span className="font-extrabold ">Meloger</span>
                 </h1>
               </div>
               <nav className="mt-5 flex-1 space-y-1 bg-white px-2">
@@ -168,7 +166,7 @@ export default function Scaffold({ children, title, subNav }) {
               </nav>
             </div>
             <div className="flex flex-shrink-0 border-t border-gray-200 p-4">
-              <Link href={'/auth/signin'}>
+              <Link href={'/'}>
                 <a className="group block w-full flex-shrink-0">
                   <div className="flex items-center">
                     <div className="ml-3">
@@ -176,7 +174,7 @@ export default function Scaffold({ children, title, subNav }) {
                         Amadou Tidiane Bah
                       </p>
                       <button
-                        onClick={AuthUser.signOut}
+                        // onClick={AuthUser.signOut}
                         className="text-xs font-medium text-gray-500 group-hover:text-gray-700"
                       >
                         Se deconnecter

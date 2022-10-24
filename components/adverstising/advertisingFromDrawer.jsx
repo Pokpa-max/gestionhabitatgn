@@ -6,6 +6,9 @@ import DrawerForm from '../DrawerForm'
 import Loader from '../Loader'
 
 import { autoFillCommercialForm } from '../../utils/functionFactory'
+import { collection, getDocs } from 'firebase/firestore'
+import { db } from '@/lib/firebase/client_config'
+import { addAdvertising } from '../../lib/services/advertising'
 
 function AdvertisingFormDrawer({ commercial, open, setOpen }) {
   const [loading, setLoading] = useState(false)
@@ -36,15 +39,24 @@ function AdvertisingFormDrawer({ commercial, open, setOpen }) {
   const onSubmit = async (data) => {
     setLoading(true)
     try {
-      if (commercial)
-        await editCommercial(
-          commercial.id,
-          data,
-          formData?.imageUrl?.length > 0,
-          commercial.imageUrl,
-          commercial.imageUrl1000
-        )
-      else await addCommercial(data)
+      // const querySnapshot = await getDocs(collection(db, 'houses'))
+      // querySnapshot.forEach((doc) => {
+      //   // doc.data() is never undefined for query doc snapshots
+      //   console.log(doc.id, ' => ', doc.data())
+      // })
+
+      // if (commercial)
+      //   await editCommercial(
+      //     commercial.id,
+      //     data,
+      //     formData?.imageUrl?.length > 0,
+      //     commercial.imageUrl,
+      //     commercial.imageUrl1000
+      //   )
+      // else
+      await addAdvertising(data)
+
+      console.log('voir donnees', data)
       setOpen(false)
       notify('Votre requète s est executée avec succès', 'success')
     } catch (error) {

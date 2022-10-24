@@ -13,6 +13,8 @@ const handler = async (req, res) => {
     const decodedToken = await authAdmin.verifyIdToken(token)
     const isAdmin = decodedToken.userType === 'admin'
 
+    console.log('decodedToken', decodedToken)
+
     if (isAdmin) {
       await setAuthCookies(req, res)
     } else {

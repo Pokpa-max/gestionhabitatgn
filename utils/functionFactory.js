@@ -216,7 +216,7 @@ export const collectionConstructorCreate = (data, edit) => {
     ...conditionalProps
   }
 }
-export const commercialConstructorCreate = (data, edit) => {
+export const advertisingConstructorCreate = (data, edit) => {
 
   const conditionalProps = edit ? {
     updatedAt: serverTimestamp(),
@@ -227,13 +227,11 @@ export const commercialConstructorCreate = (data, edit) => {
 
   return {
     title: data.title,
-    subtitle: data.subtitle,
-    externalLink: data.externalLink,
-    externalLinkFallback: data.externalLinkFallback,
-    imageHash: data.imageHash,
+    slogan: data.slogan,
+    // externalLink: data.externalLink,
+    // externalLinkFallback: data.externalLinkFallback,
     imageUrl: data.imageUrl,
-    imageUrl1000: data.imageUrl1000,
-    isActive: data.isActive,
+    // isActive: data.isActive,
     ...conditionalProps
   }
 }
