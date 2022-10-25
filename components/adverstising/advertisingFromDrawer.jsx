@@ -5,10 +5,14 @@ import { notify } from '../../utils/toast'
 import DrawerForm from '../DrawerForm'
 import Loader from '../Loader'
 
-import { autoFillCommercialForm } from '../../utils/functionFactory'
+import {
+  autoFillAdvertisingForm,
+  autoFillCommercialForm,
+} from '../../utils/functionFactory'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '@/lib/firebase/client_config'
-import { addAdvertising } from '../../lib/services/advertising'
+import { addAdvertising, editCommercial } from '../../lib/services/advertising'
+// import { editCommercial } from '../../lib/services/marketing'
 
 function AdvertisingFormDrawer({ commercial, open, setOpen }) {
   const [loading, setLoading] = useState(false)
@@ -31,7 +35,7 @@ function AdvertisingFormDrawer({ commercial, open, setOpen }) {
 
   useEffect(() => {
     const setFormvalue = () => {
-      autoFillCommercialForm(reset, setValue, commercial)
+      autoFillAdvertisingForm(reset, setValue, commercial)
     }
     setFormvalue()
   }, [commercial])
@@ -39,22 +43,17 @@ function AdvertisingFormDrawer({ commercial, open, setOpen }) {
   const onSubmit = async (data) => {
     setLoading(true)
     try {
-      // const querySnapshot = await getDocs(collection(db, 'houses'))
-      // querySnapshot.forEach((doc) => {
-      //   // doc.data() is never undefined for query doc snapshots
-      //   console.log(doc.id, ' => ', doc.data())
-      // })
-
-      // if (commercial)
-      //   await editCommercial(
-      //     commercial.id,
-      //     data,
-      //     formData?.imageUrl?.length > 0,
-      //     commercial.imageUrl,
-      //     commercial.imageUrl1000
-      //   )
-      // else
-      await addAdvertising(data)
+      if (commercial)
+        await editCommercial(
+          commercial.id,
+          data,
+          formData?.imageUrl?.length > 0,
+          commercial.imageUrl,
+          commercial.imageUrl1000
+        )
+      else {
+        await addAdvertising(data)
+      }
 
       console.log('voir donnees', data)
       setOpen(false)
@@ -143,7 +142,7 @@ function AdvertisingFormDrawer({ commercial, open, setOpen }) {
                     placeholder="Petit slogan"
                   />
                   <p className="pt-1 font-stratos-light text-xs text-red-600">
-                    {errors?.subtitle?.message}
+                    {errors?.slogan?.message}
                   </p>
                 </div>
               </div>
@@ -165,7 +164,7 @@ function AdvertisingFormDrawer({ commercial, open, setOpen }) {
                         alt="preview"
                       />
                     ) : commercial ? (
-                      <img src={commercial.imageUrl1000} alt="preview" />
+                      <img src={commercial.imageUrl} alt="preview" />
                     ) : (
                       <RiImage2Fill className="mx-auto h-12 w-12 text-gray-400" />
                     )}

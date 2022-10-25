@@ -215,14 +215,19 @@ export const columnsSponsor = [
 
 export const columnsCommercial = [
   {
-    Header: 'Id',
-    accessor: 'id',
+    Header: 'Image',
+    accessor: 'imageUrl',
     Cell: (data) => {
       return (
         <div className="flex-col p-4 line-clamp-2">
-          <p className="truncate whitespace-nowrap font-stratos-light text-sm text-gray-500">
+          <img
+            className="h-10 w-10 rounded-full object-center"
+            src={`${data}`}
+            alt=""
+          />
+          {/* <p className="truncate whitespace-nowrap font-stratos-light text-sm text-gray-500">
             {data}
-          </p>
+          </p> */}
         </div>
       )
     },
@@ -246,7 +251,7 @@ export const columnsCommercial = [
   },
   {
     Header: 'Sous titre',
-    accessor: 'subtitle',
+    accessor: 'slogan',
     Cell: (data) => {
       return (
         <div className="flex items-center justify-start space-x-1 py-4 pl-4 pr-3 ">

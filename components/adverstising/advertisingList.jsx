@@ -3,6 +3,8 @@ import { columnsCommercial } from './_dataTable'
 
 import { RiDeleteRow, RiFileCopy2Line, RiSearchLine } from 'react-icons/ri'
 import ConfirmModal from '../ConfirmModal'
+import { getAdvertising, deleteAdvertising } from '@/lib/services/marketing'
+
 import AdvertisingFormDrawer from './advertisingFromDrawer'
 
 function AdvertisinglsList() {
@@ -10,10 +12,10 @@ function AdvertisinglsList() {
   const [selectedCommercial, setSelectedCommercial] = useState(null)
 
   useEffect(() => {
-    // const unsubscribe = getCommercials(setCommercials)
-    // return () => {
-    //   unsubscribe()
-    // }
+    const unsubscribe = getAdvertising(setCommercials)
+    return () => {
+      unsubscribe()
+    }
   }, [])
 
   return (
@@ -37,7 +39,7 @@ function CommercialsTable({
     <div className="">
       <ConfirmModal
         confirmFunction={async () => {
-          deleteCommercial(selectedCommercial.id, selectedCommercial.imageUrl)
+          deleteAdvertising(selectedCommercial.id, selectedCommercial.imageUrl)
           setOpenWarning(false)
         }}
         cancelFuction={() => {}}

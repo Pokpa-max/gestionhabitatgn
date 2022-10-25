@@ -397,6 +397,29 @@ export const autoFillSponsorForm = (reset, setValue, sponsor) => {
 
 }
 
+export const autoFillAdvertisingForm = (reset, setValue, advertising) => {
+  if (!advertising) {
+    reset()
+    return
+  }
+
+  const {
+    title,
+    slogan,
+    imageUrl
+  } = advertising
+  setValue('title', title)
+  setValue('slogan', slogan)
+  // setValue('externalLink', externalLink)
+  // setValue('externalLinkFallback', externalLinkFallback)
+  // setValue('isActive', isActive)
+  setValue('imageHash', imageUrl)
+}
+
+
+
+
+
 export const autoFillCommercialForm = (reset, setValue, commercial) => {
   if (!commercial) {
     reset()
@@ -405,19 +428,23 @@ export const autoFillCommercialForm = (reset, setValue, commercial) => {
 
   const {
     title,
-    subtitle,
+    slogan,
     externalLink,
     externalLinkFallback,
     isActive,
     imageHash,
   } = commercial
   setValue('title', title)
-  setValue('subtitle', subtitle)
+  setValue('slogan', slogan)
   setValue('externalLink', externalLink)
   setValue('externalLinkFallback', externalLinkFallback)
   setValue('isActive', isActive)
   setValue('imageHash', imageHash)
 }
+
+
+
+
 
 export const autoFillCollectionForm = (reset, setValue, collection) => {
   if (!collection) {
