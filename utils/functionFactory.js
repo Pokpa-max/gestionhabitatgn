@@ -95,52 +95,52 @@ export const restaurantConstructorUpdateOffline = ({
   },
   isAccountCreated: false,
 })
-export const restaurantConstructorCreate = ({
-  storename: name,
-  firstname,
-  lastname,
-  email,
+
+export const housesConstructorCreate = ({
+  price,
   phoneNumber,
-  position,
-  indication: description,
-  long,
-  lat,
+  section,
+  imageUrl,
+  adVance,
+  houseType,
+  description,
+  // long,
+  // lat,
+  partNumber,
+  surface,
   zone,
-  quartier,
-  rccm,
-  nif,
-  otherAcc,
-  isActive,
-  restaurantEmail,
-  restaurantPhoneNumber,
+  commodite,
+  offerType,
+
+  isAvailable,
+
 }) => ({
-  restaurant: {
-    name,
-    rccm,
-    nif,
-    otherAcc,
-    email: restaurantEmail,
-    phoneNumber: restaurantPhoneNumber,
-  },
-  manager: {
-    firstname,
-    lastname,
-    phoneNumber,
-    position,
-    email,
-  },
-  isActive,
+
+  phoneNumber,
+  isAvailable,
   adress: {
-    description,
     zone: zone.value,
-    quartier: quartier.value,
-    long: Number(long),
-    lat: Number(lat),
+    section: section.value,
+    // long: Number(long),
+    // lat: Number(lat),
   },
-  isAccountCreated: false,
+
+  offerType: offerType,
+  surface: surface,
+  price: price,
+  commodite: commodite,
+  partNumber: partNumber,
+  imageUrl: imageUrl,
+  description: description,
+  houseType: houseType,
+  adVance: adVance,
+  houseInsides: [],
+  likes: [],
+  // isAvailable: isActive,
   createdAt: serverTimestamp(),
   updatedAt: serverTimestamp(),
 })
+
 
 export const sliderConstructorCreate = (data, edit) => {
   const typeValue = {}

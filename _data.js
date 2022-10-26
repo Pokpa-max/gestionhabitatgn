@@ -75,6 +75,24 @@ export const quartier = [
   { label: 'Cosa', value: 'Cosa' },
   { label: 'Bambeto', value: 'Bambeto' },
 ]
+export const houseType = [
+  { label: 'Maison', value: 'Maison' },
+  { label: 'Appartement', value: 'Appartement' },
+  { label: 'Bureaux', value: 'Bureaux' },
+
+]
+export const offerType = [
+  { label: 'Vente', value: 'Vente' },
+  { label: 'Location', value: 'Location' },
+]
+
+export const commodites = [
+  { label: 'Terrasse', value: 'Terrasse' },
+  { label: 'Jardin', value: 'Jardin' },
+  { label: 'Picine', value: 'Picine' },
+  { label: 'Autre', value: 'Autre' },
+
+]
 
 export const sliderTypes = [
   { label: 'Collection', value: 'collection' },

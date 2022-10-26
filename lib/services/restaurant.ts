@@ -10,10 +10,14 @@ import { db } from '@/lib/firebase/client_config'
 import { parseDocsData } from '@/utils/firebase/firestore'
 import { fetchWithPost } from '../../utils/fetch'
 import {
-  restaurantConstructorCreate,
+  housesConstructorCreate,
+  // restaurantConstructorCreate,
   restaurantConstructorUpdate,
 } from '../../utils/functionFactory'
+import { getDefaultImageDownloadURL } from '@/utils/firebase/storage'
 export const restaurantsCollectionRef = collection(db, `restaurants`)
+
+export const housesCollectionRef = collection(db, `essaisHouses`)
 
 export const restaurantDocRef = (restaurantId) =>
   doc(db, `restaurants/${restaurantId}`)
@@ -33,8 +37,17 @@ export const editRestaurant = async (restaurantId, data) => {
 }
 
 export const addRestaurant = async (data) => {
-  const structuredData = restaurantConstructorCreate(data)
+  const structuredData = housesConstructorCreate(data)
   await addDoc(restaurantsCollectionRef, structuredData)
+  return structuredData
+}
+
+export const addHouses = async (data) => {
+  const imageUrl = await getDefaultImageDownloadURL(data.imageUrl[0], `houses`)
+  const structuredData = housesConstructorCreate({ ...data, imageUrl })
+  // await addDoc(housesCollectionRef, structuredData)
+  console.log('voir deonnee transform', { ...data, imageUrl })
+
   return structuredData
 }
 
