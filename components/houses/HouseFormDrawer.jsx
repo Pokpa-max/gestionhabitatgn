@@ -1,5 +1,5 @@
+import { map } from '@firebase/util'
 import React, { useEffect, useState } from 'react'
-import Select from 'react-select'
 
 import { useForm } from 'react-hook-form'
 import {
@@ -20,22 +20,45 @@ import Toggle from '../Toggle'
 
 function HouseFormDrawer({ restaurant, open, setOpen }) {
   const [loading, setLoading] = useState(false)
+  const [images, setImages] = useState()
+  const [imagefiles, setImageFiles] = useState([])
   const [selectedImage, setselectedImage] = useState([])
   const [selectInsideImages, setInsideImages] = useState([])
 
-  const Hotels = [
-    { value: 1, label: 'Coral Beach Maldives' },
-    { value: 2, label: 'Ilaa Beach Maldives' },
-    { value: 3, label: 'Finolhu' },
-    { value: 4, label: 'Arena' },
-    { value: 5, label: 'Kaani Beach Hotel' },
-  ]
-
   const [selectedOptions, setSelectedOptions] = useState(null)
 
-  const setHandle = (e) => {
-    setSelectedOptions(Array.isArray(e) ? e.map((hotel) => hotel.label) : [])
+  const imageUrlTranform = (images) => {
+    images?.map((image) => {
+      console.log('voir les url ', image)
+    })
+    // const amountPrefix = amount.depositAmount
+    //   .substring(0, amount.depositAmount.indexOf(' '))
+    //   .toString().length
+
+    // return amount.depositAmount.slice(amountPrefix)
   }
+
+  const onSelectFile = (event) => {
+    const seletedFiles = event.target.files
+    const selectedFileArray = Array.from(seletedFiles)
+
+    const imagesArray = selectedFileArray.map((file) => {
+      console.log('voir filles des images interieurs11', file)
+
+      return URL.createObjectURL(file)
+    })
+
+    const imagesArray2 = selectedFileArray.map((file) => {
+      return file
+    })
+
+    setImageFiles(imagesArray2)
+    setImages(imagesArray)
+    console.log('select file', seletedFiles)
+    console.log('voir tableau image', imagesArray)
+  }
+
+  imageUrlTranform(images)
 
   const {
     handleSubmit,
@@ -73,6 +96,7 @@ function HouseFormDrawer({ restaurant, open, setOpen }) {
       // else
       await addHouses({
         ...data,
+        insideImages: images,
         // isAvailable: false,
         // isActive: false,
         // isAccountCreated: false,
@@ -100,6 +124,7 @@ function HouseFormDrawer({ restaurant, open, setOpen }) {
   }
 
   console.log('voir contenu  des  images ', selectedOptions)
+  console.log('fille sortie imagesArray', imagefiles)
 
   return (
     <>
@@ -348,6 +373,7 @@ function HouseFormDrawer({ restaurant, open, setOpen }) {
                   {errors?.partNumber?.message}
                 </p>
               </div>
+
               <div className="col-span-6 sm:col-span-3">
                 <label
                   htmlFor="surface"
@@ -517,70 +543,38 @@ function HouseFormDrawer({ restaurant, open, setOpen }) {
                 </div>
               </div>
 
-              <div className="col-span-12 sm:col-span-3">
+              <div className="col-span-6 sm:col-span-3">
                 <label
-                  htmlFor="rccm"
+                  htmlFor="position"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Image interieurs
+                  Charger les images interieurs
                 </label>
-
-                <div className="mt-1 sm:col-span-2 sm:mt-0">
-                  <div className="rounded-xs flex max-w-lg justify-center border-2 border-dashed border-gray-300 px-2 pt-5 pb-6">
-                    <div className="space-y-1 text-center">
-                      {formDataInsid?.imageInsidUrl?.length > 0 ? (
-                        <img
-                          src={URL.createObjectURL(
-                            formDataInsid?.imageInsidUrl[0]
-                          )}
-                          alt="preview"
-                        />
-                      ) : selectInsideImages ? (
-                        <img
-                          src={selectInsideImages.imageUrl1000}
-                          alt="preview"
-                        />
-                      ) : (
-                        <RiImage2Fill className="mx-auto h-12 w-12 text-gray-400" />
-                      )}
-                      <div className="flex text-sm text-gray-600">
-                        <label
-                          htmlFor="file-upload2"
-                          className="relative cursor-pointer rounded-sm bg-white font-medium text-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-primary-500 focus-within:ring-offset-2 hover:text-primary-500"
-                        >
-                          <span>Charger image</span>
-                          <input
-                            id="file-upload2"
-                            {...register('imageInsidUrl', {
-                              required:
-                                formDataInsid?.imageInsidUrl?.length == 0 &&
-                                !selectInsideImages?.imageInsidUrl,
-                            })}
-                            type="file"
-                            className="sr-only"
-                          />
-                        </label>
-                        <p className="pl-1">or drag and drop</p>
-                      </div>
-                      <p className="text-xs text-gray-500">
-                        PNG, JPG, GIF up to 10MB
-                      </p>
-                    </div>
-                    <p className="pt-1 font-stratos-light text-xs text-red-600">
-                      {errors?.imageInsidUrl &&
-                        'veuillez selectionnez les images interieurs'}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="container mx-auto py-8">
-                <h1 className="text-sm">Images interieurs</h1>
-                <div className="flex flex-wrap items-center justify-center lg:justify-between">
-                  <div className=" px-2	">
-                    <Select options={Hotels} onChange={setHandle} isMulti />
-                  </div>
-                  <div>{selectedOptions}</div>
+                <input
+                  type="file"
+                  name="images"
+                  onChange={onSelectFile}
+                  multiple
+                  accept="image/png,image/jpeg,image/webp"
+                />
+                <div className="images ">
+                  {images &&
+                    images.map((image, index) => {
+                      console.log('interne', image)
+                      return (
+                        <div key={image} className="img ">
+                          <img src={image} alt="" height={100} width={200} />
+                          <button
+                            className="p-5 text-red-400  "
+                            onClick={() =>
+                              setImages(images.filter((e) => e !== image))
+                            }
+                          >
+                            suprimer limage
+                          </button>
+                        </div>
+                      )
+                    })}
                 </div>
               </div>
             </div>

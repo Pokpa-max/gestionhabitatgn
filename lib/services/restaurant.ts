@@ -14,7 +14,10 @@ import {
   // restaurantConstructorCreate,
   restaurantConstructorUpdate,
 } from '../../utils/functionFactory'
-import { getDefaultImageDownloadURL } from '@/utils/firebase/storage'
+import {
+  getDefaultImageDownloadURL,
+  getDefaultImageDownloadURLs,
+} from '@/utils/firebase/storage'
 export const restaurantsCollectionRef = collection(db, `restaurants`)
 
 export const housesCollectionRef = collection(db, `essaisHouses`)
@@ -43,10 +46,20 @@ export const addRestaurant = async (data) => {
 }
 
 export const addHouses = async (data) => {
+  console.log('voir imageUrl screen1', data.imageUrl[0])
+  console.log('voir images 222', data.insideImages[0])
+  console.log('voir images 222', data.insideImages)
+
   const imageUrl = await getDefaultImageDownloadURL(data.imageUrl[0], `houses`)
+  // const imageInsides = await getDefaultImageDownloadURLs(
+  //   data.insideImages,
+  //   `houseInsides`
+  // )
+
   const structuredData = housesConstructorCreate({ ...data, imageUrl })
   // await addDoc(housesCollectionRef, structuredData)
-  console.log('voir deonnee transform', { ...data, imageUrl })
+  // console.log('voir deonnee transform', { ...data, imageUrl, imageInsides })
+  // console.log('voir insideImages', imageInsides)
 
   return structuredData
 }

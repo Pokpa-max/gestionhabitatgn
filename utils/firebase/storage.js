@@ -60,3 +60,17 @@ export const getDefaultImageDownloadURL = async (file, folderName) => {
       return url;
     })
 }
+
+export const getDefaultImageDownloadURLs = async (files, folderName) => {
+  const imagesInsides = []
+  files.map((file) => {
+    getDownloadURL(file.ref)
+      .then((url) => {
+        // return url;
+        imagesInsides.push(url);
+      })
+
+  })
+  return imagesInsides
+
+}
