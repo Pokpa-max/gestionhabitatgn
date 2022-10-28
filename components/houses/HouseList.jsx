@@ -132,7 +132,7 @@ function HousesTable({
                       <td className="relative flex space-x-2 whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                         <button
                           onClick={() => {
-                            setSelectedRestaurant(row)
+                            setSelectedHouse(row)
                             setOpenDrawer(true)
                           }}
                           type="button"

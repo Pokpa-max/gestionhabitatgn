@@ -10,6 +10,7 @@ import { db } from '@/lib/firebase/client_config'
 import { parseDocsData } from '@/utils/firebase/firestore'
 import { fetchWithPost } from '../../utils/fetch'
 import {
+  houseConstructorUpdate,
   housesConstructorCreate,
   // restaurantConstructorCreate,
   restaurantConstructorUpdate,
@@ -24,6 +25,8 @@ export const housesCollectionRef = collection(db, `essaisHouses`)
 
 export const restaurantDocRef = (restaurantId) =>
   doc(db, `restaurants/${restaurantId}`)
+
+export const houseDocRef = (houseId) => doc(db, `essaisHouses/${houseId}`)
 
 export const getRestaurants = (setState) => {
   return onSnapshot(restaurantsCollectionRef, (querySnapshot) => {
@@ -43,6 +46,10 @@ export const addRestaurant = async (data) => {
   const structuredData = housesConstructorCreate(data)
   await addDoc(restaurantsCollectionRef, structuredData)
   return structuredData
+}
+
+export const editHouse = async (houseId, data) => {
+  await updateDoc(houseDocRef(houseId), houseConstructorUpdate(data))
 }
 
 export const addHouses = async (data) => {

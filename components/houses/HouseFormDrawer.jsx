@@ -6,9 +6,13 @@ import {
   addHouses,
   addRestaurant,
   createAccount,
+  editHouse,
   editRestaurant,
 } from '../../lib/services/restaurant'
-import { autoFillRestaurantForm } from '../../utils/functionFactory'
+import {
+  autoFillHouseForm,
+  autoFillRestaurantForm,
+} from '../../utils/functionFactory'
 import { notify } from '../../utils/toast'
 import { quartier, zones, houseType, offerType, commodites } from '../../_data'
 
@@ -18,7 +22,8 @@ import Loader from '../Loader'
 import SimpleSelect from '../SimpleSelect'
 import Toggle from '../Toggle'
 
-function HouseFormDrawer({ restaurant, open, setOpen }) {
+function HouseFormDrawer({ house, open, setOpen }) {
+  console.log('voir modification de la maison', house)
   const [loading, setLoading] = useState(false)
   const [images, setImages] = useState()
   const [imagefiles, setImageFiles] = useState([])
@@ -32,8 +37,6 @@ function HouseFormDrawer({ restaurant, open, setOpen }) {
     const selectedFileArray = Array.from(seletedFiles)
 
     const imagesArray = selectedFileArray.map((file) => {
-      console.log('voir filles des images interieurs11', file)
-
       return URL.createObjectURL(file)
     })
 
@@ -43,8 +46,6 @@ function HouseFormDrawer({ restaurant, open, setOpen }) {
 
     setImageFiles(imagesArray2)
     setImages(imagesArray)
-    console.log('select file', seletedFiles)
-    console.log('voir tableau image', imagesArray)
   }
 
   const {
@@ -69,24 +70,25 @@ function HouseFormDrawer({ restaurant, open, setOpen }) {
 
   useEffect(() => {
     const setFormvalue = () => {
-      autoFillRestaurantForm(reset, setValue, restaurant)
+      autoFillHouseForm(reset, setValue, house)
     }
     setFormvalue()
-  }, [restaurant])
+  }, [house])
 
   const onSubmit = async (data) => {
     setLoading(true)
     try {
-      console.log('voir donnees👌👌👌👌👌👌', data)
-      // if (restaurant) await editRestaurant(restaurant.id, data)
-      // else
-      await addHouses({
-        ...data,
-        insideImages: imagefiles,
-      })
-      setImages([])
-      setOpen(false)
-      notify('Votre requète s est executée avec succès', 'success')
+      if (house) {
+        await editHouse(house.id, data)
+      } else {
+        await addHouses({
+          ...data,
+          insideImages: imagefiles,
+        })
+        setImages([])
+        setOpen(false)
+        notify('Votre requète s est executée avec succès', 'success')
+      }
     } catch (error) {
       console.log(error)
       notify('Une erreur est survenue', 'error')
@@ -450,8 +452,8 @@ function HouseFormDrawer({ restaurant, open, setOpen }) {
               </div>
               <div className="col-span-12 sm:col-span-6 ">
                 <GoogleMaps
-                  lat={restaurant?.adress.lat}
-                  lng={restaurant?.adress.long}
+                  lat={house?.adress.lat}
+                  lng={house?.adress.long}
                   setLonLat={setLonLat}
                 />
               </div>
@@ -459,8 +461,8 @@ function HouseFormDrawer({ restaurant, open, setOpen }) {
 
             <h1 className="text-primary-accent">Selection Dimages</h1>
 
-            <div className="grid grid-cols-9 gap-24 border-t pt-3">
-              <div className="col-span-12 sm:col-span-3">
+            <div className="grid grid-cols-6 gap-24 border-t pt-3">
+              <div className="col-span-2 sm:col-span-2">
                 <label
                   htmlFor="rccm"
                   className="block text-sm font-medium text-gray-700"
@@ -511,7 +513,7 @@ function HouseFormDrawer({ restaurant, open, setOpen }) {
                 </div>
               </div>
 
-              <div className="col-span-6 sm:col-span-3">
+              <div className="col-span-6 w-full  sm:col-span-4">
                 <label
                   htmlFor="position"
                   className="block text-sm font-medium text-gray-700"
@@ -519,21 +521,26 @@ function HouseFormDrawer({ restaurant, open, setOpen }) {
                   Charger les images interieurs
                 </label>
                 <input
+                  required
                   type="file"
                   name="images"
                   onChange={onSelectFile}
                   multiple
                   accept="image/png,image/jpeg,image/webp"
                 />
-                <div className="images ">
+                <div className=" flex w-full gap-5">
                   {images &&
                     images.map((image, index) => {
                       console.log('interne', image)
                       return (
-                        <div key={image} className="img ">
-                          <img src={image} alt="" height={100} width={200} />
+                        <div key={image} className="mt-5 ">
+                          <img
+                            src={image}
+                            alt=""
+                            className="h-48 w-96 object-fill"
+                          />
                           <button
-                            className="p-5 text-red-400  "
+                            className="w-full p-5 text-center text-sm text-gray-400  "
                             onClick={() =>
                               setImages(images.filter((e) => e !== image))
                             }

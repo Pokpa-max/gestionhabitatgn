@@ -3,11 +3,15 @@ import React from 'react'
 function HouseCard({ imageUrl, title, description, price, partNumber }) {
   return (
     <div class="p-10">
-      <div class=" w-full lg:flex lg:max-w-full">
-        <div class="h-48 flex-none overflow-hidden rounded-t bg-cover text-center lg:h-auto lg:w-48 lg:rounded-t-none lg:rounded-l ">
-          <img class="h-full" src={imageUrl} alt="image vitrine" />
+      <div class=" w-full gap-2 lg:flex lg:max-w-full">
+        <div class="h-48 flex-none overflow-hidden rounded rounded-t bg-cover text-center shadow-sm lg:h-auto lg:w-96 lg:rounded-t-none lg:rounded-l ">
+          <img
+            class="h-full w-full object-fill"
+            src={imageUrl}
+            alt="image vitrine"
+          />
         </div>
-        <div class="flex flex-col justify-between rounded-b border-r border-b border-l border-gray-400 bg-white p-4 leading-normal lg:rounded-b-none lg:rounded-r lg:border-l-0 lg:border-t lg:border-gray-400">
+        <div class="flex flex-col justify-between rounded-b border border-gray-400 bg-white p-4 leading-normal lg:rounded-b-none lg:rounded-r lg:border-gray-200">
           <div class="mb-8">
             <p class=" mb-5 flex items-center text-2xl font-bold text-gray-900">
               {'Logement en '}
@@ -20,8 +24,13 @@ function HouseCard({ imageUrl, title, description, price, partNumber }) {
                 <p className="text-gray-600">Quartier:{'Kipe'}</p>
               </div>
               <div>
-                <p className="text-gray-600"> Prix:{price}gnf</p>
-                <p className="text-gray-600">Nombre de Chambre:{partNumber}</p>
+                <p className="mb-1 text-gray-500">
+                  {' '}
+                  Prix:<span className="text-xl text-gray-900">{price}</span>gnf
+                </p>
+                <p className="text-gray-600">
+                  Nombre de Chambre : {partNumber}
+                </p>
               </div>
             </div>
 

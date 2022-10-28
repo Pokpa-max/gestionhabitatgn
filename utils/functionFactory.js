@@ -4,6 +4,7 @@ import { serverTimestamp, GeoPoint, Timestamp } from 'firebase/firestore'
 import { encode } from './geoHash';
 import { firebaseDateToJsDate } from '../utils/date'
 import { stringToColour } from '../utils/ui'
+import { offerType } from '_data';
 // import geofire from 'geofire-common'
 
 // dataConstructors
@@ -28,8 +29,8 @@ export const restaurantConstructorUpdate = ({
   restaurantPhoneNumber,
 }) => ({
 
-  "restaurant.name": name,
-  "restaurant.rccm": rccm,
+  "adress.section": section,
+  "adress.zone": rccm,
   "restaurant.nif": nif,
   "restaurant.otherAcc": otherAcc,
   "restaurant.email": restaurantEmail,
@@ -49,6 +50,47 @@ export const restaurantConstructorUpdate = ({
   "adress.position": getGeoPoint(lat, long),
   updatedAt: serverTimestamp(),
 })
+
+export const houseConstructorUpdate = ({
+
+  phoneNumber,
+  section,
+  // imageUrl,
+  adVance,
+  houseType,
+  description,
+  long,
+  lat,
+  partNumber,
+  // houseInsides,
+  surface,
+  zone,
+  commodite,
+  offerType,
+
+  isAvailable,
+
+}) => ({
+  description: description,
+  commodite: commodite,
+  adVance: adVance,
+  houseType: houseType,
+  offerType: offerType,
+  phoneNumber: phoneNumber,
+  partNumber: partNumber,
+  price: price,
+  surface: surface,
+  isAvailable: isAvailable,
+  "adress.zone": zone.value,
+  "adress.section": section,
+  "adress.long": Number(long),
+  "adress.lat": Number(lat),
+  updatedAt: serverTimestamp(),
+})
+
+
+
+
 
 export const restaurantConstructorUpdateOffline = ({
   storename: name,
@@ -104,8 +146,8 @@ export const housesConstructorCreate = ({
   adVance,
   houseType,
   description,
-  // long,
-  // lat,
+  long,
+  lat,
   partNumber,
   houseInsides,
   surface,
@@ -122,8 +164,8 @@ export const housesConstructorCreate = ({
   adress: {
     zone: zone.value,
     section: section,
-    // long: Number(long),
-    // lat: Number(lat),
+    long: Number(long),
+    lat: Number(lat),
   },
 
   offerType: offerType,
@@ -349,36 +391,50 @@ export const autoFillRestaurantForm = (reset, setValue, restaurant) => {
   setValue('quartier', { value: adress?.quartier, label: adress?.quartier })
   setValue('isActive', isActive)
 }
-export const autoFillHouseForm = (reset, setValue, restaurant) => {
-  if (!restaurant) {
+
+
+export const autoFillHouseForm = (reset, setValue, house) => {
+  if (!house) {
     reset()
     return
   }
 
   const {
-    restaurant: storename,
-    manager,
+    price,
+    phoneNumber,
+    section,
+    // imageUrl,
+    long,
+    lat,
+    adVance,
+    houseType,
+    description,
     adress,
-    isActive,
-  } = restaurant
-  setValue('storename', storename?.name)
-  setValue('description', storename?.description)
-  setValue('firstname', manager?.firstname)
-  setValue('lastname', manager?.lastname)
-  setValue('phoneNumber', manager?.phoneNumber)
-  setValue('email', manager?.email)
-  setValue('position', manager?.position)
-  setValue('nif', storename?.nif)
-  setValue('rccm', storename?.rccm)
-  setValue('otherAcc', storename.otherAcc)
-  setValue('restaurantPhoneNumber', storename.phoneNumber)
-  setValue('lat', adress?.lat)
-  setValue('long', adress?.long)
-  setValue('restaurantEmail', storename?.email)
-  setValue('indication', adress?.description)
+    partNumber,
+    // houseInsides,
+    surface,
+    zone,
+    commodite,
+    offerType,
+    isAvailable,
+
+  } = house
+
+  setValue('description', description)
+  setValue('price', price)
+  setValue('adVance', adVance)
+  setValue('partNumber', partNumber)
+  setValue('surface', surface)
+  setValue('offerType', { value: offerType?.value, label: offerType?.value })
+  setValue('phoneNumber', phoneNumber)
+  setValue('surface', surface)
+  setValue('commodite', { value: commodite?.value, label: commodite?.value })
+  setValue('houseType', { value: houseType?.value, label: houseType?.value })
+  setValue('adress', { section: adress?.section, zone: adress?.zone, long: Number(long), lat: Number(lat), })
+  setValue('section', adress?.section)
   setValue('zone', { value: adress?.zone, label: adress?.zone })
-  setValue('quartier', { value: adress?.quartier, label: adress?.quartier })
-  setValue('isActive', isActive)
+  setValue('isAvailable', isAvailable)
+
 }
 
 export const autoFillSliderForm = (reset, setValue, slider) => {

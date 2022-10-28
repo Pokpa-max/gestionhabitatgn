@@ -7,9 +7,13 @@ function InsideHouseCard({ houseInsides }) {
         return (
           <div class="overflow-hidden rounded shadow-lg">
             <div className="imageInsid">
-              <img class="w-full" src={imageUrl} alt="Mountain" />
+              <img
+                class="h-60 w-96 object-fill"
+                src={imageUrl}
+                alt="Mountain"
+              />
               <div class="px-6 py-4">
-                <div class="mb-2 text-xl font-bold">{index + 1}</div>
+                <div class="mb-2 text-gray-400">image {index + 1}</div>
               </div>
             </div>
           </div>
