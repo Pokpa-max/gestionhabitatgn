@@ -6,23 +6,29 @@ import ConfirmModal from '../ConfirmModal'
 import { getAdvertising, deleteAdvertising } from '@/lib/services/marketing'
 
 import AdvertisingFormDrawer from './advertisingFromDrawer'
+import { OrderSkleton } from '../Orders/OrdersList'
+import { async } from '@firebase/util'
 
 function AdvertisinglsList() {
   const [commercials, setCommercials] = useState([])
   const [selectedCommercial, setSelectedCommercial] = useState(null)
+  const [isLoading, setLoading] = useState(false)
 
   useEffect(() => {
+    setLoading(true)
     const unsubscribe = getAdvertising(setCommercials)
+    setLoading(false)
     return () => {
       unsubscribe()
     }
-  }, [])
+  }, [isLoading])
 
   return (
     <CommercialsTable
       selectedCommercial={selectedCommercial}
       setSelectedCommercial={setSelectedCommercial}
       commercials={commercials}
+      isLoading={isLoading}
     />
   )
 }
@@ -31,11 +37,14 @@ function CommercialsTable({
   selectedCommercial,
   setSelectedCommercial,
   commercials,
+  isLoading,
 }) {
   const [openDrawer, setOpenDrawer] = useState(false)
   const [openWarning, setOpenWarning] = useState(false)
 
-  return (
+  return isLoading ? (
+    <OrderSkleton />
+  ) : (
     <div className="">
       <ConfirmModal
         confirmFunction={async () => {

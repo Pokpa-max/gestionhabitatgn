@@ -6,23 +6,53 @@ import { Router, useRouter } from 'next/router'
 // import { OrderSkleton } from '../Orders/OrdersList'
 // import PaginationButton from '../Orders/PaginationButton'
 import HouseFormDrawer from './HouseFormDrawer'
+import { OrderSkleton } from '../Orders/OrdersList'
+import PaginationButton from '../Orders/PaginationButton'
 
-function HousesList({}) {
+function HousesList({
+  data,
+  setData,
+  houses,
+  showMore,
+  pagination,
+  isLoading,
+  isLoadingP,
+}) {
   const [selectedHouse, setSelectedHouse] = useState(null)
+  console.log('voir les maisons', houses)
 
   return (
     <HousesTable
       selectedHouse={selectedHouse}
       setSelectedHouse={setSelectedHouse}
+      isLoading={isLoading}
+      houses={houses}
+      isLoadingP={isLoadingP}
+      showMore={showMore}
+      data={data}
+      setData={setData}
+      pagination={pagination}
     />
   )
 }
 
-function HousesTable({ selectedHouse, setSelectedHouse }) {
+function HousesTable({
+  selectedHouse,
+  setSelectedHouse,
+  data,
+  setData,
+  houses,
+  showMore,
+  pagination,
+  isLoading,
+  isLoadingP,
+}) {
   const [openDrawer, setOpenDrawer] = useState(false)
   const router = useRouter()
 
-  return (
+  return isLoading ? (
+    <OrderSkleton />
+  ) : (
     <div className="">
       <HouseFormDrawer
         house={selectedHouse}
@@ -91,10 +121,10 @@ function HousesTable({ selectedHouse, setSelectedHouse }) {
                     </th>
                   </tr>
                 </thead>
-                {/* <tbody className="divide-y divide-gray-200 bg-white">
-                  {restaurants?.map((row, index) => (
+                <tbody className="divide-y divide-gray-200 bg-white">
+                  {houses?.map((row, index) => (
                     <tr key={index}>
-                      {columnsRestaurant.map((column, index) => {
+                      {columnsHouse.map((column, index) => {
                         const cell = row[column.accessor]
                         const element = column.Cell?.(cell) ?? cell
                         return <td key={index}>{element}</td>
@@ -115,6 +145,7 @@ function HousesTable({ selectedHouse, setSelectedHouse }) {
                         </button>
                         <button
                           onClick={() => {
+                            console.log('voir routes', router.pathname)
                             router?.push(`${router.pathname}/${row.id}`)
                           }}
                           type="button"
@@ -128,16 +159,16 @@ function HousesTable({ selectedHouse, setSelectedHouse }) {
                       </td>
                     </tr>
                   ))}
-                </tbody> */}
+                </tbody>
               </table>
             </div>
           </div>
-          {/* <div>
-            <p className="mt-5">{restaurants.length + ' Restaurants'}</p>
-            {pagination && restaurants.length > 0 && (
+          <div>
+            <p className="mt-5">{houses.length + 'Logements'}</p>
+            {pagination && houses.length > 0 && (
               <PaginationButton getmoreData={showMore} />
             )}
-          </div> */}
+          </div>
         </div>
       </div>
     </div>

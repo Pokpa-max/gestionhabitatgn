@@ -107,6 +107,7 @@ export const housesConstructorCreate = ({
   // long,
   // lat,
   partNumber,
+  houseInsides,
   surface,
   zone,
   commodite,
@@ -120,7 +121,7 @@ export const housesConstructorCreate = ({
   isAvailable,
   adress: {
     zone: zone.value,
-    section: section.value,
+    section: section,
     // long: Number(long),
     // lat: Number(lat),
   },
@@ -134,7 +135,7 @@ export const housesConstructorCreate = ({
   description: description,
   houseType: houseType,
   adVance: adVance,
-  houseInsides: [],
+  houseInsides: houseInsides,
   likes: [],
   // isAvailable: isActive,
   createdAt: serverTimestamp(),
@@ -318,6 +319,37 @@ export const getGeoPoint = (lat, long) => {
 // Form
 
 export const autoFillRestaurantForm = (reset, setValue, restaurant) => {
+  if (!restaurant) {
+    reset()
+    return
+  }
+
+  const {
+    restaurant: storename,
+    manager,
+    adress,
+    isActive,
+  } = restaurant
+  setValue('storename', storename?.name)
+  setValue('description', storename?.description)
+  setValue('firstname', manager?.firstname)
+  setValue('lastname', manager?.lastname)
+  setValue('phoneNumber', manager?.phoneNumber)
+  setValue('email', manager?.email)
+  setValue('position', manager?.position)
+  setValue('nif', storename?.nif)
+  setValue('rccm', storename?.rccm)
+  setValue('otherAcc', storename.otherAcc)
+  setValue('restaurantPhoneNumber', storename.phoneNumber)
+  setValue('lat', adress?.lat)
+  setValue('long', adress?.long)
+  setValue('restaurantEmail', storename?.email)
+  setValue('indication', adress?.description)
+  setValue('zone', { value: adress?.zone, label: adress?.zone })
+  setValue('quartier', { value: adress?.quartier, label: adress?.quartier })
+  setValue('isActive', isActive)
+}
+export const autoFillHouseForm = (reset, setValue, restaurant) => {
   if (!restaurant) {
     reset()
     return

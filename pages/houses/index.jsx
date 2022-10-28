@@ -32,46 +32,46 @@ function Houses() {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    const orderRef = collection(db, 'restaurants')
+    const housesRef = collection(db, 'essaisHouses')
     const fetchData = async () => {
       setIsLoading(true)
       const q = query(
-        orderRef,
+        housesRef,
         orderBy('createdAt', 'desc'),
         limit(HITS_PER_PAGE)
       )
 
       const querySnapshot = await getDocs(q)
-      const restaurants = parseDocsData(querySnapshot)
+      const houses = parseDocsData(querySnapshot)
       setData({
-        restaurants,
+        houses,
         lastElement: querySnapshot.docs[querySnapshot.docs.length - 1],
       })
       setIsLoading(false)
     }
     fetchData()
   }, [])
-  const restaurantsToShow = data?.restaurants ?? []
+  const housesToShow = data?.houses ?? []
 
   const showMoreFirestore = async () => {
-    const orderRef = collection(db, 'restaurants')
+    const housesRef = collection(db, 'restaurants')
     setIsLoadingP(true)
     const lastElement = data.lastElement
 
     const q = query(
-      orderRef,
+      housesRef,
       orderBy('createdAt', 'desc'),
       startAfter(lastElement),
       limit(HITS_PER_PAGE)
     )
     const querySnapshot = await getDocs(q)
-    const restaurants = parseDocsData(querySnapshot)
+    const houses = parseDocsData(querySnapshot)
     const nextData = {
-      restaurants: [...data.restaurants, ...restaurants],
+      houses: [...data.houses, ...houses],
       lastElement: querySnapshot.docs[querySnapshot.docs.length - 1],
     }
 
-    setPagination({ ...pagination, showPagination: restaurants.length > 0 })
+    setPagination({ ...pagination, showPagination: houses.length > 0 })
 
     setData(nextData)
     setIsLoadingP(false)
@@ -83,7 +83,7 @@ function Houses() {
       <HousesList
         data={data}
         setData={setData}
-        restaurants={restaurantsToShow}
+        houses={housesToShow}
         showMore={showMoreFirestore}
         pagination={pagination.showPagination}
         isLoading={isLoading}

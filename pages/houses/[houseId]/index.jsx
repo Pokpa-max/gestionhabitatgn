@@ -1,0 +1,48 @@
+import { useRouter } from 'next/router'
+import Scaffold from '@/components/Scaffold'
+import Header from '@/components/Header'
+import { db } from '@/lib/firebase/client_config'
+import React, { useEffect } from 'react'
+import { doc, getDoc } from 'firebase/firestore'
+import { useState } from 'react'
+import HouseCard from '../../../components/houses/houseCard'
+import { title } from 'process'
+import InsideHouseCard from '../../../components/houses/insideHouseCard'
+
+function HouseDetail() {
+  const router = useRouter()
+  const { houseId } = router.query
+  const [house, setHouse] = useState()
+  useEffect(() => {
+    if (houseId) {
+      console.log('voir id maison', houseId)
+      const houseRef = doc(db, 'essaisHouses', houseId)
+      const fetchHouse = async () => {
+        const docSnap = await getDoc(houseRef)
+        if (docSnap.exists()) {
+          setHouse(docSnap.data())
+        }
+      }
+      fetchHouse()
+    }
+  }, [houseId])
+
+  return (
+    <Scaffold>
+      <div className="flex items-end justify-between">
+        <Header title="Details du logement" />
+      </div>
+      <HouseCard
+        imageUrl={house?.imageUrl}
+        description={house?.description}
+        title={house?.offerType?.value}
+        price={house?.price}
+        partNumber={house?.partNumber}
+      />
+      <p className="py-5 text-2xl text-cyan-500">Details Images du Logement</p>
+      <InsideHouseCard houseInsides={house?.houseInsides} />
+    </Scaffold>
+  )
+}
+
+export default HouseDetail

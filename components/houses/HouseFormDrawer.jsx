@@ -27,17 +27,6 @@ function HouseFormDrawer({ restaurant, open, setOpen }) {
 
   const [selectedOptions, setSelectedOptions] = useState(null)
 
-  const imageUrlTranform = (images) => {
-    images?.map((image) => {
-      console.log('voir les url ', image)
-    })
-    // const amountPrefix = amount.depositAmount
-    //   .substring(0, amount.depositAmount.indexOf(' '))
-    //   .toString().length
-
-    // return amount.depositAmount.slice(amountPrefix)
-  }
-
   const onSelectFile = (event) => {
     const seletedFiles = event.target.files
     const selectedFileArray = Array.from(seletedFiles)
@@ -58,8 +47,6 @@ function HouseFormDrawer({ restaurant, open, setOpen }) {
     console.log('voir tableau image', imagesArray)
   }
 
-  imageUrlTranform(images)
-
   const {
     handleSubmit,
     register,
@@ -79,7 +66,6 @@ function HouseFormDrawer({ restaurant, open, setOpen }) {
     setValue('lat', lat)
   }
   const formData = watch()
-  const formDataInsid = watch()
 
   useEffect(() => {
     const setFormvalue = () => {
@@ -96,11 +82,9 @@ function HouseFormDrawer({ restaurant, open, setOpen }) {
       // else
       await addHouses({
         ...data,
-        insideImages: images,
-        // isAvailable: false,
-        // isActive: false,
-        // isAccountCreated: false,
+        insideImages: imagefiles,
       })
+      setImages([])
       setOpen(false)
       notify('Votre requète s est executée avec succès', 'success')
     } catch (error) {
@@ -109,22 +93,6 @@ function HouseFormDrawer({ restaurant, open, setOpen }) {
     }
     setLoading(false)
   }
-
-  const CreatedAccountSubmit = async (data) => {
-    setLoading(true)
-    try {
-      await createAccount(restaurant.id, data)
-      // setOpen(false)
-      notify('le compte à été crée avec succès', 'success')
-    } catch (error) {
-      console.log(error)
-      notify('Une erreur est survenue', 'error')
-    }
-    setLoading(false)
-  }
-
-  console.log('voir contenu  des  images ', selectedOptions)
-  console.log('fille sortie imagesArray', imagefiles)
 
   return (
     <>

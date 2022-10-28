@@ -7,15 +7,32 @@ function classNames(...classes) {
 
 export const columnsHouse = [
   {
+    Header: 'Image',
+    accessor: 'imageUrl',
+    Cell: (data) => {
+      return (
+        <div className="flex items-center justify-center space-x-2 whitespace-nowrap px-3 text-sm font-light text-gray-500">
+          <img
+            src={data}
+            alt=""
+            width={100}
+            height={100}
+            className="h-10 w-10  bg-gray-100"
+          />
+        </div>
+      )
+    },
+  },
+  {
     Header: 'Type Logement',
-    accessor: 'restaurant',
+    accessor: 'houseType',
     Cell: (data) => {
       return (
         <div className="flex items-center justify-start space-x-1 py-4 pl-4 pr-3 ">
           <div className="group whitespace-pre-wrap text-sm font-bold text-gray-900 sm:pl-6">
             <Link href={'/'}>
               <a className="group-hover:text-primary group-hover:underline">
-                {data.name}
+                {data.value}
               </a>
             </Link>
             <p className="w-2/4 truncate whitespace-nowrap font-stratos-light text-sm text-gray-500">
@@ -28,31 +45,31 @@ export const columnsHouse = [
   },
   {
     Header: 'Commune',
-    accessor: 'manager',
+    accessor: 'adress',
     Cell: (data) => {
       return (
         <div className="flex-col py-4">
           <div className="text-black-900 whitespace-nowrap px-3 text-sm font-bold">
-            {data.firstname} {data.lastname}
+            {data.zone}
           </div>
           <div className="whitespace-nowrap px-3 text-sm text-gray-500">
-            {data.phoneNumber}
+            {data.section}
           </div>
         </div>
       )
     },
   },
   {
-    Header: 'Quartier',
-    accessor: 'adress',
+    Header: 'Telephone',
+    accessor: 'phoneNumber',
     Cell: (data) => {
       return (
         <div className="flex-col py-4">
           <div className="text-black-900 w-2/4 truncate whitespace-nowrap px-3 text-sm font-bold">
-            {data.description}
+            {'Bailleur'}
           </div>
           <div className="whitespace-nowrap px-3 font-stratos-light text-sm text-gray-500">
-            {data.zone}
+            {data}
           </div>
         </div>
       )
@@ -72,31 +89,21 @@ export const columnsHouse = [
       )
     },
   },
+
   {
     Header: 'Status',
-    accessor: 'isActive',
-    Cell: (isActive) => {
+    accessor: 'isAvailable',
+    Cell: (data) => {
       return (
-        <span
-          className={classNames(
-            isActive
-              ? 'bg-green-100 text-green-800'
-              : 'bg-red-100 text-red-800',
-            'inline-flex items-center rounded-full  px-2.5 py-0.5 text-xs font-medium '
-          )}
-        >
-          <svg
-            className={classNames(
-              isActive ? 'text-green-400' : 'text-red-400',
-              '-ml-0.5 mr-1.5 h-2 w-2 '
+        <div className="flex-col py-4">
+          <div className="whitespace-nowrap px-3 font-stratos-light text-sm text-gray-500">
+            {data ? (
+              <p className="text-cyan-500">Occupé</p>
+            ) : (
+              <p className="">Disponible</p>
             )}
-            fill="currentColor"
-            viewBox="0 0 8 8"
-          >
-            <circle cx={4} cy={4} r={3} />
-          </svg>
-          {isActive ? 'Active' : 'Inactive'}
-        </span>
+          </div>
+        </div>
       )
     },
   },
