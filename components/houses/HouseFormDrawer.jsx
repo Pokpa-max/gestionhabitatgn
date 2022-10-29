@@ -1,20 +1,18 @@
-import { map } from '@firebase/util'
 import React, { useEffect, useState } from 'react'
 
 import { useForm } from 'react-hook-form'
 import {
   addHouses,
-  addRestaurant,
   createAccount,
   editHouse,
-  editRestaurant,
 } from '../../lib/services/restaurant'
+import { getCurrentDateOnline } from '../../utils/date'
 import {
   autoFillHouseForm,
-  autoFillRestaurantForm,
+  houseConstructorUpdateOffline,
 } from '../../utils/functionFactory'
 import { notify } from '../../utils/toast'
-import { quartier, zones, houseType, offerType, commodites } from '../../_data'
+import { zones, houseType, offerType, commodites } from '../../_data'
 
 import DrawerForm from '../DrawerForm'
 import GoogleMaps from '../GoogleMaps'
@@ -22,15 +20,16 @@ import Loader from '../Loader'
 import SimpleSelect from '../SimpleSelect'
 import Toggle from '../Toggle'
 
-function HouseFormDrawer({ house, open, setOpen }) {
-  console.log('voir modification de la maison', house)
+function HouseFormDrawer({ house, open, setOpen, setData, data }) {
   const [loading, setLoading] = useState(false)
   const [images, setImages] = useState()
   const [imagefiles, setImageFiles] = useState([])
   const [selectedImage, setselectedImage] = useState([])
-  const [selectInsideImages, setInsideImages] = useState([])
+  // const [selectInsideImages, setInsideImages] = useState([])
 
-  const [selectedOptions, setSelectedOptions] = useState(null)
+  // const [selectedOptions, setSelectedOptions] = useState(null)
+  data = data || {}
+  const { houses, lastElement } = data
 
   const onSelectFile = (event) => {
     const seletedFiles = event.target.files
@@ -79,12 +78,38 @@ function HouseFormDrawer({ house, open, setOpen }) {
     setLoading(true)
     try {
       if (house) {
-        await editHouse(house.id, data)
+        await editHouse(
+          house.id,
+          data
+          // formData?.imageUrl?.length > 0 && house?.houseInsides > 0,
+          // house?.imageUrl,
+          // house.houseInsides
+        )
+        const update = (data) => {
+          const houseCopy = JSON.parse(JSON.stringify(houses))
+          const newHouses = houseCopy.map((res) => {
+            if (house.id === res.id) {
+              return {
+                ...res,
+                ...houseConstructorUpdateOffline(data),
+              }
+            }
+            return res
+          })
+
+          setData({ houses: newHouses, lastElement })
+        }
+
+        update(data)
+        setOpen(false)
+        notify('Modification executée avec succès', 'success')
       } else {
-        await addHouses({
+        const newHouse = await addHouses({
           ...data,
           insideImages: imagefiles,
         })
+        newHouse['createdAt'] = await getCurrentDateOnline()
+        setData({ houses: [newHouse, ...houses], lastElement })
         setImages([])
         setOpen(false)
         notify('Votre requète s est executée avec succès', 'success')
@@ -167,7 +192,7 @@ function HouseFormDrawer({ house, open, setOpen }) {
                   />
                 </div>
                 <p className="pt-1 font-stratos-light text-xs text-red-600">
-                  {errors?.quartier?.message}
+                  {errors?.isAvailable?.message}
                 </p>
               </div>
               <div className="col-span-12 sm:col-span-3">
@@ -256,6 +281,9 @@ function HouseFormDrawer({ house, open, setOpen }) {
       "
                   rows="3"
                 ></textarea>
+                <p className="pt-1 font-stratos-light text-xs text-red-600">
+                  {errors?.description?.message}
+                </p>
               </div>
 
               <div className="col-span-6 sm:col-span-3">
@@ -461,7 +489,7 @@ function HouseFormDrawer({ house, open, setOpen }) {
 
             <h1 className="text-primary-accent">Selection Dimages</h1>
 
-            <div className="grid grid-cols-6 gap-24 border-t pt-3">
+            {/* <div className="grid grid-cols-6 gap-24 border-t pt-3">
               <div className="col-span-2 sm:col-span-2">
                 <label
                   htmlFor="rccm"
@@ -552,7 +580,7 @@ function HouseFormDrawer({ house, open, setOpen }) {
                     })}
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </DrawerForm>

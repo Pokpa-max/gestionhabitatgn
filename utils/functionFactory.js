@@ -51,6 +51,50 @@ export const restaurantConstructorUpdate = ({
   updatedAt: serverTimestamp(),
 })
 
+export const houseConstructorUpdateOffline = ({
+
+  phoneNumber,
+  section,
+  // imageUrl,
+  adVance,
+
+  houseType,
+  description,
+  long,
+  lat,
+  price,
+  partNumber,
+  // houseInsides,
+  surface,
+  zone,
+  commodite,
+  offerType,
+
+  isAvailable,
+
+}) => ({
+  adress: {
+    zone: zone.value,
+    section: section,
+    long: Number(long),
+    lat: Number(lat),
+  },
+  description: description,
+  commodite: commodite,
+  adVance: adVance,
+  houseType: houseType,
+  offerType: offerType,
+  phoneNumber: phoneNumber,
+  partNumber: partNumber,
+  price: price,
+  surface: surface,
+  isAvailable: isAvailable,
+})
+
+
+
+
+
 export const houseConstructorUpdate = ({
 
   phoneNumber,
@@ -61,6 +105,7 @@ export const houseConstructorUpdate = ({
   description,
   long,
   lat,
+  price,
   partNumber,
   // houseInsides,
   surface,
@@ -179,7 +224,6 @@ export const housesConstructorCreate = ({
   adVance: adVance,
   houseInsides: houseInsides,
   likes: [],
-  // isAvailable: isActive,
   createdAt: serverTimestamp(),
   updatedAt: serverTimestamp(),
 })
@@ -402,10 +446,7 @@ export const autoFillHouseForm = (reset, setValue, house) => {
   const {
     price,
     phoneNumber,
-    section,
     // imageUrl,
-    long,
-    lat,
     adVance,
     houseType,
     description,
@@ -413,7 +454,6 @@ export const autoFillHouseForm = (reset, setValue, house) => {
     partNumber,
     // houseInsides,
     surface,
-    zone,
     commodite,
     offerType,
     isAvailable,
@@ -430,8 +470,9 @@ export const autoFillHouseForm = (reset, setValue, house) => {
   setValue('surface', surface)
   setValue('commodite', { value: commodite?.value, label: commodite?.value })
   setValue('houseType', { value: houseType?.value, label: houseType?.value })
-  setValue('adress', { section: adress?.section, zone: adress?.zone, long: Number(long), lat: Number(lat), })
   setValue('section', adress?.section)
+  setValue('long', Number(adress?.long))
+  setValue('lat', Number(adress?.lat))
   setValue('zone', { value: adress?.zone, label: adress?.zone })
   setValue('isAvailable', isAvailable)
 

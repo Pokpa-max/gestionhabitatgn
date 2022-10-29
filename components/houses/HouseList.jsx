@@ -55,6 +55,8 @@ function HousesTable({
   ) : (
     <div className="">
       <HouseFormDrawer
+        data={data}
+        setData={setData}
         house={selectedHouse}
         open={openDrawer}
         setOpen={setOpenDrawer}

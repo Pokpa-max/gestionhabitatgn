@@ -16,6 +16,7 @@ import {
   restaurantConstructorUpdate,
 } from '../../utils/functionFactory'
 import {
+  deleteResizedStorageImage,
   getDefaultImageDownloadURL,
   getDefaultImageDownloadURLs,
 } from '@/utils/firebase/storage'
@@ -48,8 +49,48 @@ export const addRestaurant = async (data) => {
   return structuredData
 }
 
-export const editHouse = async (houseId, data) => {
-  await updateDoc(houseDocRef(houseId), houseConstructorUpdate(data))
+export const editHouse = async (
+  houseId,
+  data
+  // updateImages,
+  // oldImageUrl,
+  // oldImagesInside
+) => {
+  const imageData = {}
+  // if (updateImages) {
+  //   const imageUrl = await getDefaultImageDownloadURL(
+  //     data.imageUrl[0],
+  //     `houses`
+  //   )
+  //   const housImageUrls = data.insideImages.map((imageUrl) => {
+  //     return getDefaultImageDownloadURL(imageUrl, `houses`)
+  //   })
+
+  //   const houseInsides = await Promise.all(housImageUrls)
+
+  //   deleteResizedStorageImage(oldImageUrl, '200x200')
+  //   const housImageUrlsup = data.insideImages.map((imageUrl) => {
+  //     return deleteResizedStorageImage(imageUrl, '200x200')
+  //   })
+
+  //   const houseInsidesup = await Promise.all(housImageUrlsup)
+
+  //   imageData['imageUrl'] = imageUrl
+  //   imageData['houseInsides '] = houseInsidesup
+  // }
+  await updateDoc(
+    houseDocRef(houseId),
+    houseConstructorUpdate(
+      data
+      // {
+      //   ...data,
+      //   imageUrl: oldImageUrl,
+      //   houseInsides: oldImagesInside,
+      //   ...imageData,
+      // },
+      // true
+    )
+  )
 }
 
 export const addHouses = async (data) => {
