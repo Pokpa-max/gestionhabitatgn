@@ -49,47 +49,50 @@ export const addRestaurant = async (data) => {
   return structuredData
 }
 
-export const editHouse = async (
-  houseId,
-  data
-  // updateImages,
-  // oldImageUrl,
-  // oldImagesInside
-) => {
-  const imageData = {}
-  // if (updateImages) {
-  //   const imageUrl = await getDefaultImageDownloadURL(
-  //     data.imageUrl[0],
-  //     `houses`
-  //   )
-  //   const housImageUrls = data.insideImages.map((imageUrl) => {
-  //     return getDefaultImageDownloadURL(imageUrl, `houses`)
-  //   })
+export const editHouse = async (house, data, updateImages) => {
+  // const imageUrl = await getDefaultImageDownloadURL(
+  //   data.imageUrl[0],
+  //   `houses`
+  // )
+  // const housImageUrls = data.insideImages.map((imageUrl) => {
+  //   return getDefaultImageDownloadURL(imageUrl, `houses`)
+  // })
+  deleteResizedStorageImage(house?.imageUrl, '1000x1000')
+  deleteResizedStorageImage(house?.imageUrl, '200x200')
+  house?.houseInsides?.map((imageUrl) => {
+    return deleteResizedStorageImage(imageUrl, '1000x1000')
+  })
+  house?.houseInsides.map((imageUrl) => {
+    return deleteResizedStorageImage(imageUrl, '200x200')
+  })
 
-  //   const houseInsides = await Promise.all(housImageUrls)
+  const imageUrl = await getDefaultImageDownloadURL(data.imageUrl[0], `houses`)
 
-  //   deleteResizedStorageImage(oldImageUrl, '200x200')
-  //   const housImageUrlsup = data.insideImages.map((imageUrl) => {
-  //     return deleteResizedStorageImage(imageUrl, '200x200')
-  //   })
-
-  //   const houseInsidesup = await Promise.all(housImageUrlsup)
-
-  //   imageData['imageUrl'] = imageUrl
-  //   imageData['houseInsides '] = houseInsidesup
-  // }
+  const housImageUrls = data.insideImages.map((imageUrl) => {
+    return getDefaultImageDownloadURL(imageUrl, `houses`)
+  })
+  const houseInsides = await Promise.all(housImageUrls)
   await updateDoc(
-    houseDocRef(houseId),
-    houseConstructorUpdate(
-      data
-      // {
-      //   ...data,
-      //   imageUrl: oldImageUrl,
-      //   houseInsides: oldImagesInside,
-      //   ...imageData,
-      // },
-      // true
-    )
+    houseDocRef(house?.id),
+    housesConstructorCreate({
+      ...data,
+      imageUrl,
+      houseInsides,
+    })
+    // houseConstructorUpdate(
+    //   {
+    //     ...data,
+    //     imageUrl: oldImageUrl,
+    //     houseInsides: oldImagesInside,
+    //   },
+    //   true
+    // )
+  )
+
+  console.log(
+    'voir house mode',
+    houseDocRef(house?.id),
+    houseConstructorUpdate(data)
   )
 }
 

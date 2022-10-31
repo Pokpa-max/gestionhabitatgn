@@ -99,7 +99,7 @@ export const houseConstructorUpdate = ({
 
   phoneNumber,
   section,
-  // imageUrl,
+  imageUrl,
   adVance,
   houseType,
   description,
@@ -107,7 +107,7 @@ export const houseConstructorUpdate = ({
   lat,
   price,
   partNumber,
-  // houseInsides,
+  houseInsides,
   surface,
   zone,
   commodite,
@@ -125,6 +125,8 @@ export const houseConstructorUpdate = ({
   partNumber: partNumber,
   price: price,
   surface: surface,
+  imageUrl: imageUrl,
+  houseInsides: houseInsides,
   isAvailable: isAvailable,
   "adress.zone": zone.value,
   "adress.section": section,
@@ -446,13 +448,13 @@ export const autoFillHouseForm = (reset, setValue, house) => {
   const {
     price,
     phoneNumber,
-    // imageUrl,
+    imageUrl,
     adVance,
     houseType,
     description,
     adress,
     partNumber,
-    // houseInsides,
+    houseInsides,
     surface,
     commodite,
     offerType,
@@ -475,6 +477,9 @@ export const autoFillHouseForm = (reset, setValue, house) => {
   setValue('lat', Number(adress?.lat))
   setValue('zone', { value: adress?.zone, label: adress?.zone })
   setValue('isAvailable', isAvailable)
+  setValue('imageUrl', imageUrl)
+  setValue('houseInsides', houseInsides
+  )
 
 }
 

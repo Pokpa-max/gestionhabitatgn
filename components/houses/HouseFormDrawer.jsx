@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { useForm } from 'react-hook-form'
+import { RiImage2Fill } from 'react-icons/ri'
 import {
   addHouses,
   createAccount,
@@ -21,8 +22,9 @@ import SimpleSelect from '../SimpleSelect'
 import Toggle from '../Toggle'
 
 function HouseFormDrawer({ house, open, setOpen, setData, data }) {
+  console.log('images interieurs', house?.houseInsides)
   const [loading, setLoading] = useState(false)
-  const [images, setImages] = useState()
+  const [images, setImages] = useState([house?.houseInsides])
   const [imagefiles, setImageFiles] = useState([])
   const [selectedImage, setselectedImage] = useState([])
   // const [selectInsideImages, setInsideImages] = useState([])
@@ -30,6 +32,10 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
   // const [selectedOptions, setSelectedOptions] = useState(null)
   data = data || {}
   const { houses, lastElement } = data
+
+  const updateImages = images.length > 0 ? images : house?.houseInsides
+
+  console.log('voir condiction ', updateImages)
 
   const onSelectFile = (event) => {
     const seletedFiles = event.target.files
@@ -72,19 +78,15 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
       autoFillHouseForm(reset, setValue, house)
     }
     setFormvalue()
+    console.log('condiction', house)
   }, [house])
 
   const onSubmit = async (data) => {
     setLoading(true)
     try {
       if (house) {
-        await editHouse(
-          house.id,
-          data
-          // formData?.imageUrl?.length > 0 && house?.houseInsides > 0,
-          // house?.imageUrl,
-          // house.houseInsides
-        )
+        setImages(house.houseInsides)
+        await editHouse(house, data)
         const update = (data) => {
           const houseCopy = JSON.parse(JSON.stringify(houses))
           const newHouses = houseCopy.map((res) => {
@@ -489,7 +491,7 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
 
             <h1 className="text-primary-accent">Selection Dimages</h1>
 
-            {/* <div className="grid grid-cols-6 gap-24 border-t pt-3">
+            <div className="grid grid-cols-6 gap-24 border-t pt-3">
               <div className="col-span-2 sm:col-span-2">
                 <label
                   htmlFor="rccm"
@@ -502,14 +504,16 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
                   <div className="rounded-xs flex max-w-lg justify-center border-2 border-dashed border-gray-300 px-2 pt-5 pb-6">
                     <div className="space-y-1 text-center">
                       {formData?.imageUrl?.length > 0 ? (
-                        <img
-                          src={URL.createObjectURL(formData?.imageUrl[0])}
-                          alt="preview"
-                        />
-                      ) : selectedImage ? (
-                        <img src={selectedImage.imageUrl1000} alt="preview" />
+                        house ? (
+                          <img src={house?.imageUrl} alt="preview" />
+                        ) : (
+                          <img
+                            src={URL.createObjectURL(formData?.imageUrl[0])}
+                            alt="preview"
+                          />
+                        )
                       ) : (
-                        <RiImage2Fill className="mx-auto h-12 w-12 text-gray-400" />
+                        <img src={house?.imageUrl} alt="preview" />
                       )}
                       <div className="flex text-sm text-gray-600">
                         <label
@@ -549,7 +553,7 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
                   Charger les images interieurs
                 </label>
                 <input
-                  required
+                  // required
                   type="file"
                   name="images"
                   onChange={onSelectFile}
@@ -559,7 +563,7 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
                 <div className=" flex w-full gap-5">
                   {images &&
                     images.map((image, index) => {
-                      console.log('interne', image)
+                      console.log('interne image house', image)
                       return (
                         <div key={image} className="mt-5 ">
                           <img
@@ -580,7 +584,7 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
                     })}
                 </div>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
       </DrawerForm>

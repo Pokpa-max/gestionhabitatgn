@@ -31,16 +31,16 @@ const navigation = [
   // { name: 'Paiements', href: '/payments', icon: RiSafe2Fill },
   // { name: 'Promotions', href: '/marketing', icon: RiAlarmWarningFill },
 
-  {
-    name: 'Utilisateurs',
-    href: '/users',
-    icon: RiGroupFill,
-  },
+  // {
+  //   name: 'Utilisateurs',
+  //   href: '/users',
+  //   icon: RiGroupFill,
+  // },
 
   {
-    name: 'Parametres',
-    href: '/settings',
-    icon: RiSettings2Fill,
+    name: 'Utilisateurs',
+    href: '/customers',
+    icon: RiGroupFill,
   },
 ]
 
