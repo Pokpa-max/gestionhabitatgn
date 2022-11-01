@@ -25,21 +25,10 @@ const navigation = [
   { name: 'Acceuil', href: '/', icon: RiDashboardFill },
   { name: 'Publicité', href: '/advertising', icon: RiBookOpenFill },
   { name: 'Maisons', href: '/houses', icon: RiStore3Fill },
-  // { name: 'Restaurants', href: '/restaurants', icon: RiStore3Fill },
-  // { name: 'Commandes', href: '/orders', icon: RiMotorbikeFill },
-  // { name: 'Rapports', href: '/reports', icon: RiNewspaperFill },
-  // { name: 'Paiements', href: '/payments', icon: RiSafe2Fill },
-  // { name: 'Promotions', href: '/marketing', icon: RiAlarmWarningFill },
-
-  // {
-  //   name: 'Utilisateurs',
-  //   href: '/users',
-  //   icon: RiGroupFill,
-  // },
 
   {
     name: 'Utilisateurs',
-    href: '/customers',
+    href: '/users',
     icon: RiGroupFill,
   },
 ]

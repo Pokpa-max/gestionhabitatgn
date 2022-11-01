@@ -1,61 +1,56 @@
-import React, { useState } from 'react'
-import { columnsHouse } from './_dataTable'
+import React, { useEffect, useState } from 'react'
+import { columnsCategory } from '../_dataTable'
 
-import { RiFileEditLine, RiProfileLine, RiSearchLine } from 'react-icons/ri'
-import { Router, useRouter } from 'next/router'
+import { RiDeleteRow, RiFileCopy2Line, RiSearchLine } from 'react-icons/ri'
+import CategoryFormDrawer from './CategoryFormDrawer'
+import { getCategories, deleteCategory } from '@/lib/services/settings'
+import ConfirmModal from '../../ConfirmModal'
 
-import HouseFormDrawer from './HouseFormDrawer'
-import { OrderSkleton } from '../Orders/OrdersList'
-import PaginationButton from '../Orders/PaginationButton'
+function CategoriesList() {
+  const [categories, setCategories] = useState([])
+  const [selectedCategory, setSelectedCategory] = useState(null)
 
-function HousesList({
-  data,
-  setData,
-  houses,
-  showMore,
-  pagination,
-  isLoading,
-  isLoadingP,
-}) {
-  const [selectedHouse, setSelectedHouse] = useState(null)
+  useEffect(() => {
+    const unsubscribe = getCategories(setCategories)
+    return () => {
+      unsubscribe()
+    }
+  }, [])
 
   return (
-    <HousesTable
-      selectedHouse={selectedHouse}
-      setSelectedHouse={setSelectedHouse}
-      isLoading={isLoading}
-      houses={houses}
-      isLoadingP={isLoadingP}
-      showMore={showMore}
-      data={data}
-      setData={setData}
-      pagination={pagination}
+    <CategoriesTable
+      selectedCategory={selectedCategory}
+      setSelectedCategory={setSelectedCategory}
+      categories={categories}
     />
   )
 }
 
-function HousesTable({
-  selectedHouse,
-  setSelectedHouse,
-  data,
-  setData,
-  houses,
-  showMore,
-  pagination,
-  isLoading,
-  isLoadingP,
+function CategoriesTable({
+  selectedCategory,
+  setSelectedCategory,
+  categories,
 }) {
   const [openDrawer, setOpenDrawer] = useState(false)
-  const router = useRouter()
+  const [openWarning, setOpenWarning] = useState(false)
 
-  return isLoading ? (
-    <OrderSkleton />
-  ) : (
+  return (
     <div className="">
-      <HouseFormDrawer
-        data={data}
-        setData={setData}
-        house={selectedHouse}
+      <ConfirmModal
+        confirmFunction={async () => {
+          deleteCategory(selectedCategory.id, selectedCategory.imageUrl)
+          setOpenWarning(false)
+        }}
+        cancelFuction={() => {}}
+        title="Suppression Category"
+        description={
+          "Etes vous sur de supprimer cette categorie ? L'action est irreversible"
+        }
+        open={openWarning}
+        setOpen={setOpenWarning}
+      />
+      <CategoryFormDrawer
+        category={selectedCategory}
         open={openDrawer}
         setOpen={setOpenDrawer}
       />
@@ -77,7 +72,7 @@ function HousesTable({
                   id="search"
                   name="search"
                   className="block w-full rounded-sm border border-gray-300 bg-white py-2 pl-10 pr-3 leading-5 placeholder-gray-500 focus:border-primary-500 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary-500 sm:text-sm"
-                  placeholder="Rechercher un logement"
+                  placeholder="Rechercher un Category"
                   type="search"
                 />
               </div>
@@ -88,12 +83,12 @@ function HousesTable({
           <button
             onClick={() => {
               setOpenDrawer(true)
-              setSelectedHouse(null)
+              setSelectedCategory(null)
             }}
             type="button"
-            className="focus:ring-bg-cyan-500 inline-flex items-center justify-center rounded-sm border border-transparent bg-cyan-500 px-4 py-2 text-sm font-medium text-white hover:bg-cyan-500 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:w-auto"
+            className="hover:bg-primary-700 inline-flex items-center justify-center rounded-sm border border-transparent bg-primary-500 px-4 py-2 text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:w-auto"
           >
-            Ajouter un logement
+            Ajouter une categorie
           </button>
         </div>
       </div>
@@ -104,7 +99,7 @@ function HousesTable({
               <table className="min-w-full table-auto divide-y divide-gray-300 text-left">
                 <thead className="bg-gray-50">
                   <tr>
-                    {columnsHouse.map((column, index) => (
+                    {columnsCategory.map((column, index) => (
                       <th
                         key={index}
                         scope="col"
@@ -122,9 +117,9 @@ function HousesTable({
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-                  {houses?.map((row, index) => (
+                  {categories?.map((row, index) => (
                     <tr key={index}>
-                      {columnsHouse.map((column, index) => {
+                      {columnsCategory.map((column, index) => {
                         const cell = row[column.accessor]
                         const element = column.Cell?.(cell) ?? cell
                         return <td key={index}>{element}</td>
@@ -132,29 +127,26 @@ function HousesTable({
                       <td className="relative flex space-x-2 whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                         <button
                           onClick={() => {
-                            setSelectedHouse(row)
+                            setSelectedCategory(row)
                             setOpenDrawer(true)
                           }}
                           type="button"
                           className="text-black-900 inline-flex items-center rounded-full border border-transparent bg-gray-200 p-3 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                         >
-                          <RiFileEditLine
+                          <RiFileCopy2Line
                             className="h-4 w-4"
                             aria-hidden="true"
                           />
                         </button>
                         <button
                           onClick={() => {
-                            console.log('voir routes', router.pathname)
-                            router?.push(`${router.pathname}/${row.id}`)
+                            setSelectedCategory(row)
+                            setOpenWarning(true)
                           }}
                           type="button"
-                          className="text-black-900 inline-flex items-center rounded-full border border-transparent bg-gray-200 p-3 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                          className="inline-flex items-center rounded-full border border-transparent bg-red-500 p-3 text-white shadow-sm hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                         >
-                          <RiProfileLine
-                            className="h-4 w-4"
-                            aria-hidden="true"
-                          />
+                          <RiDeleteRow className="h-4 w-4" aria-hidden="true" />
                         </button>
                       </td>
                     </tr>
@@ -163,16 +155,10 @@ function HousesTable({
               </table>
             </div>
           </div>
-          <div>
-            <p className="mt-5">{houses.length + ' Logements'}</p>
-            {pagination && houses.length > 0 && (
-              <PaginationButton getmoreData={showMore} />
-            )}
-          </div>
         </div>
       </div>
     </div>
   )
 }
 
-export default HousesList
+export default CategoriesList

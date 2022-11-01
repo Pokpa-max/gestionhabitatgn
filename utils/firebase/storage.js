@@ -33,6 +33,7 @@ export const deleteResizedStorageImage = (primaryUrl, size = '200x200') => {
   deleteStorageImage(resizeUrl)
 };
 
+
 export const getImageLinkBySize = (primaryUrl, size) => {
   const withOutToken = primaryUrl.split('&')[0];
 

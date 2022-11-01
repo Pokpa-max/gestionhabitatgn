@@ -57,37 +57,40 @@ export const editHouse = async (house, data, updateImages) => {
   // const housImageUrls = data.insideImages.map((imageUrl) => {
   //   return getDefaultImageDownloadURL(imageUrl, `houses`)
   // })
-  deleteResizedStorageImage(house?.imageUrl, '1000x1000')
-  deleteResizedStorageImage(house?.imageUrl, '200x200')
-  house?.houseInsides?.map((imageUrl) => {
-    return deleteResizedStorageImage(imageUrl, '1000x1000')
-  })
-  house?.houseInsides.map((imageUrl) => {
-    return deleteResizedStorageImage(imageUrl, '200x200')
-  })
 
-  const imageUrl = await getDefaultImageDownloadURL(data.imageUrl[0], `houses`)
+  // deleteResizedStorageImage(house?.imageUrl, '1000x1000')
+  // deleteResizedStorageImage(house?.imageUrl, '200x200')
+  // house?.houseInsides?.map((imageUrl) => {
+  //   return deleteResizedStorageImage(imageUrl, '1000x1000')
+  // })
+  // house?.houseInsides.map((imageUrl) => {
+  //   return deleteResizedStorageImage(imageUrl, '200x200')
+  // })
 
-  const housImageUrls = data.insideImages.map((imageUrl) => {
-    return getDefaultImageDownloadURL(imageUrl, `houses`)
-  })
-  const houseInsides = await Promise.all(housImageUrls)
-  await updateDoc(
-    houseDocRef(house?.id),
-    housesConstructorCreate({
-      ...data,
-      imageUrl,
-      houseInsides,
-    })
-    // houseConstructorUpdate(
-    //   {
-    //     ...data,
-    //     imageUrl: oldImageUrl,
-    //     houseInsides: oldImagesInside,
-    //   },
-    //   true
-    // )
-  )
+  // const imageUrl = await getDefaultImageDownloadURL(data.imageUrl[0], `houses`)
+
+  // const housImageUrls = data.insideImages.map((imageUrl) => {
+  //   return getDefaultImageDownloadURL(imageUrl, `houses`)
+  // })
+  // const houseInsides = await Promise.all(housImageUrls)
+
+  // await updateDoc(
+  //   houseDocRef(house?.id),
+  //   housesConstructorCreate({
+  //     ...data,
+  //     imageUrl,
+  //     houseInsides,
+  //   })
+
+  // houseConstructorUpdate(
+  //   {
+  //     ...data,
+  //     imageUrl: oldImageUrl,
+  //     houseInsides: oldImagesInside,
+  //   },
+  //   true
+  // )
+  // )
 
   console.log(
     'voir house mode',

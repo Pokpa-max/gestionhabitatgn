@@ -22,9 +22,8 @@ import SimpleSelect from '../SimpleSelect'
 import Toggle from '../Toggle'
 
 function HouseFormDrawer({ house, open, setOpen, setData, data }) {
-  console.log('images interieurs', house?.houseInsides)
   const [loading, setLoading] = useState(false)
-  const [images, setImages] = useState([house?.houseInsides])
+  const [images, setImages] = useState([])
   const [imagefiles, setImageFiles] = useState([])
   const [selectedImage, setselectedImage] = useState([])
   // const [selectInsideImages, setInsideImages] = useState([])
@@ -33,9 +32,7 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
   data = data || {}
   const { houses, lastElement } = data
 
-  const updateImages = images.length > 0 ? images : house?.houseInsides
-
-  console.log('voir condiction ', updateImages)
+  console.log('voir house ', house)
 
   const onSelectFile = (event) => {
     const seletedFiles = event.target.files
@@ -63,6 +60,9 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
     formState: { errors },
   } = useForm({
     mode: 'onBlur',
+    defaultValues: {
+      isSoldOut: false,
+    },
     reValidateMode: 'onChange',
     shouldUnregister: false,
   })
@@ -71,22 +71,29 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
     setValue('long', lon)
     setValue('lat', lat)
   }
-  const formData = watch()
+  // const formData = watch()
 
   useEffect(() => {
     const setFormvalue = () => {
+      if (house) {
+        setImages(house.houseInsides)
+      }
+
       autoFillHouseForm(reset, setValue, house)
     }
     setFormvalue()
     console.log('condiction', house)
   }, [house])
 
+  const files = watch('imageUrl')
+
+  console.log('voir fileddddd', files?.length)
+
   const onSubmit = async (data) => {
     setLoading(true)
     try {
       if (house) {
-        setImages(house.houseInsides)
-        await editHouse(house, data)
+        await editHouse(house, data, imagefiles)
         const update = (data) => {
           const houseCopy = JSON.parse(JSON.stringify(houses))
           const newHouses = houseCopy.map((res) => {
@@ -111,6 +118,7 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
           insideImages: imagefiles,
         })
         newHouse['createdAt'] = await getCurrentDateOnline()
+        newHouse['']
         setData({ houses: [newHouse, ...houses], lastElement })
         setImages([])
         setOpen(false)
@@ -503,18 +511,38 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
                 <div className="mt-1 sm:col-span-2 sm:mt-0">
                   <div className="rounded-xs flex max-w-lg justify-center border-2 border-dashed border-gray-300 px-2 pt-5 pb-6">
                     <div className="space-y-1 text-center">
-                      {formData?.imageUrl?.length > 0 ? (
-                        house ? (
-                          <img src={house?.imageUrl} alt="preview" />
+                      {files?.length > 0 ? (
+                        house?.imageUrl > 0 ? (
+                          <img
+                            src={URL.createObjectURL(files[0])}
+                            alt="preview"
+                          />
                         ) : (
                           <img
-                            src={URL.createObjectURL(formData?.imageUrl[0])}
+                            src={
+                              files?.length == 1
+                                ? URL.createObjectURL(files[0])
+                                : house.imageUrl
+                            }
                             alt="preview"
                           />
                         )
+                      ) : house ? (
+                        <img src={house.imageUrl} alt="preview" />
                       ) : (
-                        <img src={house?.imageUrl} alt="preview" />
+                        <RiImage2Fill className="mx-auto h-12 w-12 text-gray-400" />
                       )}
+
+                      {/* {formData?.imageUrl?.length > 0 ? (
+                        <img
+                          src={URL.createObjectURL(formData?.imageUrl[0])}
+                          alt="preview"
+                        />
+                      ) : house ? (
+                        <img src={house.imageUrl} alt="preview" />
+                      ) : (
+                        <RiImage2Fill className="mx-auto h-12 w-12 text-gray-400" />
+                      )} */}
                       <div className="flex text-sm text-gray-600">
                         <label
                           htmlFor="file-upload"
@@ -524,15 +552,13 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
                           <input
                             id="file-upload"
                             {...register('imageUrl', {
-                              required:
-                                formData?.imageUrl?.length == 0 &&
-                                !selectedImage?.imageUrl,
+                              required: files == 0 && !house?.imageUrl,
                             })}
                             type="file"
                             className="sr-only"
                           />
                         </label>
-                        <p className="pl-1">or drag and drop</p>
+                        {/* <p className="pl-1">or drag and drop</p> */}
                       </div>
                       <p className="text-xs text-gray-500">
                         PNG, JPG, GIF up to 10MB
@@ -571,14 +597,18 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
                             alt=""
                             className="h-48 w-96 object-fill"
                           />
-                          <button
-                            className="w-full p-5 text-center text-sm text-gray-400  "
-                            onClick={() =>
-                              setImages(images.filter((e) => e !== image))
-                            }
-                          >
-                            suprimer limage
-                          </button>
+                          {images.length > 0 ? (
+                            <button
+                              className="w-full p-5 text-center text-sm text-gray-400  "
+                              onClick={() =>
+                                setImages(images.filter((e) => e !== image))
+                              }
+                            >
+                              suprimer limage
+                            </button>
+                          ) : (
+                            <RiImage2Fill className="mx-auto h-12 w-12 text-gray-400" />
+                          )}
                         </div>
                       )
                     })}
