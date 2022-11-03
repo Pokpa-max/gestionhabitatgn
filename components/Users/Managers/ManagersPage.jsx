@@ -21,7 +21,7 @@ function ManagersPage() {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    const managerRef = collection(db, 'restaurants')
+    const managerRef = collection(db, 'managers')
     const fetchData = async () => {
       setIsLoading(true)
       const q = query(
@@ -31,9 +31,9 @@ function ManagersPage() {
       )
 
       const querySnapshot = await getDocs(q)
-      const restaurants = parseDocsData(querySnapshot)
+      const managers = parseDocsData(querySnapshot)
       setData({
-        restaurants,
+        managers,
         lastElement: querySnapshot.docs[querySnapshot.docs.length - 1],
       })
       setIsLoading(false)
@@ -41,11 +41,44 @@ function ManagersPage() {
     fetchData()
   }, [])
 
+  const managerToShow = data?.managers ?? []
+  const showMoreFirestore = async () => {
+    const customerRef = collection(db, 'managers')
+    setIsLoadingP(true)
+    const lastElement = data.lastElement
+
+    const q = query(
+      customerRef,
+      orderBy('createdAt', 'desc'),
+      startAfter(lastElement),
+      limit(HITS_PER_PAGE)
+    )
+    const querySnapshot = await getDocs(q)
+    const managers = parseDocsData(querySnapshot)
+    const nextData = {
+      managers: [...data.managers, ...managers],
+      lastElement: querySnapshot.docs[querySnapshot.docs.length - 1],
+    }
+
+    setPagination({ ...pagination, showPagination: managers.length > 0 })
+
+    setData(nextData)
+    setIsLoadingP(false)
+  }
+
   return (
     <div className="flex-1 py-6">
       <div className="mx-auto px-4 sm:px-6 md:px-8">
         <Header title={'Managers'} />
-        <UsersList />
+        <UsersList
+          title={'Managers'}
+          setData={setData}
+          customers={managerToShow}
+          showMore={showMoreFirestore}
+          pagination={pagination.showPagination}
+          isLoading={isLoading}
+          isLoadingP={isLoadingP}
+        />
       </div>
     </div>
   )

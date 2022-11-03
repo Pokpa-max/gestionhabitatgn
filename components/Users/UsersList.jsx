@@ -5,6 +5,7 @@ import PaginationButton from '../Orders/PaginationButton'
 import { useState } from 'react'
 import { RiSearchLine } from 'react-icons/ri'
 import DesableConfirmModal from '../DesableConfirm'
+import { desableUser, desableUserFirestore } from '../../lib/services/user'
 
 function UsersList({
   data,
@@ -22,12 +23,13 @@ function UsersList({
       isLoading={isLoading}
       selectedUser={selectedUser}
       setSelectedUser={setSelectedUser}
-      customers={customers}
+      newcustomers={customers}
       isLoadingP={isLoadingP}
       showMore={showMore}
       data={data}
       setData={setData}
       pagination={pagination}
+      title={title}
     />
   )
 }
@@ -35,14 +37,18 @@ function UsersList({
 function UserTable({
   data,
   setData,
-  customers,
+  newcustomers,
   showMore,
   pagination,
   isLoading,
   isLoadingP,
+  title,
 }) {
   const [openModal, setOpenModal] = useState(false)
   const [selectUser, setSlectUser] = useState(false)
+  data = data || {}
+  const { users, lastElement } = data
+  console.log('voir detail', data)
 
   return isLoading ? (
     <OrderSkleton />
@@ -50,8 +56,29 @@ function UserTable({
     <div className="">
       <DesableConfirmModal
         title="Suspendre le Compte"
+        desable={!selectUser?.isAvailable}
         confirmFunction={async () => {
-          // deleteCategory(selectedCategory.id, selectedCategory.imageUrl)
+          await desableUser(selectUser.id, !selectUser?.isAvailable).then(
+            async () => {
+              await desableUserFirestore(
+                selectUser.id,
+                !selectUser?.isAvailable
+              )
+              const update = () => {
+                const user = users.map((user) => {
+                  const newUser = { ...user }
+
+                  if (user.id == selectUser.id) {
+                    newUser.isAvailable = !selectUser?.isAvailable
+                  }
+                  return newUser
+                })
+
+                setData({ users: user, lastElement })
+              }
+              update()
+            }
+          )
           setOpenModal(false)
         }}
         open={openModal}
@@ -110,7 +137,7 @@ function UserTable({
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-                  {customers?.map((row, index) => (
+                  {newcustomers?.map((row, index) => (
                     <tr key={index}>
                       {columnsUser.map((column, index) => {
                         const cell = row[column.accessor]
@@ -124,10 +151,14 @@ function UserTable({
                             setOpenModal(true)
                           }}
                         >
-                          {row.active ? (
-                            <p className=" text-gray-500 ">Desactiver </p>
+                          {row.isAvailable ? (
+                            <p className=" mr-2 rounded bg-green-100 px-2.5 py-0.5 text-sm font-medium text-gray-800 ">
+                              Activer{' '}
+                            </p>
                           ) : (
-                            <p className="  text-gray-500 ">Activer</p>
+                            <p className=" mr-2 rounded bg-red-100 px-2.5 py-0.5 text-sm font-medium text-gray-800 ">
+                              Desactiver
+                            </p>
                           )}
                         </button>
                       </td>
@@ -137,8 +168,11 @@ function UserTable({
               </table>
             </div>
             <div>
-              <p className="mt-5">{customers?.length + ' Utilisateurs'}</p>
-              {pagination && customers.length > 0 && (
+              <p className="mt-5">
+                {newcustomers?.length + ' '}
+                {title}
+              </p>
+              {pagination && newcustomers.length > 0 && (
                 <PaginationButton getmoreData={showMore} />
               )}
             </div>

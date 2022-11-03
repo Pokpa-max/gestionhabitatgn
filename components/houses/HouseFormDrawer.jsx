@@ -2,11 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { useForm } from 'react-hook-form'
 import { RiImage2Fill } from 'react-icons/ri'
-import {
-  addHouses,
-  createAccount,
-  editHouse,
-} from '../../lib/services/restaurant'
+import { addHouses, editHouse } from '../../lib/services/restaurant'
 import { getCurrentDateOnline } from '../../utils/date'
 import {
   autoFillHouseForm,
@@ -71,7 +67,6 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
     setValue('long', lon)
     setValue('lat', lat)
   }
-  // const formData = watch()
 
   useEffect(() => {
     const setFormvalue = () => {
@@ -86,8 +81,6 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
   }, [house])
 
   const files = watch('imageUrl')
-
-  console.log('voir fileddddd', files?.length)
 
   const onSubmit = async (data) => {
     setLoading(true)
@@ -117,6 +110,7 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
           ...data,
           insideImages: imagefiles,
         })
+        console.log('voir dddd', newHouse)
         newHouse['createdAt'] = await getCurrentDateOnline()
         newHouse['']
         setData({ houses: [newHouse, ...houses], lastElement })
@@ -137,10 +131,8 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
         open={open}
         setOpen={setOpen}
         onSubmit={handleSubmit(onSubmit)}
-        title={'Informations logement'}
-        description={
-          'Modifiez ou finalisez l inscription d un établissement en fournissant les informations du formulaire suivant.'
-        }
+        title={"Enregistrement d'un  Logement"}
+        description={'Veillez remplir le formulaire suivant...'}
         footerButtons={
           <>
             {loading ? (
@@ -169,7 +161,7 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
       >
         <div className="mt-5 md:col-span-2 md:mt-0">
           <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
-            <h1 className="text-primary-accent">Information</h1>
+            <h1 className="text-primary-accent">Description du logement</h1>
 
             <div className="grid grid-cols-6 gap-6 border-t pt-3">
               <div className="col-span-12 sm:col-span-3">
@@ -194,13 +186,13 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
                 </p>
               </div>
               <div className="col-span-12 sm:col-span-3">
-                <div className="mt-1">
+                {/* <div className="mt-1">
                   <Toggle
                     setToggleValue={setValue}
                     control={control}
                     name={'isAvailable'}
                   />
-                </div>
+                </div> */}
                 <p className="pt-1 font-stratos-light text-xs text-red-600">
                   {errors?.isAvailable?.message}
                 </p>
@@ -301,7 +293,7 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
                   htmlFor="position"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Prix
+                  Prix mensuel
                 </label>
                 <input
                   type="number"
@@ -322,7 +314,7 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
                   htmlFor="position"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Avance du loyer
+                  Nombre de mois d'avance
                 </label>
                 <input
                   type="number"
@@ -349,7 +341,7 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
 
                 <div className="mt-1">
                   <SimpleSelect
-                    required={'Champs requis'}
+                    // required={'Champs requis'}
                     name="commodite"
                     control={control}
                     options={commodites}
@@ -365,12 +357,12 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
                   htmlFor="position"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Nombre de piece
+                  Nombre de Chambres
                 </label>
                 <input
                   type="number"
                   {...register('partNumber', {
-                    required: 'Champs requis',
+                    // required: 'Champs requis',
                   })}
                   id="partNumber"
                   autoComplete="family-name"
@@ -387,7 +379,7 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
                   htmlFor="surface"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Surface
+                  Surface en m²
                 </label>
                 <input
                   type="text"
@@ -522,7 +514,7 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
                             src={
                               files?.length == 1
                                 ? URL.createObjectURL(files[0])
-                                : house.imageUrl
+                                : house?.imageUrl
                             }
                             alt="preview"
                           />
@@ -533,16 +525,6 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
                         <RiImage2Fill className="mx-auto h-12 w-12 text-gray-400" />
                       )}
 
-                      {/* {formData?.imageUrl?.length > 0 ? (
-                        <img
-                          src={URL.createObjectURL(formData?.imageUrl[0])}
-                          alt="preview"
-                        />
-                      ) : house ? (
-                        <img src={house.imageUrl} alt="preview" />
-                      ) : (
-                        <RiImage2Fill className="mx-auto h-12 w-12 text-gray-400" />
-                      )} */}
                       <div className="flex text-sm text-gray-600">
                         <label
                           htmlFor="file-upload"
@@ -558,7 +540,6 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
                             className="sr-only"
                           />
                         </label>
-                        {/* <p className="pl-1">or drag and drop</p> */}
                       </div>
                       <p className="text-xs text-gray-500">
                         PNG, JPG, GIF up to 10MB

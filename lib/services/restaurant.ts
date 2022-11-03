@@ -17,6 +17,7 @@ import {
 } from '../../utils/functionFactory'
 import {
   deleteResizedStorageImage,
+  deleteStorageImage,
   getDefaultImageDownloadURL,
   getDefaultImageDownloadURLs,
 } from '@/utils/firebase/storage'
@@ -49,61 +50,42 @@ export const addRestaurant = async (data) => {
   return structuredData
 }
 
-export const editHouse = async (house, data, updateImages) => {
-  // const imageUrl = await getDefaultImageDownloadURL(
-  //   data.imageUrl[0],
-  //   `houses`
-  // )
-  // const housImageUrls = data.insideImages.map((imageUrl) => {
-  //   return getDefaultImageDownloadURL(imageUrl, `houses`)
-  // })
+export const editHouse = async (house, data, imagefiles) => {
+  const imageUrl =
+    typeof data.imageUrl === 'string'
+      ? house.imageUrl
+      : await getDefaultImageDownloadURL(data.imageUrl[0], `housess`)
 
-  // deleteResizedStorageImage(house?.imageUrl, '1000x1000')
-  // deleteResizedStorageImage(house?.imageUrl, '200x200')
-  // house?.houseInsides?.map((imageUrl) => {
-  //   return deleteResizedStorageImage(imageUrl, '1000x1000')
-  // })
-  // house?.houseInsides.map((imageUrl) => {
-  //   return deleteResizedStorageImage(imageUrl, '200x200')
-  // })
+  const housImageUrls =
+    imagefiles.length > 0
+      ? imagefiles.map((imageUrl) => {
+          return getDefaultImageDownloadURL(imageUrl, `housess`)
+        })
+      : house.houseInsides
 
-  // const imageUrl = await getDefaultImageDownloadURL(data.imageUrl[0], `houses`)
+  const houseInsides = await Promise.all(housImageUrls)
 
-  // const housImageUrls = data.insideImages.map((imageUrl) => {
-  //   return getDefaultImageDownloadURL(imageUrl, `houses`)
-  // })
-  // const houseInsides = await Promise.all(housImageUrls)
+  deleteStorageImage(house?.imageUrl)
 
-  // await updateDoc(
-  //   houseDocRef(house?.id),
-  //   housesConstructorCreate({
-  //     ...data,
-  //     imageUrl,
-  //     houseInsides,
-  //   })
+  house?.houseInsides.map((imageUrl) => {
+    return deleteStorageImage(imageUrl)
+  })
 
-  // houseConstructorUpdate(
-  //   {
-  //     ...data,
-  //     imageUrl: oldImageUrl,
-  //     houseInsides: oldImagesInside,
-  //   },
-  //   true
-  // )
-  // )
-
-  console.log(
-    'voir house mode',
+  await updateDoc(
     houseDocRef(house?.id),
-    houseConstructorUpdate(data)
+    housesConstructorCreate({
+      ...data,
+      imageUrl,
+      houseInsides,
+    })
   )
 }
 
 export const addHouses = async (data) => {
-  const imageUrl = await getDefaultImageDownloadURL(data.imageUrl[0], `houses`)
+  const imageUrl = await getDefaultImageDownloadURL(data.imageUrl[0], `housess`)
 
   const housImageUrls = data.insideImages.map((imageUrl) => {
-    return getDefaultImageDownloadURL(imageUrl, `houses`)
+    return getDefaultImageDownloadURL(imageUrl, `housess`)
   })
 
   const houseInsides = await Promise.all(housImageUrls)
@@ -114,6 +96,7 @@ export const addHouses = async (data) => {
     ...data,
     imageUrl,
     houseInsides,
+    isAvailable: false,
   })
   console.log('voir structuredData👌👌👌👌👌👌👌', structuredData)
 

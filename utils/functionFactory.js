@@ -1,13 +1,15 @@
 // Entity constructor for the data model
 
-import { serverTimestamp, GeoPoint, Timestamp } from 'firebase/firestore'
+import { serverTimestamp, GeoPoint, Timestamp, updateDoc, doc } from 'firebase/firestore'
 import { encode } from './geoHash';
 import { firebaseDateToJsDate } from '../utils/date'
 import { stringToColour } from '../utils/ui'
 import { offerType } from '_data';
+import { db } from '@/lib/firebase/client_config';
 // import geofire from 'geofire-common'
 
 // dataConstructors
+export const houseRef = (houseId) => doc(db, `essaisHouses/${houseId}`)
 
 export const restaurantConstructorUpdate = ({
   storename: name,
@@ -199,7 +201,7 @@ export const housesConstructorCreate = ({
   houseInsides,
   surface,
   zone,
-  commodite,
+  commodite = "",
   offerType,
 
   isAvailable,
@@ -658,4 +660,37 @@ export const autoFillDishForm = (reset, setValue, dish) => {
 
 export const getObjectInString = (str) => {
   return JSON.parse(str.substring(str.indexOf('{'), str.lastIndexOf('}') + 1))
+}
+
+
+
+
+
+
+export const desableHouseToFirestore = async (houseId, isAvailable) => {
+  console.log("voir condiction ", isAvailable);
+
+  await updateDoc(houseRef(houseId), { isAvailable: isAvailable })
+
+
+}
+
+
+
+export const desableUser = async (userId, desable) => {
+
+  try {
+    fetch('/api/userActivity/desableUser', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: userId,
+        isActive: desable,
+      }),
+    })
+  } catch (error) {
+    console.log('error: ', error)
+  }
 }

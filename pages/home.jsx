@@ -1,6 +1,7 @@
 import Page from '@/components/Page'
 import Scaffold from '@/components/Scaffold'
 import Header from '@/components/Header'
+
 import {
   AuthAction,
   withAuthUser,
@@ -11,6 +12,7 @@ function Home() {
   return (
     <Scaffold>
       <Header title={'Acceuil'} />
+      {/* <DashbordCard /> */}
     </Scaffold>
   )
 }
@@ -21,13 +23,3 @@ const HomePage = () => (
   </Page>
 )
 export default HomePage
-// export const getServerSideProps = withAuthUserTokenSSR({
-//   whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
-// })(async () => {
-//   return {
-//     props: {},
-//   }
-// })
-// export default withAuthUser({
-//   whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
-// })(HomePage)

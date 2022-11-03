@@ -2,11 +2,14 @@ import React, { useState } from 'react'
 import { columnsHouse } from './_dataTable'
 
 import { RiFileEditLine, RiProfileLine, RiSearchLine } from 'react-icons/ri'
-import { Router, useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 
 import HouseFormDrawer from './HouseFormDrawer'
 import { OrderSkleton } from '../Orders/OrdersList'
 import PaginationButton from '../Orders/PaginationButton'
+import DesableConfirmModal from '../DesableConfirm'
+import { desableHouseToFirestore } from '../../utils/functionFactory'
+import { notify } from '../../utils/toast'
 
 function HousesList({
   data,
@@ -17,14 +20,10 @@ function HousesList({
   isLoading,
   isLoadingP,
 }) {
-  const [selectedHouse, setSelectedHouse] = useState(null)
-
   return (
     <HousesTable
-      selectedHouse={selectedHouse}
-      setSelectedHouse={setSelectedHouse}
       isLoading={isLoading}
-      houses={houses}
+      newhouses={houses}
       isLoadingP={isLoadingP}
       showMore={showMore}
       data={data}
@@ -35,23 +34,55 @@ function HousesList({
 }
 
 function HousesTable({
-  selectedHouse,
-  setSelectedHouse,
   data,
   setData,
-  houses,
+  newhouses,
   showMore,
   pagination,
   isLoading,
   isLoadingP,
 }) {
+  const [selectedHouse, setSelectedHouse] = useState(null)
   const [openDrawer, setOpenDrawer] = useState(false)
+  const [openModal, setOpenModal] = useState(false)
+
   const router = useRouter()
+  data = data || {}
+
+  const { houses, lastElement } = data
 
   return isLoading ? (
     <OrderSkleton />
   ) : (
     <div className="">
+      <DesableConfirmModal
+        desable={!selectedHouse?.isAvailable}
+        title="Voulez-vous effectuer cette action"
+        confirmFunction={async () => {
+          await desableHouseToFirestore(
+            selectedHouse.id,
+            !selectedHouse?.isAvailable
+          )
+          const update = () => {
+            const houseUpdated = houses.map((user) => {
+              const newUser = { ...user }
+
+              if (user.id == selectedHouse.id) {
+                newUser.isAvailable = !selectedHouse?.isAvailable
+              }
+              return newUser
+            })
+
+            setData({ houses: houseUpdated, lastElement })
+          }
+          update()
+          notify('Action effectuée avec succès', 'success')
+
+          setOpenModal(false)
+        }}
+        open={openModal}
+        setOpen={setOpenModal}
+      />
       <HouseFormDrawer
         data={data}
         setData={setData}
@@ -113,6 +144,7 @@ function HousesTable({
                         {column.Header}
                       </th>
                     ))}
+                    <th></th>
                     <th
                       scope="col"
                       className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold uppercase text-slate-500 sm:pl-6"
@@ -122,7 +154,7 @@ function HousesTable({
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-                  {houses?.map((row, index) => (
+                  {newhouses?.map((row, index) => (
                     <tr key={index}>
                       {columnsHouse.map((column, index) => {
                         const cell = row[column.accessor]
@@ -152,9 +184,27 @@ function HousesTable({
                           className="text-black-900 inline-flex items-center rounded-full border border-transparent bg-gray-200 p-3 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                         >
                           <RiProfileLine
-                            className="h-4 w-4"
+                            className="h-4 w-4 "
                             aria-hidden="true"
                           />
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          onClick={() => {
+                            setSelectedHouse(row)
+                            setOpenModal(true)
+                          }}
+                        >
+                          {row.isAvailable ? (
+                            <p className=" mr-2 rounded bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-gray-500 text-green-800 dark:bg-green-200 dark:text-green-900">
+                              Activer{' '}
+                            </p>
+                          ) : (
+                            <p className="  mr-2  rounded bg-red-100 px-2.5 py-0.5 text-sm font-medium text-gray-500 text-red-800 dark:bg-red-200 dark:text-red-900">
+                              Desactiver
+                            </p>
+                          )}
                         </button>
                       </td>
                     </tr>
@@ -164,8 +214,8 @@ function HousesTable({
             </div>
           </div>
           <div>
-            <p className="mt-5">{houses.length + ' Logements'}</p>
-            {pagination && houses.length > 0 && (
+            <p className="mt-5 ml-10">{newhouses.length + ' Logements'}</p>
+            {pagination && newhouses.length > 0 && (
               <PaginationButton getmoreData={showMore} />
             )}
           </div>

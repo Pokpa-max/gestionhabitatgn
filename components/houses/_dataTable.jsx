@@ -98,7 +98,7 @@ export const columnsHouse = [
         <div className="flex-col py-4">
           <div className="whitespace-nowrap px-3 font-stratos-light text-sm text-gray-500">
             {data ? (
-              <p className="text-cyan-500">Occupé</p>
+              <p className="text-red-900">Indisponible</p>
             ) : (
               <p className="">Disponible</p>
             )}

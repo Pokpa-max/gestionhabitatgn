@@ -80,6 +80,7 @@ function CustomersPage() {
         <UsersList
           title={'Utilisateurs'}
           setData={setData}
+          data={data}
           customers={usersToShow}
           showMore={showMoreFirestore}
           pagination={pagination.showPagination}

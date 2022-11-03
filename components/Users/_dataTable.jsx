@@ -67,18 +67,15 @@ export const columnsUser = [
   },
   {
     Header: 'Etat',
-    accessor: 'active',
+    accessor: 'desabled',
     Cell: (data) => {
+      console.log('voir etat', data)
       return (
         <div className="">
           {data ? (
-            <p className="mr-2 rounded bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-800 dark:bg-green-200 dark:text-green-900">
-              Actif
-            </p>
+            <p className=" text-xs font-semibold text-red-800 ">Inactif</p>
           ) : (
-            <p className="mr-2 rounded bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-800 dark:bg-red-200 dark:text-red-900">
-              Inactif
-            </p>
+            <p className="mr-2  text-sm font-semibold text-green-800 ">Actif</p>
           )}
         </div>
       )
