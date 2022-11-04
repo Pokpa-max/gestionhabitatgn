@@ -155,7 +155,7 @@ export default function Scaffold({ children, title, subNav }) {
               </nav>
             </div>
             <div className="flex flex-shrink-0 border-t border-gray-200 p-4">
-              <Link href={'/'}>
+              <Link href={'auth/signin'}>
                 <a className="group block w-full flex-shrink-0">
                   <div className="flex items-center">
                     <div className="ml-3">

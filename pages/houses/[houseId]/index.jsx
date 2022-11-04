@@ -8,26 +8,37 @@ import { useState } from 'react'
 import HouseCard from '../../../components/houses/houseCard'
 import { title } from 'process'
 import InsideHouseCard from '../../../components/houses/insideHouseCard'
+import { OrderSkleton } from '../../../components/Orders/OrdersList'
 
 function HouseDetail() {
   const router = useRouter()
   const { houseId } = router.query
   const [house, setHouse] = useState()
+  const [isLoading, setIsLoading] = useState(false)
+
   useEffect(() => {
     if (houseId) {
       console.log('voir id maison', houseId)
       const houseRef = doc(db, 'essaisHouses', houseId)
       const fetchHouse = async () => {
+        setIsLoading(true)
         const docSnap = await getDoc(houseRef)
         if (docSnap.exists()) {
           setHouse(docSnap.data())
         }
+        setIsLoading(false)
       }
       fetchHouse()
     }
   }, [houseId])
 
-  return (
+  console.log('house insideHouseCard', house?.houseInsides)
+
+  return isLoading ? (
+    <Scaffold>
+      <OrderSkleton />
+    </Scaffold>
+  ) : (
     <Scaffold>
       <div className="flex items-end justify-between">
         <Header title="Details du logement" />

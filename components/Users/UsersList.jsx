@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { RiSearchLine } from 'react-icons/ri'
 import DesableConfirmModal from '../DesableConfirm'
 import { desableUser, desableUserFirestore } from '../../lib/services/user'
+import { notify } from '../../utils/toast'
 
 function UsersList({
   data,
@@ -79,6 +80,7 @@ function UserTable({
               update()
             }
           )
+          notify('Action executée avec succès', 'success')
           setOpenModal(false)
         }}
         open={openModal}

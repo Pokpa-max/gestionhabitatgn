@@ -197,7 +197,7 @@ export const housesConstructorCreate = ({
   description,
   long,
   lat,
-  partNumber,
+  partNumber = "",
   houseInsides,
   surface,
   zone,

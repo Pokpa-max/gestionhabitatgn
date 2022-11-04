@@ -23,6 +23,7 @@ function SignIn() {
 
   const [loading, setLoading] = useState(false)
   const onSubmit = async (data) => {
+    console.log('voir data', data)
     setLoading(true)
     try {
       await signin(data.email, data.password)
@@ -38,24 +39,21 @@ function SignIn() {
         <div className="w-full max-w-md space-y-8">
           <div>
             <div className="mx-auto flex items-center justify-center">
-              <img
+              {/* <img
                 className="mb-20 h-24 "
                 src="/images/logo.png"
                 alt="Workflow"
-              />
+              /> */}
               <div className="ml-5 flex-col">
-                <h1 className="text-5xl font-black text-primary-accent">
-                  EAT224
-                </h1>
-                <p className="text-5xl">ADMIN</p>
+                <h1 className="text-5xl font-black text-cyan-500">Meloger</h1>
+                <p className="ml-4 mt-2 text-5xl text-gray-600">ADMIN</p>
               </div>
             </div>
             <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
               Bienvenu.
             </h2>
             <p className="mt-4 font-stratos-light text-gray-500">
-              Utilisez vos identifiants pour acceder au panel d'administration
-              EAT224.
+              Veillez Saisir vos informations d'identification
             </p>
           </div>
           <form
@@ -135,7 +133,7 @@ function SignIn() {
             <div>
               <button
                 type="submit"
-                className="group relative flex w-full justify-center rounded-sm border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                className="group relative flex w-full justify-center rounded-sm border border-transparent bg-cyan-500 px-4 py-2 text-sm font-medium text-white hover:bg-cyan-500 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               >
                 Connexion
               </button>
@@ -148,7 +146,7 @@ function SignIn() {
 }
 
 const SignInPage = () => (
-  <Page name="Eat224 Admin">
+  <Page name="Meloger">
     <SignIn />
   </Page>
 )

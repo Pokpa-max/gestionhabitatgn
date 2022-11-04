@@ -15,16 +15,13 @@ import DrawerForm from '../DrawerForm'
 import GoogleMaps from '../GoogleMaps'
 import Loader from '../Loader'
 import SimpleSelect from '../SimpleSelect'
-import Toggle from '../Toggle'
 
 function HouseFormDrawer({ house, open, setOpen, setData, data }) {
   const [loading, setLoading] = useState(false)
   const [images, setImages] = useState([])
   const [imagefiles, setImageFiles] = useState([])
   const [selectedImage, setselectedImage] = useState([])
-  // const [selectInsideImages, setInsideImages] = useState([])
 
-  // const [selectedOptions, setSelectedOptions] = useState(null)
   data = data || {}
   const { houses, lastElement } = data
 
@@ -186,13 +183,6 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
                 </p>
               </div>
               <div className="col-span-12 sm:col-span-3">
-                {/* <div className="mt-1">
-                  <Toggle
-                    setToggleValue={setValue}
-                    control={control}
-                    name={'isAvailable'}
-                  />
-                </div> */}
                 <p className="pt-1 font-stratos-light text-xs text-red-600">
                   {errors?.isAvailable?.message}
                 </p>

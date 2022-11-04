@@ -35,12 +35,7 @@ function HouseCard({ imageUrl, title, description, price, partNumber }) {
             </div>
 
             <div class="mb-2 text-xl font-bold text-cyan-500 ">Description</div>
-            <p class="text-base text-gray-700">
-              {description}
-              {
-                ' Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, Nonea! Maiores et perferendis eaque, exercitationem praesentium nihil.'
-              }
-            </p>
+            <p class="text-base text-gray-700">{description}</p>
           </div>
         </div>
       </div>

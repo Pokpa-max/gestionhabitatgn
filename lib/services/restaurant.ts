@@ -51,6 +51,15 @@ export const addRestaurant = async (data) => {
 }
 
 export const editHouse = async (house, data, imagefiles) => {
+  if (typeof data.imageUrl != 'string') {
+    deleteStorageImage(house?.imageUrl)
+  }
+  if (imagefiles.length > 0) {
+    house?.houseInsides.map((imageUrl) => {
+      return deleteStorageImage(imageUrl)
+    })
+  }
+
   const imageUrl =
     typeof data.imageUrl === 'string'
       ? house.imageUrl
@@ -65,11 +74,7 @@ export const editHouse = async (house, data, imagefiles) => {
 
   const houseInsides = await Promise.all(housImageUrls)
 
-  deleteStorageImage(house?.imageUrl)
-
-  house?.houseInsides.map((imageUrl) => {
-    return deleteStorageImage(imageUrl)
-  })
+  console.log('voir les images...🤬🤬🤬🤬', imageUrl, houseInsides)
 
   await updateDoc(
     houseDocRef(house?.id),
