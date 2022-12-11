@@ -55,4 +55,13 @@ function HouseDetail() {
   )
 }
 
-export default HouseDetail
+export const getServerSideProps = withAuthUserTokenSSR({
+  whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
+})(async () => {
+  return {
+    props: {},
+  }
+})
+export default withAuthUser({
+  whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
+})(HouseDetail)

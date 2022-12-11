@@ -101,4 +101,18 @@ const UsersPage = () => (
   </Page>
 )
 
-export default UsersPage
+export const getServerSideProps = withAuthUserTokenSSR({
+  whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
+})(async ({ AuthUser }) => {
+  if (AuthUser.claims.userType !== 'admin') {
+    return {
+      notFound: true,
+    }
+  }
+  return {
+    props: {},
+  }
+})
+export default withAuthUser({
+  whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
+})(UsersPage)
