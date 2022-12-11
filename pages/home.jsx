@@ -24,15 +24,13 @@ const HomePage = () => (
   </Page>
 )
 
-// export const getServerSideProps = withAuthUserTokenSSR({
-//   whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
-// })(async () => {
-//   return {
-//     props: {},
-//   }
-// })
-// export default withAuthUser({
-//   whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
-// })(HomePage)
-
-export default HomePage
+export const getServerSideProps = withAuthUserTokenSSR({
+  whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
+})(async () => {
+  return {
+    props: {},
+  }
+})
+export default withAuthUser({
+  whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
+})(HomePage)

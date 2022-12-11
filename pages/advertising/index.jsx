@@ -23,7 +23,19 @@ const AdvertisingPage = () => (
   </Page>
 )
 
-export const getServerSideProps = withAuthUserTokenSSR({})()
+export const getServerSideProps = withAuthUserTokenSSR({
+  whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
+})(async ({ AuthUser }) => {
+  if (AuthUser.claims.userType !== 'admin') {
+    return {
+      notFound: true,
+    }
+  }
+
+  return {
+    props: {},
+  }
+})
 
 export default withAuthUser({
   whenAuthedBeforeRedirect: AuthAction.RENDER,
