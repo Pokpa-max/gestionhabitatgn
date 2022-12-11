@@ -7,6 +7,7 @@ import { RiSearchLine } from 'react-icons/ri'
 import DesableConfirmModal from '../DesableConfirm'
 import { desableUser, desableUserFirestore } from '../../lib/services/user'
 import { notify } from '../../utils/toast'
+import CreateUserDrawer from './CreateUserDrawer'
 
 function UsersList({
   data,
@@ -47,6 +48,7 @@ function UserTable({
 }) {
   const [openModal, setOpenModal] = useState(false)
   const [selectUser, setSlectUser] = useState(false)
+  const [openDrawer, setOpenDrawer] = useState(false)
   data = data || {}
   const { users, lastElement } = data
   console.log('voir detail', data)
@@ -55,6 +57,7 @@ function UserTable({
     <OrderSkleton />
   ) : (
     <div className="">
+      <CreateUserDrawer open={openDrawer} setOpen={setOpenDrawer} />
       <DesableConfirmModal
         title="Suspendre le Compte"
         desable={!selectUser?.isAvailable}
@@ -86,7 +89,6 @@ function UserTable({
         open={openModal}
         setOpen={setOpenModal}
       />
-
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <div className="flex flex-1 items-center ">
@@ -109,6 +111,18 @@ function UserTable({
                   type="search"
                 />
               </div>
+            </div>
+            <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+              <button
+                onClick={() => {
+                  setOpenDrawer(true)
+                  // setSelectedHouse(null)
+                }}
+                type="button"
+                className="focus:ring-bg-cyan-500 inline-flex items-center justify-center rounded-sm border border-transparent bg-cyan-500 px-4 py-2 text-sm font-medium text-white hover:bg-cyan-500 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:w-auto"
+              >
+                Ajouter un manager
+              </button>
             </div>
           </div>
         </div>
