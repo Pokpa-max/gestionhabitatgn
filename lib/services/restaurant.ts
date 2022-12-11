@@ -23,12 +23,12 @@ import {
 } from '@/utils/firebase/storage'
 export const restaurantsCollectionRef = collection(db, `restaurants`)
 
-export const housesCollectionRef = collection(db, `essaisHouses`)
+export const housesCollectionRef = collection(db, `houses`)
 
 export const restaurantDocRef = (restaurantId) =>
   doc(db, `restaurants/${restaurantId}`)
 
-export const houseDocRef = (houseId) => doc(db, `essaisHouses/${houseId}`)
+export const houseDocRef = (houseId) => doc(db, `houses/${houseId}`)
 
 export const getRestaurants = (setState) => {
   return onSnapshot(restaurantsCollectionRef, (querySnapshot) => {
@@ -63,18 +63,16 @@ export const editHouse = async (house, data, imagefiles) => {
   const imageUrl =
     typeof data.imageUrl === 'string'
       ? house.imageUrl
-      : await getDefaultImageDownloadURL(data.imageUrl[0], `housess`)
+      : await getDefaultImageDownloadURL(data.imageUrl[0], `houseImages`)
 
   const housImageUrls =
     imagefiles.length > 0
       ? imagefiles.map((imageUrl) => {
-          return getDefaultImageDownloadURL(imageUrl, `housess`)
+          return getDefaultImageDownloadURL(imageUrl, `houseImages`)
         })
       : house.houseInsides
 
   const houseInsides = await Promise.all(housImageUrls)
-
-  console.log('voir les images...🤬🤬🤬🤬', imageUrl, houseInsides)
 
   await updateDoc(
     houseDocRef(house?.id),
@@ -86,16 +84,29 @@ export const editHouse = async (house, data, imagefiles) => {
   )
 }
 
+export const deleteHouse = async (house) => {
+  deleteStorageImage(house?.imageUrl)
+
+  house?.houseInsides.map((imageUrl) => {
+    return deleteStorageImage(imageUrl)
+  })
+
+  await deleteDoc(houseDocRef(house?.id))
+}
+
 export const addHouses = async (data) => {
-  const imageUrl = await getDefaultImageDownloadURL(data.imageUrl[0], `housess`)
+  console.log('ajout effectué avec suscess')
+
+  const imageUrl = await getDefaultImageDownloadURL(
+    data.imageUrl[0],
+    `houseImages`
+  )
 
   const housImageUrls = data.insideImages.map((imageUrl) => {
-    return getDefaultImageDownloadURL(imageUrl, `housess`)
+    return getDefaultImageDownloadURL(imageUrl, `houseImages`)
   })
 
   const houseInsides = await Promise.all(housImageUrls)
-
-  console.log('voir tableau imageUrls', houseInsides)
 
   const structuredData = housesConstructorCreate({
     ...data,
@@ -103,11 +114,8 @@ export const addHouses = async (data) => {
     houseInsides,
     isAvailable: false,
   })
-  console.log('voir structuredData👌👌👌👌👌👌👌', structuredData)
 
   await addDoc(housesCollectionRef, structuredData)
-  // console.log('voir deonnee transform', { ...data, imageUrl, imageInsides })
-  // console.log('voir insideImages', imageInsides)
 
   return structuredData
 }
@@ -116,19 +124,19 @@ export const deleteRestaurant = async (restaurantId) => {
   await deleteDoc(restaurantDocRef(restaurantId))
 }
 
-export const createAccount = async (restaurantId, data) => {
-  await editRestaurant(restaurantId, data)
+// export const createAccount = async (restaurantId, data) => {
+//   await editRestaurant(restaurantId, data)
 
-  //creating account
-  const { firstname, lastname } = data
-  const name = `${firstname} ${lastname}`
-  const response = await fetchWithPost('api/createUser', {
-    email: data.restaurantEmail,
-    name,
-    restaurantId,
-  })
-  if (response.code != 'ok') throw new Error(response.message)
-}
+//   //creating account
+//   const { firstname, lastname } = data
+//   const name = `${firstname} ${lastname}`
+//   const response = await fetchWithPost('api/createUser', {
+//     email: data.restaurantEmail,
+//     name,
+//     restaurantId,
+//   })
+//   if (response.code != 'ok') throw new Error(response.message)
+// }
 
 export const getDefaultHours = () => {
   return [

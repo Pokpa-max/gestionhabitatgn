@@ -6,7 +6,6 @@ import React, { useEffect } from 'react'
 import { doc, getDoc } from 'firebase/firestore'
 import { useState } from 'react'
 import HouseCard from '../../../components/houses/houseCard'
-import { title } from 'process'
 import InsideHouseCard from '../../../components/houses/insideHouseCard'
 import { OrderSkleton } from '../../../components/Orders/OrdersList'
 
@@ -19,7 +18,7 @@ function HouseDetail() {
   useEffect(() => {
     if (houseId) {
       console.log('voir id maison', houseId)
-      const houseRef = doc(db, 'essaisHouses', houseId)
+      const houseRef = doc(db, 'houses', houseId)
       const fetchHouse = async () => {
         setIsLoading(true)
         const docSnap = await getDoc(houseRef)

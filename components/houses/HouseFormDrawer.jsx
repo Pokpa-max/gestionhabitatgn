@@ -25,8 +25,6 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
   data = data || {}
   const { houses, lastElement } = data
 
-  console.log('voir house ', house)
-
   const onSelectFile = (event) => {
     const seletedFiles = event.target.files
     const selectedFileArray = Array.from(seletedFiles)
@@ -74,7 +72,6 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
       autoFillHouseForm(reset, setValue, house)
     }
     setFormvalue()
-    console.log('condiction', house)
   }, [house])
 
   const files = watch('imageUrl')
@@ -101,6 +98,7 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
 
         update(data)
         setOpen(false)
+        // resetHouseForm(reset, setValue)
         notify('Modification executée avec succès', 'success')
       } else {
         const newHouse = await addHouses({
@@ -109,10 +107,12 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
         })
         console.log('voir dddd', newHouse)
         newHouse['createdAt'] = await getCurrentDateOnline()
-        newHouse['']
+        // // newHouse['']
         setData({ houses: [newHouse, ...houses], lastElement })
         setImages([])
         setOpen(false)
+        reset()
+        // resetHouseForm(reset, setValue)
         notify('Votre requète s est executée avec succès', 'success')
       }
     } catch (error) {
@@ -147,7 +147,7 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
                 </button>
                 <button
                   type="submit"
-                  className="ml-4 inline-flex justify-center border border-transparent bg-cyan-500 px-4 py-2 text-sm font-medium text-white hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                  className="ml-4 inline-flex justify-center border border-transparent bg-cyan-500 px-4 py-2 text-sm font-medium text-white hover:bg-cyan-500 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                 >
                   Enregistrer
                 </button>
@@ -560,9 +560,8 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
                 <div className=" flex w-full gap-5">
                   {images &&
                     images.map((image, index) => {
-                      console.log('interne image house', image)
                       return (
-                        <div key={image} className="mt-5 ">
+                        <div key={image + index} className="mt-5 ">
                           <img
                             src={image}
                             alt=""

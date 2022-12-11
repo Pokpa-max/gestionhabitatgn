@@ -6,6 +6,7 @@ import { firebaseDateToJsDate } from '../utils/date'
 import { stringToColour } from '../utils/ui'
 import { offerType } from '_data';
 import { db } from '@/lib/firebase/client_config';
+import { deleteStorageImage } from './firebase/storage';
 // import geofire from 'geofire-common'
 
 // dataConstructors
@@ -480,10 +481,18 @@ export const autoFillHouseForm = (reset, setValue, house) => {
   setValue('zone', { value: adress?.zone, label: adress?.zone })
   setValue('isAvailable', isAvailable)
   setValue('imageUrl', imageUrl)
-  setValue('houseInsides', houseInsides
-  )
+  setValue('houseInsides', houseInsides)
 
 }
+
+
+
+
+
+
+
+
+
 
 export const autoFillSliderForm = (reset, setValue, slider) => {
   if (!slider) {
@@ -674,6 +683,9 @@ export const desableHouseToFirestore = async (houseId, isAvailable) => {
 
 
 }
+
+
+
 
 
 

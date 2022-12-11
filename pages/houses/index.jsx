@@ -32,7 +32,7 @@ function Houses() {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    const housesRef = collection(db, 'essaisHouses')
+    const housesRef = collection(db, 'houses')
     const fetchData = async () => {
       setIsLoading(true)
       const q = query(
@@ -54,7 +54,7 @@ function Houses() {
   const housesToShow = data?.houses ?? []
 
   const showMoreFirestore = async () => {
-    const housesRef = collection(db, 'restaurants')
+    const housesRef = collection(db, 'houses')
     setIsLoadingP(true)
     const lastElement = data.lastElement
 

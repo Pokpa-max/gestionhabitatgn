@@ -13,13 +13,13 @@ const handler = async (req, res) => {
     const decodedToken = await authAdmin.verifyIdToken(token)
     const isAdmin = decodedToken.userType === 'admin'
 
-    console.log('decodedToken', decodedToken)
+    console.log('decodedToken🤬🤬🤬🤬🤬🤬🤬🤬', decodedToken)
 
-    if (isAdmin) {
-      await setAuthCookies(req, res)
-    } else {
-      return res.status(500).json({ error: "Votre compte n'est pas valide" })
-    }
+    // if (isAdmin) {
+    //   await setAuthCookies(req, res)
+    // } else {
+    //   return res.status(500).json({ error: "Votre compte n'est pas valide" })
+    // }
   } catch (e) {
     return res.status(500).json({ error: 'Unexpected error.' })
   }

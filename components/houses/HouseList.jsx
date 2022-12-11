@@ -1,7 +1,12 @@
 import React, { useState } from 'react'
 import { columnsHouse } from './_dataTable'
 
-import { RiFileEditLine, RiProfileLine, RiSearchLine } from 'react-icons/ri'
+import {
+  RiFileEditLine,
+  RiProfileLine,
+  RiSearchLine,
+  RiDeleteRow,
+} from 'react-icons/ri'
 import { useRouter } from 'next/router'
 
 import HouseFormDrawer from './HouseFormDrawer'
@@ -10,6 +15,8 @@ import PaginationButton from '../Orders/PaginationButton'
 import DesableConfirmModal from '../DesableConfirm'
 import { desableHouseToFirestore } from '../../utils/functionFactory'
 import { notify } from '../../utils/toast'
+import ConfirmModal from '../ConfirmModal'
+import { deleteHouse } from '../../lib/services/restaurant'
 
 function HousesList({
   data,
@@ -45,6 +52,7 @@ function HousesTable({
   const [selectedHouse, setSelectedHouse] = useState(null)
   const [openDrawer, setOpenDrawer] = useState(false)
   const [openModal, setOpenModal] = useState(false)
+  const [openWarning, setOpenWarning] = useState(false)
 
   const router = useRouter()
   data = data || {}
@@ -55,6 +63,31 @@ function HousesTable({
     <OrderSkleton />
   ) : (
     <div className="">
+      <ConfirmModal
+        confirmFunction={async () => {
+          await deleteHouse(selectedHouse).then(() => {
+            const update = () => {
+              const housesCopy = JSON.parse(JSON.stringify(houses))
+              const newHouses = housesCopy.filter((house) => {
+                return house.id != selectedHouse.id
+              })
+
+              setData({ houses: newHouses, lastElement })
+            }
+            update()
+            notify('Action effectuée avec succès', 'success')
+          })
+
+          setOpenWarning(false)
+        }}
+        cancelFuction={() => {}}
+        title="Suppression de logement"
+        description={
+          "Etes vous sur de supprimer cette annonce ? L'action est irreversible"
+        }
+        open={openWarning}
+        setOpen={setOpenWarning}
+      />
       <DesableConfirmModal
         desable={!selectedHouse?.isAvailable}
         title="Voulez-vous effectuer cette action"
@@ -177,7 +210,6 @@ function HousesTable({
                         </button>
                         <button
                           onClick={() => {
-                            console.log('voir routes', router.pathname)
                             router?.push(`${router.pathname}/${row.id}`)
                           }}
                           type="button"
@@ -205,6 +237,18 @@ function HousesTable({
                               Desactiver
                             </p>
                           )}
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          onClick={() => {
+                            setSelectedHouse(row)
+                            setOpenWarning(true)
+                          }}
+                          type="button"
+                          className="inline-flex items-center rounded-full border border-transparent bg-red-500 p-3 text-white shadow-sm hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                        >
+                          <RiDeleteRow className="h-4 w-4" aria-hidden="true" />
                         </button>
                       </td>
                     </tr>

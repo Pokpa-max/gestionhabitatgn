@@ -46,7 +46,7 @@ function SignIn() {
               /> */}
               <div className="ml-5 flex-col">
                 <h1 className="text-5xl font-black text-cyan-500">Meloger</h1>
-                <p className="ml-4 mt-2 text-5xl text-gray-600">ADMIN</p>
+                <p className="ml-10 mt-2 text-2xl text-gray-600">ADMIN</p>
               </div>
             </div>
             <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
