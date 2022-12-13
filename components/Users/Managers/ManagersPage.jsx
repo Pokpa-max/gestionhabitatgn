@@ -5,7 +5,15 @@ import { db } from '@/lib/firebase/client_config'
 
 import { parseDocsData } from '@/utils/firebase/firestore'
 
-import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore'
+import {
+  collection,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  startAfter,
+  where,
+} from 'firebase/firestore'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { HITS_PER_PAGE } from '../../../lib/constants'
@@ -21,11 +29,12 @@ function ManagersPage() {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    const managerRef = collection(db, 'managers')
+    const managerRef = collection(db, 'users')
     const fetchData = async () => {
       setIsLoading(true)
       const q = query(
         managerRef,
+        where('type', '==', 'manager'),
         orderBy('createdAt', 'desc'),
         limit(HITS_PER_PAGE)
       )
@@ -43,12 +52,13 @@ function ManagersPage() {
 
   const managerToShow = data?.managers ?? []
   const showMoreFirestore = async () => {
-    const customerRef = collection(db, 'managers')
+    const customerRef = collection(db, 'users')
     setIsLoadingP(true)
     const lastElement = data.lastElement
 
     const q = query(
       customerRef,
+      where('type', '==', 'manager'),
       orderBy('createdAt', 'desc'),
       startAfter(lastElement),
       limit(HITS_PER_PAGE)

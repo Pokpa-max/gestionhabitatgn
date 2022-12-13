@@ -12,47 +12,6 @@ import { deleteStorageImage } from './firebase/storage';
 // dataConstructors
 export const houseRef = (houseId) => doc(db, `essaisHouses/${houseId}`)
 
-export const restaurantConstructorUpdate = ({
-  storename: name,
-  firstname,
-  lastname,
-  email,
-  phoneNumber,
-  position,
-  indication: description,
-  long,
-  lat,
-  zone,
-  quartier,
-  rccm,
-  nif,
-  otherAcc,
-  isActive,
-  restaurantEmail,
-  restaurantPhoneNumber,
-}) => ({
-
-  "adress.section": section,
-  "adress.zone": rccm,
-  "restaurant.nif": nif,
-  "restaurant.otherAcc": otherAcc,
-  "restaurant.email": restaurantEmail,
-  "restaurant.phoneNumber": restaurantPhoneNumber,
-
-  "manager.firstname": firstname,
-  "manager.lastname": lastname,
-  "manager.phoneNumber": phoneNumber,
-  "manager.position": position,
-  "manager.email": email,
-  isActive,
-  "adress.description": description,
-  "adress.zone": zone.value,
-  "adress.quartier": quartier.value,
-  "adress.long": Number(long),
-  "adress.lat": Number(lat),
-  "adress.position": getGeoPoint(lat, long),
-  updatedAt: serverTimestamp(),
-})
 
 export const houseConstructorUpdateOffline = ({
 
@@ -204,8 +163,8 @@ export const housesConstructorCreate = ({
   zone,
   commodite = "",
   offerType,
-
   isAvailable,
+  userId
 
 }) => ({
 
@@ -229,6 +188,7 @@ export const housesConstructorCreate = ({
   adVance: adVance,
   houseInsides: houseInsides,
   likes: [],
+  userId: userId,
   createdAt: serverTimestamp(),
   updatedAt: serverTimestamp(),
 })

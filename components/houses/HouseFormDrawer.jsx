@@ -1,8 +1,9 @@
+import { useAuthUser } from 'next-firebase-auth'
 import React, { useEffect, useState } from 'react'
 
 import { useForm } from 'react-hook-form'
 import { RiImage2Fill } from 'react-icons/ri'
-import { addHouses, editHouse } from '../../lib/services/restaurant'
+import { addHouses, editHouse } from '../../lib/services/houses'
 import { getCurrentDateOnline } from '../../utils/date'
 import {
   autoFillHouseForm,
@@ -17,10 +18,10 @@ import Loader from '../Loader'
 import SimpleSelect from '../SimpleSelect'
 
 function HouseFormDrawer({ house, open, setOpen, setData, data }) {
+  const AuthUser = useAuthUser()
   const [loading, setLoading] = useState(false)
   const [images, setImages] = useState([])
   const [imagefiles, setImageFiles] = useState([])
-  const [selectedImage, setselectedImage] = useState([])
 
   data = data || {}
   const { houses, lastElement } = data
@@ -98,21 +99,22 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
 
         update(data)
         setOpen(false)
-        // resetHouseForm(reset, setValue)
+
         notify('Modification executée avec succès', 'success')
       } else {
         const newHouse = await addHouses({
           ...data,
           insideImages: imagefiles,
+          userId: AuthUser.id,
         })
-        console.log('voir dddd', newHouse)
+
         newHouse['createdAt'] = await getCurrentDateOnline()
-        // // newHouse['']
+
         setData({ houses: [newHouse, ...houses], lastElement })
         setImages([])
         setOpen(false)
         reset()
-        // resetHouseForm(reset, setValue)
+
         notify('Votre requète s est executée avec succès', 'success')
       }
     } catch (error) {

@@ -16,7 +16,7 @@ import DesableConfirmModal from '../DesableConfirm'
 import { desableHouseToFirestore } from '../../utils/functionFactory'
 import { notify } from '../../utils/toast'
 import ConfirmModal from '../ConfirmModal'
-import { deleteHouse } from '../../lib/services/restaurant'
+import { deleteHouse } from '../../lib/services/houses'
 
 function HousesList({
   data,

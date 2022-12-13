@@ -1,5 +1,3 @@
-// ./pages/api/login
-import { setCustomUserClaims } from '@/utils/firebase/auth'
 import { setAuthCookies } from 'next-firebase-auth'
 import initAuth from 'utils/firebase/initAuth'
 import { authAdmin } from '../../lib/firebase-admin/admin_config'
@@ -13,8 +11,6 @@ const handler = async (req, res) => {
     const decodedToken = await authAdmin.verifyIdToken(token)
     const isAdmin =
       decodedToken.userType === 'admin' || decodedToken.userType === 'manager'
-
-    console.log('decodedToken🤬🤬🤬🤬🤬🤬🤬🤬', decodedToken)
 
     if (isAdmin) {
       await setAuthCookies(req, res)

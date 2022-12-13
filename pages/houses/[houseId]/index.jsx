@@ -8,6 +8,11 @@ import { useState } from 'react'
 import HouseCard from '../../../components/houses/houseCard'
 import InsideHouseCard from '../../../components/houses/insideHouseCard'
 import { OrderSkleton } from '../../../components/Orders/OrdersList'
+import {
+  AuthAction,
+  withAuthUser,
+  withAuthUserTokenSSR,
+} from 'next-firebase-auth'
 
 function HouseDetail() {
   const router = useRouter()

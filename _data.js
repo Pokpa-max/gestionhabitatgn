@@ -62,6 +62,10 @@ export const zones = [
   { label: 'Ratoma', value: 'Ratoma' },
   { label: 'Matoto', value: 'Matoto' },
 ]
+export const userRole = [
+  { label: 'manager', value: 'manager' },
+
+]
 
 export const quartier = [
   { label: 'Koulewondy', value: 'Koulewondy' },

@@ -12,6 +12,7 @@ import {
   orderBy,
   query,
   startAfter,
+  where,
 } from 'firebase/firestore'
 import { useState } from 'react'
 import { useEffect } from 'react'
@@ -34,6 +35,7 @@ function CustomersPage() {
       const q = query(
         userRef,
         orderBy('createdAt', 'desc'),
+        where('type', '==', 'customer'),
         limit(HITS_PER_PAGE)
       )
 
@@ -57,6 +59,7 @@ function CustomersPage() {
     const q = query(
       customerRef,
       orderBy('createdAt', 'desc'),
+      where('type', '==', 'customer'),
       startAfter(lastElement),
       limit(HITS_PER_PAGE)
     )
@@ -72,6 +75,7 @@ function CustomersPage() {
     setData(nextData)
     setIsLoadingP(false)
   }
+  console.log('voir donnees', data)
 
   return (
     <div className="flex-1 py-6">

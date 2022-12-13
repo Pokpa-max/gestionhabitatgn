@@ -3,12 +3,6 @@ import { authAdmin, dbAdmin } from 'lib/firebase-admin/admin_config'
 import { setCustomUserClaims } from '@/utils/firebase/auth'
 import { FieldValue } from 'firebase-admin/firestore'
 
-import {
-  getDefaultHours,
-  getDefaultRestaurantData,
-  getDefaultReviewsData,
-} from '@/lib/services/restaurant'
-
 import { firestoreAutoId } from '../../utils/firebase/firestore'
 
 //TODO: create the default restaurant menu
@@ -18,71 +12,33 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const { email, name, restaurantId } = req.body
+    const { email, name, passWord } = req.body
+    const data = req.body
 
-    const userRecord = await createUserAuth(email, 'password', name)
+    const userRecord = await createUserAuth(email, passWord, name)
+    console.log('voir email', data)
+
     await setCustomUserClaims(userRecord.uid, 'manager')
     const { uid } = userRecord
-    // const generateLink = await authAdmin.generateEmailVerificationLink(email)
-
     const batch = dbAdmin.batch()
+
     batch.set(dbAdmin.collection('users').doc(uid), {
       email,
       name,
       type: 'manager',
-      restaurantId,
+      passWord,
       createdAt: FieldValue.serverTimestamp(),
     })
-
-    batch.update(dbAdmin.collection('restaurants').doc(restaurantId), {
-      ...getDefaultRestaurantData(uid),
-      updatedAt: FieldValue.serverTimestamp(),
-    })
-
-    batch.set(
-      dbAdmin
-        .collection('restaurants')
-        .doc(restaurantId)
-        .collection('reviews')
-        .doc('--stats-reviews--'),
-      getDefaultReviewsData()
-    )
-
-    const menuId = firestoreAutoId()
-
-    batch.set(dbAdmin.collection('menus').doc(restaurantId), {
-      description: 'Menu principal',
-      menuImages: [],
-      name: 'Menu principal',
-      id: menuId,
-      createdAt: FieldValue.serverTimestamp(),
-      updatedAt: FieldValue.serverTimestamp(),
-    })
-
-    batch.set(
-      dbAdmin
-        .collection('menus')
-        .doc(restaurantId)
-        .collection('menus')
-        .doc(menuId),
-      {
-        description: 'Menu principal',
-        menuImages: [],
-        menuSectionIds: [],
-        name: 'Menu principal',
-        createdAt: FieldValue.serverTimestamp(),
-        updatedAt: FieldValue.serverTimestamp(),
-      }
-    )
 
     await batch.commit()
+    const menuId = firestoreAutoId()
 
-    await sendEmail(email, name)
+    // await sendEmail(email, name)
 
-    res.status(200).json({ code: 'ok', message: 'users create successfully' })
+    res.status(200).json({ code: 1, message: 'users create successfully' })
   } catch (error) {
-    console.log(error)
-    res.status(500).json(error)
+    console.log('🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬error', error)
+    res.status(500).json({ code: 0, message: 'une erreur est survenu' })
   }
 }
 

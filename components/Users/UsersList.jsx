@@ -5,7 +5,7 @@ import PaginationButton from '../Orders/PaginationButton'
 import { useState } from 'react'
 import { RiSearchLine } from 'react-icons/ri'
 import DesableConfirmModal from '../DesableConfirm'
-import { desableUser, desableUserFirestore } from '../../lib/services/user'
+import { desableUser, desableUserFirestore } from '../../lib/services/managers'
 import { notify } from '../../utils/toast'
 import CreateUserDrawer from './CreateUserDrawer'
 
@@ -91,7 +91,7 @@ function UserTable({
       />
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <div className="flex flex-1 items-center ">
+          <div className="flex flex-1 items-center justify-between ">
             <div className="w-full max-w-lg lg:max-w-xs">
               <label htmlFor="search" className="sr-only">
                 Search
@@ -113,16 +113,20 @@ function UserTable({
               </div>
             </div>
             <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-              <button
-                onClick={() => {
-                  setOpenDrawer(true)
-                  // setSelectedHouse(null)
-                }}
-                type="button"
-                className="focus:ring-bg-cyan-500 inline-flex items-center justify-center rounded-sm border border-transparent bg-cyan-500 px-4 py-2 text-sm font-medium text-white hover:bg-cyan-500 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:w-auto"
-              >
-                Ajouter un manager
-              </button>
+              {title == 'Managers' ? (
+                <button
+                  onClick={() => {
+                    setOpenDrawer(true)
+                    // setSelectedHouse(null)
+                  }}
+                  type="button"
+                  className="focus:ring-bg-cyan-500 mb-20 inline-flex items-center justify-center rounded-sm border border-transparent bg-cyan-500 px-4 py-2 text-sm font-medium text-white hover:bg-cyan-500 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:w-auto"
+                >
+                  Ajouter un manager
+                </button>
+              ) : (
+                ''
+              )}
             </div>
           </div>
         </div>

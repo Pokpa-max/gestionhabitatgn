@@ -1,20 +1,26 @@
 import Page from '@/components/Page'
 import Scaffold from '@/components/Scaffold'
 import Header from '@/components/Header'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+
 import { parseDocsData } from '@/utils/firebase/firestore'
 import { db } from '@/lib/firebase/client_config'
 import {
   AuthAction,
+  useAuthUser,
   withAuthUser,
   withAuthUserTokenSSR,
 } from 'next-firebase-auth'
 import {
   collection,
+  doc,
   getDocs,
   limit,
+  onSnapshot,
   orderBy,
   query,
   startAfter,
+  where,
 } from 'firebase/firestore'
 import { useEffect } from 'react'
 import { useState } from 'react'
@@ -22,7 +28,9 @@ import { HITS_PER_PAGE } from '../../lib/constants'
 import HousesList from '../../components/houses/HouseList'
 
 function Houses() {
+  const AuthUser = useAuthUser()
   const [data, setData] = useState(null)
+
   const [pagination, setPagination] = useState({
     page: 0,
     nbHits: 0,
@@ -31,15 +39,26 @@ function Houses() {
   const [isLoadingP, setIsLoadingP] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
+  // information id
+
   useEffect(() => {
-    const housesRef = collection(db, 'houses')
     const fetchData = async () => {
+      const housesRef = collection(db, 'houses')
       setIsLoading(true)
-      const q = query(
-        housesRef,
-        orderBy('createdAt', 'desc'),
-        limit(HITS_PER_PAGE)
-      )
+      // const q = query(
+      //   housesRef,
+      //   orderBy('createdAt', 'desc'),
+      //   limit(HITS_PER_PAGE)
+      // )
+      const q =
+        AuthUser.claims.userType == 'manager'
+          ? query(
+              housesRef,
+              orderBy('createdAt', 'desc'),
+              where('userId', '==', AuthUser.id),
+              limit(HITS_PER_PAGE)
+            )
+          : query(housesRef, orderBy('createdAt', 'desc'), limit(HITS_PER_PAGE))
 
       const querySnapshot = await getDocs(q)
       const houses = parseDocsData(querySnapshot)
@@ -58,12 +77,32 @@ function Houses() {
     setIsLoadingP(true)
     const lastElement = data.lastElement
 
-    const q = query(
-      housesRef,
-      orderBy('createdAt', 'desc'),
-      startAfter(lastElement),
-      limit(HITS_PER_PAGE)
-    )
+    const q =
+      AuthUser.claims.userType == 'admin'
+        ? query(
+            housesRef,
+            orderBy('createdAt', 'desc'),
+            startAfter(lastElement),
+            limit(HITS_PER_PAGE)
+          )
+        : query(
+            housesRef,
+            orderBy('createdAt', 'desc'),
+            where('type', '==', AuthUser.id),
+            startAfter(lastElement),
+            limit(HITS_PER_PAGE)
+          )
+
+    // const q =
+    //   AuthUser.claims.userType == 'manager'
+    //     ? query(
+    //         housesRef,
+    //         orderBy('createdAt', 'desc'),
+    //         where('userId', '==', AuthUser.id),
+    //         startAfter(lastElement),
+    //         limit(HITS_PER_PAGE)
+    //       )
+    //     : query(housesRef, orderBy('createdAt', 'desc'), limit(HITS_PER_PAGE))
     const querySnapshot = await getDocs(q)
     const houses = parseDocsData(querySnapshot)
     const nextData = {
@@ -76,7 +115,7 @@ function Houses() {
     setData(nextData)
     setIsLoadingP(false)
   }
-
+  console.log('voir ujjjj', AuthUser.claims.userType)
   return (
     <Scaffold>
       <Header title={'Logement'} />
@@ -100,10 +139,12 @@ const HousesPage = () => (
 )
 
 export const getServerSideProps = withAuthUserTokenSSR({
-  whenAuthed: AuthAction.REDIRECT_TO_APP,
-})()
-
+  whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
+})(async ({ AuthUser }) => {
+  return {
+    props: {},
+  }
+})
 export default withAuthUser({
-  whenAuthedBeforeRedirect: AuthAction.RENDER,
-  whenAuthed: AuthAction.REDIRECT_TO_APP,
+  whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
 })(HousesPage)
