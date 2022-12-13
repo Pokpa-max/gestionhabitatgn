@@ -7,10 +7,8 @@ import { stringToColour } from '../utils/ui'
 import { offerType } from '_data';
 import { db } from '@/lib/firebase/client_config';
 import { deleteStorageImage } from './firebase/storage';
-// import geofire from 'geofire-common'
 
-// dataConstructors
-export const houseRef = (houseId) => doc(db, `essaisHouses/${houseId}`)
+export const houseRef = (houseId) => doc(db, `houses/${houseId}`)
 
 
 export const houseConstructorUpdateOffline = ({

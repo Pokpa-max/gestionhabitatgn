@@ -111,10 +111,8 @@ export default function Scaffold({ children, title, subNav }) {
                   <nav className="mt-5 space-y-1 px-2">
                     {navigation.map((item) => {
                       if (item.claims.includes(AuthUser.claims.userType)) {
-                        console.log('hello world', item)
                         return <NavItem key={item.name} item={item} />
                       }
-                      console.log('hello ', item)
 
                       return null
                     })}
@@ -150,10 +148,8 @@ export default function Scaffold({ children, title, subNav }) {
               <nav className="mt-5 flex-1 space-y-1 bg-white px-2">
                 {navigation.map((item) => {
                   if (item.claims.includes(AuthUser.claims.userType)) {
-                    console.log('hello world', item)
                     return <NavItem key={item.name} item={item} />
                   }
-                  console.log('hello ', item)
 
                   return null
                 })}

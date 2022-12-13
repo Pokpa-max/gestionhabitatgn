@@ -7,7 +7,7 @@ import {
   addDoc,
 } from 'firebase/firestore'
 import { db } from '@/lib/firebase/client_config'
-import { parseDocsData } from '@/utils/firebase/firestore'
+import { firestoreAutoId, parseDocsData } from '@/utils/firebase/firestore'
 import { fetchWithPost } from '../../utils/fetch'
 import {
   houseConstructorUpdate,
@@ -72,8 +72,6 @@ export const deleteHouse = async (house) => {
 }
 
 export const addHouses = async (data) => {
-  console.log('ajout effectué avec suscess')
-
   const imageUrl = await getDefaultImageDownloadURL(
     data.imageUrl[0],
     `houseImages`
