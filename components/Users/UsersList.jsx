@@ -51,6 +51,8 @@ function UserTable({
   const [openDrawer, setOpenDrawer] = useState(false)
   data = data || {}
   const { users, lastElement } = data
+  const { managers, lastElement: lasteManager } = data
+  // const { managers, lastElement: lasteManager } = data
   console.log('voir detail', data)
 
   return isLoading ? (
@@ -64,23 +66,43 @@ function UserTable({
         confirmFunction={async () => {
           await desableUser(selectUser.id, !selectUser?.isAvailable).then(
             async () => {
-              await desableUserFirestore(
-                selectUser.id,
-                !selectUser?.isAvailable
-              )
-              const update = () => {
-                const user = users.map((user) => {
-                  const newUser = { ...user }
+              if (title == 'Utilisateurs') {
+                await desableUserFirestore(
+                  selectUser.id,
+                  !selectUser?.isAvailable
+                )
+                const update = () => {
+                  const user = users.map((user) => {
+                    const newUser = { ...user }
 
-                  if (user.id == selectUser.id) {
-                    newUser.isAvailable = !selectUser?.isAvailable
-                  }
-                  return newUser
-                })
+                    if (user.id == selectUser.id) {
+                      newUser.isAvailable = !selectUser?.isAvailable
+                    }
+                    return newUser
+                  })
 
-                setData({ users: user, lastElement })
+                  setData({ users: user, lastElement })
+                }
+                update()
+              } else {
+                await desableUserFirestore(
+                  selectUser.id,
+                  !selectUser?.isAvailable
+                )
+                const update = () => {
+                  const user = managers.map((user) => {
+                    const newUser = { ...user }
+
+                    if (user.id == selectUser.id) {
+                      newUser.isAvailable = !selectUser?.isAvailable
+                    }
+                    return newUser
+                  })
+
+                  setData({ managers: user, lasteManager })
+                }
+                update()
               }
-              update()
             }
           )
           notify('Action executée avec succès', 'success')
