@@ -65,20 +65,19 @@ export const columnsUser = [
       )
     },
   },
-  {
-    Header: 'Etat',
-    accessor: 'desabled',
-    Cell: (data) => {
-      console.log('voir etat', data)
-      return (
-        <div className="">
-          {data ? (
-            <p className=" text-xs font-semibold text-red-800 ">Inactif</p>
-          ) : (
-            <p className="mr-2  text-sm font-semibold text-green-800 ">Actif</p>
-          )}
-        </div>
-      )
-    },
-  },
+  // {
+  //   Header: 'Etat',
+  //   accessor: 'desabled',
+  //   Cell: (data) => {
+  //     console.log('voir etat', data)
+  //       <div className="">
+  //         {data ? (
+  //           <p className=" text-xs font-semibold text-red-800 ">Inactif</p>
+  //         ) : (
+  //           <p className="mr-2  text-sm font-semibold text-green-800 ">Actif</p>
+  //         )}
+  //       </div>
+  //     )
+  //   },
+  // },
 ]
