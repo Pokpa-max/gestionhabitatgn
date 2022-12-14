@@ -169,6 +169,7 @@ function CategoryFormDrawer({ category, open, setOpen }) {
                 </div>
               </div>
             </div>
+
             <div
               className={`p-2 px-4 ${
                 formData?.isActive ? 'bg-green-200' : 'bg-red-200'

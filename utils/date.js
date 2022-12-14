@@ -1,5 +1,6 @@
 import fr from 'date-fns/locale/fr'
 import { Timestamp } from '@firebase/firestore'
+import fetcher from "./fetcher";
 import { format, formatDistance, differenceInCalendarDays } from 'date-fns'
 
 export const firebaseDateFormat = (date, formatString = 'PP') => {
@@ -41,6 +42,12 @@ const firebaseDateToTimestamp = (firebaseDate) => {
   return timestamp.toDate()
 }
 
+export const getCurrentDateOnline = async () => {
+  const data = await fetcher("/api/infos/getDate");
+  return Timestamp.fromDate(new Date(data.date));
+};
+
+
 export const getOnlineDate = async () => {
   const data = await fetcher(
     'https://www.timeapi.io/api/Time/current/zone?timeZone=Africa/Conakry'
@@ -57,6 +64,25 @@ export const getCurrentHour = () => {
   const date = new Date()
   return format(date, 'HH:MM', { locale: fr })
 }
+
+export const firebaseHour = (data) => {
+  var date = new Date(0);
+  date.setSeconds(data?.seconds);
+  var timeString = date.toISOString().substring(11, 19);
+  return timeString
+}
+
+export const firebaseDateHour = (data) => {
+
+  let options = { hour: "2-digit", minute: "2-digit", year: "numeric", month: "short", day: "numeric", weekday: "long", };
+  let dateHoure = new Date(data?.seconds * 1000).toLocaleDateString("fr-FR", options);
+  return dateHoure;
+
+}
+
+
+
+
 
 export const firebaseDateToJsDate = (firebaseDate) => {
   return new Date(firebaseDate.seconds * 1000)

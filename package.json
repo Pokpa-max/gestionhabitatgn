@@ -19,6 +19,7 @@
     "firebase": "^9.8.3",
     "firebase-admin": "^11.0.0",
     "geofire-common": "^6.0.0",
+    "moment": "^2.29.4",
     "next": "latest",
     "next-firebase-auth": "^1.0.0-canary.9",
     "nextjs-breadcrumbs": "^1.1.9",

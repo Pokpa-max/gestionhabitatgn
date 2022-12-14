@@ -1,7 +1,12 @@
 import React, { useState } from 'react'
 import { RiDownload2Line, RiDownloadLine, RiMailLine } from 'react-icons/ri'
-import { getCurrentDate, getCurrentHour } from '../../utils/date'
-import GoogleMaps from '../GoogleMaps'
+import {
+  firebaseDateFormat,
+  firebaseHour,
+  getCurrentDate,
+  getCurrentHour,
+} from '../../utils/date'
+import OrderGoogleMaps from '../OrderGoogleMap'
 import SimpleDrawer from '../SimpleDrawer'
 import PaymentDetailsModal from './PaymentDetailsModal'
 
@@ -10,25 +15,25 @@ function classNames(...classes) {
 }
 
 const statuses = [
-  <p className="px-2 py-1 text-xs text-orange-500 bg-orange-100 rounded-full w-min whitespace-nowrap">
+  <p className="w-min whitespace-nowrap rounded-full bg-orange-100 px-2 py-1 text-xs text-orange-500">
     En cours de confirmation
   </p>,
-  <p className="px-2 py-1 text-xs text-orange-500 bg-orange-100 rounded-full w-min whitespace-nowrap">
+  <p className="w-min whitespace-nowrap rounded-full bg-orange-100 px-2 py-1 text-xs text-orange-500">
     En cours de préparation
   </p>,
-  <p className="px-2 py-1 text-xs text-orange-500 rounded-full bg-orange-1 w-min00 whitespace-nowrap">
+  <p className="bg-orange-1 w-min00 whitespace-nowrap rounded-full px-2 py-1 text-xs text-orange-500">
     En cours de livraison
   </p>,
-  <p className="px-2 py-1 text-xs text-green-500 bg-green-100 rounded-full w-min whitespace-nowrap">
+  <p className="w-min whitespace-nowrap rounded-full bg-green-100 px-2 py-1 text-xs text-green-500">
     Commande terminé
   </p>,
-  <p className="px-2 py-1 text-xs text-red-500 bg-red-100 rounded-full w-min whitespace-nowrap">
+  <p className="w-min whitespace-nowrap rounded-full bg-red-100 px-2 py-1 text-xs text-red-500">
     Rejete par le restaurant
   </p>,
-  <p className="px-2 py-1 text-xs text-red-500 bg-red-100 rounded-full w-min whitespace-nowrap">
+  <p className="w-min whitespace-nowrap rounded-full bg-red-100 px-2 py-1 text-xs text-red-500">
     Commande annulé
   </p>,
-  <p className="px-2 py-1 text-xs text-orange-500 bg-orange-100 rounded-full w-min whitespace-nowrap">
+  <p className="w-min whitespace-nowrap rounded-full bg-orange-100 px-2 py-1 text-xs text-orange-500">
     Pres pour recupération
   </p>,
 ]
@@ -41,6 +46,7 @@ function OrderDetailsDrawer({ order, open, setOpen }) {
       <PaymentDetailsModal
         open={openPaymentDetailsModal}
         setOpen={setOpenPaymentDetailsModal}
+        order={order}
       />
       <SimpleDrawer
         open={open}
@@ -49,7 +55,7 @@ function OrderDetailsDrawer({ order, open, setOpen }) {
         footerButtons={
           <button
             type="button"
-            className="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            className="border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
             onClick={() => setOpen(false)}
           >
             Fermer
@@ -57,7 +63,7 @@ function OrderDetailsDrawer({ order, open, setOpen }) {
         }
       >
         <div className="mt-2 md:col-span-2 md:mt-0">
-          <div className="px-6 py-2 space-y-6 bg-white ">
+          <div className="space-y-6 bg-white px-6 py-2 ">
             <OrderDetailsHeader
               order={order}
               setOpenPaymentDetailsModal={setOpenPaymentDetailsModal}
@@ -73,24 +79,24 @@ function OrderDetailsDrawer({ order, open, setOpen }) {
                 </p>
               </div>
               <div className="space-x-2">
-                <button className="p-2 bg-gray-100 rounded-full hover:bg-gray-200">
+                <button className="rounded-full bg-gray-100 p-2 hover:bg-gray-200">
                   <RiDownloadLine className="" />
                 </button>
-                <button className="p-2 bg-gray-100 rounded-full hover:bg-gray-200">
+                <button className="rounded-full bg-gray-100 p-2 hover:bg-gray-200">
                   <RiMailLine className="" />
                 </button>
               </div>
             </div>
             <div className="space-y-3">
               <p>Recapitulatif de la commande</p>
-              <div className="px-4 space-y-2 text-gray-500">
+              <div className="space-y-2 px-4 text-gray-500">
                 {order?.products?.map((item, idx) => (
                   <div
                     key={item?.id}
                     className="flex items-center justify-between gap-2"
                   >
                     <p>{item?.quantity} x</p>
-                    <div className="flex justify-start w-3/5">
+                    <div className="flex w-3/5 justify-start">
                       <p>{item?.alias}</p>
                     </div>
                     <p>{item?.price} GNF</p>
@@ -101,13 +107,13 @@ function OrderDetailsDrawer({ order, open, setOpen }) {
             <div className="px-4 ">
               <div className="flex justify-between">
                 <p className="">Sous total</p>
-                <p className="">775 000 GNF</p>
+                <p className="">{order?.total} GNF</p>
               </div>
               <div className="flex justify-between">
                 <p className="">Frais de livraison</p>
                 <p className="">20 000 GNF</p>
               </div>
-              <div className="flex justify-between pb-1 mb-1 border-b">
+              <div className="mb-1 flex justify-between border-b pb-1">
                 <p className="">Frais de service</p>
                 <p className="">2 000 GNF</p>
               </div>
@@ -122,10 +128,13 @@ function OrderDetailsDrawer({ order, open, setOpen }) {
             </div>
             <div className="mb-4 space-y-2">
               <p className="text-gray-500">Itineraire de livraison</p>
-              <GoogleMaps />
+              <OrderGoogleMaps
+                latLng={order?.pickupLocation?.latLng}
+                deliveryLg={order?.deliveryLocation?.latLng}
+              />
               <button
                 type="button"
-                className="px-4 py-2 text-sm font-medium text-white border border-gray-300 bg-primary hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                className="border border-gray-300 bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               >
                 Montrer itineraire
               </button>
@@ -139,12 +148,12 @@ function OrderDetailsDrawer({ order, open, setOpen }) {
 
 function OrderDetailsHeader({ order, setOpenPaymentDetailsModal }) {
   return (
-    <div className="pb-5 space-y-4 border-b">
-      <div className="flex items-end justify-between w-full">
+    <div className="space-y-4 border-b pb-5">
+      <div className="flex w-full items-end justify-between">
         <div className="space-y-2">
           <div className="flex items-center justify-between space-x-4">
             <td className="text-sm text-gray-500 ">Commande</td>
-            <p className="px-1 text-sm text-orange-500 bg-orange-100 rounded-full">
+            <p className="rounded-full bg-orange-100 px-1 text-sm text-orange-500">
               #FD45GBD
             </p>
           </div>
@@ -190,7 +199,7 @@ function OrderDetailsHeader({ order, setOpenPaymentDetailsModal }) {
           </div>
           <div className="flex items-center justify-between space-x-4">
             <td className="text-sm text-gray-500 ">Paiement</td>
-            <p className="px-2 py-1 text-xs uppercase rounded-full w-min whitespace-nowrap bg-sky-100 text-sky-500">
+            <p className="w-min whitespace-nowrap rounded-full bg-sky-100 px-2 py-1 text-xs uppercase text-sky-500">
               Ecobank pay
             </p>
           </div>
@@ -200,16 +209,20 @@ function OrderDetailsHeader({ order, setOpenPaymentDetailsModal }) {
         <div className="text-xs text-gray-500">
           <p className="">
             Commande faite le
-            <span className="ml-2 text-gray-900">{getCurrentDate()}</span>
+            <span className="ml-2 text-gray-900">
+              {firebaseDateFormat(order?.createdAt)}
+            </span>
           </p>
           <p>
             Heure
-            <span className="ml-2 text-gray-900">{getCurrentHour()}</span>
+            <span className="ml-2 text-gray-900">
+              {firebaseHour(order?.createdAt)}
+            </span>
           </p>
         </div>
         <button
           onClick={() => setOpenPaymentDetailsModal(true)}
-          className="px-2 py-2 text-xs text-gray-700 uppercase rounded-sm w-min whitespace-nowrap bg-slate-100 hover:bg-slate-200"
+          className="w-min whitespace-nowrap rounded-sm bg-slate-100 px-2 py-2 text-xs uppercase text-gray-700 hover:bg-slate-200"
         >
           Voir details paiement
         </button>

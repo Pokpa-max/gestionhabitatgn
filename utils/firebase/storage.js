@@ -33,6 +33,7 @@ export const deleteResizedStorageImage = (primaryUrl, size = '200x200') => {
   deleteStorageImage(resizeUrl)
 };
 
+
 export const getImageLinkBySize = (primaryUrl, size) => {
   const withOutToken = primaryUrl.split('&')[0];
 
@@ -59,4 +60,18 @@ export const getDefaultImageDownloadURL = async (file, folderName) => {
     .then((url) => {
       return url;
     })
+}
+
+export const getDefaultImageDownloadURLs = async (files, folderName) => {
+  const imagesInsides = []
+  files.map((file) => {
+    getDownloadURL(file.ref)
+      .then((url) => {
+        // return url;
+        imagesInsides.push(url);
+      })
+
+  })
+  return imagesInsides
+
 }

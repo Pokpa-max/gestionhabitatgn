@@ -15,14 +15,14 @@ function NavItem({ item }) {
       <a
         className={classNames(
           active
-            ? 'bg-primary text-white'
-            : 'text-black-900 hover:bg-primary hover:text-white',
+            ? 'bg-cyan-500 text-white'
+            : 'text-gray-500 hover:bg-cyan-500 hover:text-white',
           'group flex items-center px-2 py-3 text-sm font-medium hover:cursor-pointer'
         )}
       >
         <item.icon
           className={classNames(
-            active ? 'text-white' : 'text-primary group-hover:text-white',
+            active ? 'text-white' : 'text-gray-500 group-hover:text-white',
             'mr-3 h-7 w-7 flex-shrink-0'
           )}
           aria-hidden="true"

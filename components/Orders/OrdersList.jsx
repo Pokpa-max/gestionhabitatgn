@@ -2,33 +2,59 @@ import React, { useState } from 'react'
 import { RiFileCopy2Line } from 'react-icons/ri'
 import { columnsOrder } from './_dataTable'
 import OrderDetailsDrawer from './OrderDetailsDrawer'
+import PaginationButton from './PaginationButton'
 
-function OrdersList({ orders }) {
+function OrdersList({
+  data,
+  orders,
+  showMore,
+  pagination,
+  isLoading,
+  isLoadingP,
+}) {
   const [selectedOrder, setSelectedOrder] = useState(null)
 
   return (
     <OrdersTable
       selectedOrder={selectedOrder}
       setSelectedOrder={setSelectedOrder}
-      orders={orders}
+      data={data}
+      newOrders={orders}
+      showMore={showMore}
+      pagination={pagination}
+      isLoading={isLoading}
+      // isLoading={isLoadingP || isLoading}
+      isLoadingP={isLoadingP}
     />
   )
 }
 
-function OrdersTable({ selectedOrder, setSelectedOrder, orders }) {
+function OrdersTable({
+  selectedOrder,
+  setSelectedOrder,
+  data,
+  isLoading,
+  isLoadingP,
+  pagination,
+  newOrders,
+  showMore,
+}) {
   const [openDrawer, setOpenDrawer] = useState(false)
-  return (
+
+  return isLoading ? (
+    <OrderSkleton />
+  ) : (
     <div className="">
       <OrderDetailsDrawer
         order={selectedOrder}
         open={openDrawer}
         setOpen={setOpenDrawer}
       />
-      <div className="flex flex-col mt-4">
+      <div className="mt-4 flex flex-col">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
             <div className="overflow-hidden ring-1 ring-black ring-opacity-5 md:rounded-sm">
-              <table className="min-w-full text-left divide-y divide-gray-300 table-auto">
+              <table className="min-w-full table-auto divide-y divide-gray-300 text-left">
                 <thead className="bg-gray-50">
                   <tr>
                     {columnsOrder.map((column, index) => (
@@ -48,25 +74,25 @@ function OrdersTable({ selectedOrder, setSelectedOrder, orders }) {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {orders?.map((row, index) => (
+                <tbody className="divide-y divide-gray-200 bg-white">
+                  {newOrders?.map((row, index) => (
                     <tr key={index}>
                       {columnsOrder.map((column, index) => {
                         const cell = row[column.accessor]
                         const element = column.Cell?.(cell) ?? cell
                         return <td key={index}>{element}</td>
                       })}
-                      <td className="relative flex py-4 pl-3 pr-4 space-x-2 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
+                      <td className="relative flex space-x-2 whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                         <button
                           onClick={() => {
                             setSelectedOrder(row)
                             setOpenDrawer(true)
                           }}
                           type="button"
-                          className="inline-flex items-center p-3 bg-gray-200 border border-transparent rounded-full shadow-sm text-black-900 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                          className="text-black-900 inline-flex items-center rounded-full border border-transparent bg-gray-200 p-3 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                         >
                           <RiFileCopy2Line
-                            className="w-4 h-4"
+                            className="h-4 w-4"
                             aria-hidden="true"
                           />
                         </button>
@@ -76,6 +102,12 @@ function OrdersTable({ selectedOrder, setSelectedOrder, orders }) {
                 </tbody>
               </table>
             </div>
+            <div>
+              <p className="mt-5">{newOrders.length + ' Commandes'}</p>
+              {pagination && newOrders.length > 0 && (
+                <PaginationButton getmoreData={showMore} />
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -84,3 +116,20 @@ function OrdersTable({ selectedOrder, setSelectedOrder, orders }) {
 }
 
 export default OrdersList
+
+export function OrderSkleton() {
+  return (
+    <div class="animate-pulse">
+      <div class="mt-3 mb-6 h-4 rounded bg-gray-200"></div>
+      <div class="mb-6 h-4 rounded bg-gray-300"></div>
+      <div class="mb-6 h-4 rounded bg-gray-200"></div>
+      <div class="mb-6 h-4 rounded bg-gray-300"></div>
+      <div class="mb-6 h-4 rounded bg-gray-200"></div>
+      <div class="mt-3 mb-6 h-4 rounded bg-gray-200"></div>
+      <div class="mb-6 h-4 rounded bg-gray-300"></div>
+      <div class="mb-6 h-4 rounded bg-gray-200"></div>
+      <div class="mb-6 h-4 rounded bg-gray-300"></div>
+      <div class="mb-6 h-4 rounded bg-gray-200"></div>
+    </div>
+  )
+}

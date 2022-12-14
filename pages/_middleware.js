@@ -7,6 +7,12 @@ export async function middleware(req, ev) {
         url.pathname = `${pathname}/categories`;
         return NextResponse.redirect(url);
     }
+    if (pathname == "/users") {
+        const url = req.nextUrl.clone();
+        url.pathname = `${pathname}/customers`;
+        return NextResponse.redirect(url);
+
+    }
 
     return NextResponse.next();
 }

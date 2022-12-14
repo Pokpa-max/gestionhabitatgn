@@ -1,56 +1,105 @@
 // Entity constructor for the data model
 
-import { serverTimestamp, GeoPoint, Timestamp } from 'firebase/firestore'
+import { serverTimestamp, GeoPoint, Timestamp, updateDoc, doc } from 'firebase/firestore'
 import { encode } from './geoHash';
 import { firebaseDateToJsDate } from '../utils/date'
 import { stringToColour } from '../utils/ui'
-// import geofire from 'geofire-common'
+import { offerType } from '_data';
+import { db } from '@/lib/firebase/client_config';
+import { deleteStorageImage } from './firebase/storage';
 
-// dataConstructors
+export const houseRef = (houseId) => doc(db, `houses/${houseId}`)
 
-export const restaurantConstructorUpdate = ({
-  storename: name,
-  firstname,
-  lastname,
-  email,
+
+export const houseConstructorUpdateOffline = ({
+
   phoneNumber,
-  position,
-  indication: description,
+  section,
+  // imageUrl,
+  adVance,
+
+  houseType,
+  description,
   long,
   lat,
+  price,
+  partNumber,
+  // houseInsides,
+  surface,
   zone,
-  quartier,
-  rccm,
-  nif,
-  otherAcc,
-  isActive,
-  restaurantEmail,
-  restaurantPhoneNumber,
+  commodite,
+  offerType,
+
+  isAvailable,
+
 }) => ({
+  adress: {
+    zone: zone.value,
+    section: section,
+    long: Number(long),
+    lat: Number(lat),
+  },
+  description: description,
+  commodite: commodite,
+  adVance: adVance,
+  houseType: houseType,
+  offerType: offerType,
+  phoneNumber: phoneNumber,
+  partNumber: partNumber,
+  price: price,
+  surface: surface,
+  isAvailable: isAvailable,
+})
 
-  "restaurant.name": name,
-  "restaurant.rccm": rccm,
-  "restaurant.nif": nif,
-  "restaurant.otherAcc": otherAcc,
-  "restaurant.email": restaurantEmail,
-  "restaurant.phoneNumber": restaurantPhoneNumber,
 
-  "manager.firstname": firstname,
-  "manager.lastname": lastname,
-  "manager.phoneNumber": phoneNumber,
-  "manager.position": position,
-  "manager.email": email,
-  isActive,
-  "adress.description": description,
+
+
+
+export const houseConstructorUpdate = ({
+
+  phoneNumber,
+  section,
+  imageUrl,
+  adVance,
+  houseType,
+  description,
+  long,
+  lat,
+  price,
+  partNumber,
+  houseInsides,
+  surface,
+  zone,
+  commodite,
+  offerType,
+
+  isAvailable,
+
+}) => ({
+  description: description,
+  commodite: commodite,
+  adVance: adVance,
+  houseType: houseType,
+  offerType: offerType,
+  phoneNumber: phoneNumber,
+  partNumber: partNumber,
+  price: price,
+  surface: surface,
+  imageUrl: imageUrl,
+  houseInsides: houseInsides,
+  isAvailable: isAvailable,
   "adress.zone": zone.value,
-  "adress.quartier": quartier.value,
+  "adress.section": section,
   "adress.long": Number(long),
   "adress.lat": Number(lat),
-  "adress.position": getGeoPoint(lat, long),
   updatedAt: serverTimestamp(),
 })
 
-export const restaurantConstructorCreate = ({
+
+
+
+
+export const restaurantConstructorUpdateOffline = ({
   storename: name,
   firstname,
   lastname,
@@ -91,11 +140,57 @@ export const restaurantConstructorCreate = ({
     quartier: quartier.value,
     long: Number(long),
     lat: Number(lat),
+    position: getGeoPoint(lat, long),
   },
   isAccountCreated: false,
+})
+
+export const housesConstructorCreate = ({
+  price,
+  phoneNumber,
+  section,
+  imageUrl,
+  adVance,
+  houseType,
+  description,
+  long,
+  lat,
+  partNumber = "",
+  houseInsides,
+  surface,
+  zone,
+  commodite = "",
+  offerType,
+  isAvailable,
+  userId
+
+}) => ({
+
+  phoneNumber,
+  isAvailable,
+  adress: {
+    zone: zone.value,
+    section: section,
+    long: Number(long),
+    lat: Number(lat),
+  },
+
+  offerType: offerType,
+  surface: surface,
+  price: price,
+  commodite: commodite,
+  partNumber: partNumber,
+  imageUrl: imageUrl,
+  description: description,
+  houseType: houseType,
+  adVance: adVance,
+  houseInsides: houseInsides,
+  likes: [],
+  userId: userId,
   createdAt: serverTimestamp(),
   updatedAt: serverTimestamp(),
 })
+
 
 export const sliderConstructorCreate = (data, edit) => {
   const typeValue = {}
@@ -171,7 +266,7 @@ export const collectionConstructorCreate = (data, edit) => {
     ...conditionalProps
   }
 }
-export const commercialConstructorCreate = (data, edit) => {
+export const advertisingConstructorCreate = (data, edit) => {
 
   const conditionalProps = edit ? {
     updatedAt: serverTimestamp(),
@@ -182,13 +277,11 @@ export const commercialConstructorCreate = (data, edit) => {
 
   return {
     title: data.title,
-    subtitle: data.subtitle,
-    externalLink: data.externalLink,
-    externalLinkFallback: data.externalLinkFallback,
-    imageHash: data.imageHash,
+    slogan: data.slogan,
+    // externalLink: data.externalLink,
+    // externalLinkFallback: data.externalLinkFallback,
     imageUrl: data.imageUrl,
-    imageUrl1000: data.imageUrl1000,
-    isActive: data.isActive,
+    // isActive: data.isActive,
     ...conditionalProps
   }
 }
@@ -306,6 +399,59 @@ export const autoFillRestaurantForm = (reset, setValue, restaurant) => {
   setValue('isActive', isActive)
 }
 
+
+export const autoFillHouseForm = (reset, setValue, house) => {
+  if (!house) {
+    reset()
+    return
+  }
+
+  const {
+    price,
+    phoneNumber,
+    imageUrl,
+    adVance,
+    houseType,
+    description,
+    adress,
+    partNumber,
+    houseInsides,
+    surface,
+    commodite,
+    offerType,
+    isAvailable,
+
+  } = house
+
+  setValue('description', description)
+  setValue('price', price)
+  setValue('adVance', adVance)
+  setValue('partNumber', partNumber)
+  setValue('surface', surface)
+  setValue('offerType', { value: offerType?.value, label: offerType?.value })
+  setValue('phoneNumber', phoneNumber)
+  setValue('surface', surface)
+  setValue('commodite', { value: commodite?.value, label: commodite?.value })
+  setValue('houseType', { value: houseType?.value, label: houseType?.value })
+  setValue('section', adress?.section)
+  setValue('long', Number(adress?.long))
+  setValue('lat', Number(adress?.lat))
+  setValue('zone', { value: adress?.zone, label: adress?.zone })
+  setValue('isAvailable', isAvailable)
+  setValue('imageUrl', imageUrl)
+  setValue('houseInsides', houseInsides)
+
+}
+
+
+
+
+
+
+
+
+
+
 export const autoFillSliderForm = (reset, setValue, slider) => {
   if (!slider) {
     reset()
@@ -354,6 +500,29 @@ export const autoFillSponsorForm = (reset, setValue, sponsor) => {
 
 }
 
+export const autoFillAdvertisingForm = (reset, setValue, advertising) => {
+  if (!advertising) {
+    reset()
+    return
+  }
+
+  const {
+    title,
+    slogan,
+    imageUrl
+  } = advertising
+  setValue('title', title)
+  setValue('slogan', slogan)
+  // setValue('externalLink', externalLink)
+  // setValue('externalLinkFallback', externalLinkFallback)
+  // setValue('isActive', isActive)
+  setValue('imageHash', imageUrl)
+}
+
+
+
+
+
 export const autoFillCommercialForm = (reset, setValue, commercial) => {
   if (!commercial) {
     reset()
@@ -362,19 +531,23 @@ export const autoFillCommercialForm = (reset, setValue, commercial) => {
 
   const {
     title,
-    subtitle,
+    slogan,
     externalLink,
     externalLinkFallback,
     isActive,
     imageHash,
   } = commercial
   setValue('title', title)
-  setValue('subtitle', subtitle)
+  setValue('slogan', slogan)
   setValue('externalLink', externalLink)
   setValue('externalLinkFallback', externalLinkFallback)
   setValue('isActive', isActive)
   setValue('imageHash', imageHash)
 }
+
+
+
+
 
 export const autoFillCollectionForm = (reset, setValue, collection) => {
   if (!collection) {
@@ -454,4 +627,40 @@ export const autoFillDishForm = (reset, setValue, dish) => {
 
 export const getObjectInString = (str) => {
   return JSON.parse(str.substring(str.indexOf('{'), str.lastIndexOf('}') + 1))
+}
+
+
+
+
+
+
+export const desableHouseToFirestore = async (houseId, isAvailable) => {
+  console.log("voir condiction ", isAvailable);
+
+  await updateDoc(houseRef(houseId), { isAvailable: isAvailable })
+
+
+}
+
+
+
+
+
+
+export const desableUser = async (userId, desable) => {
+
+  try {
+    fetch('/api/userActivity/desableUser', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: userId,
+        isActive: desable,
+      }),
+    })
+  } catch (error) {
+    console.log('error: ', error)
+  }
 }
