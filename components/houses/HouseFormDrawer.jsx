@@ -82,7 +82,7 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
     setLoading(true)
     try {
       if (house) {
-        await editHouse(house, data, imagefiles)
+        await editHouse(house, data, imagefiles, AuthUser.id)
         const update = (data) => {
           const houseCopy = JSON.parse(JSON.stringify(houses))
           const newHouses = houseCopy.map((res) => {

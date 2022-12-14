@@ -27,7 +27,7 @@ export const restaurantDocRef = (restaurantId) =>
 
 export const houseDocRef = (houseId) => doc(db, `houses/${houseId}`)
 
-export const editHouse = async (house, data, imagefiles) => {
+export const editHouse = async (house, data, imagefiles, userId) => {
   if (typeof data.imageUrl != 'string') {
     deleteStorageImage(house?.imageUrl)
   }
@@ -57,6 +57,7 @@ export const editHouse = async (house, data, imagefiles) => {
       ...data,
       imageUrl,
       houseInsides,
+      userId,
     })
   )
 }
