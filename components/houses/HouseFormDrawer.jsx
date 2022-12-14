@@ -83,15 +83,17 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
     setLoading(true)
     try {
       if (house) {
-        await editHouse(house, data, imagefiles)
+        const dataR = await editHouse(house, data, imagefiles)
         console.log('voir modificaion', house)
-        const update = (data) => {
+        const update = async () => {
           const houseCopy = JSON.parse(JSON.stringify(houses))
+          const updatedAt = await getCurrentDateOnline()
           const newHouses = houseCopy.map((res) => {
             if (house.id === res.id) {
               return {
-                ...houseConstructorUpdateOffline(data),
                 ...res,
+                ...dataR,
+                updatedAt,
               }
             }
             return res
