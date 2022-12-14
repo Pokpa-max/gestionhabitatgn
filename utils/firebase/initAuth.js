@@ -14,7 +14,7 @@ const initAuth = () => {
             const errorMessage = error.message
             const convertedError = getObjectInString(errorMessage)
             notify(`Une erreur est survenue, ${convertedError}`, 'error')
-            console.log('onLoginRequestError', convertedError)
+
         },
         onLogoutRequestError: (error) => {
             console.log('onLogoutRequestError', error)

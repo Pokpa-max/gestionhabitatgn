@@ -41,7 +41,7 @@ export const getImageLinkBySize = (primaryUrl, size) => {
   const firstElement = splitedurl.join('.');
 
   const resizeUrl = `${firstElement}_${size}.${lastElement}`;
-  console.log('resizeUrl 😱😱', resizeUrl);
+
   return resizeUrl;
 }
 
