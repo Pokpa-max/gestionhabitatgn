@@ -83,6 +83,7 @@ function ManagersPage() {
         <UsersList
           title={'Managers'}
           setData={setData}
+          data={data}
           customers={managerToShow}
           showMore={showMoreFirestore}
           pagination={pagination.showPagination}
