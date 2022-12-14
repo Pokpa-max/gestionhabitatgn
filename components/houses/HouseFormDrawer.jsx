@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 import { useForm } from 'react-hook-form'
 import { RiImage2Fill } from 'react-icons/ri'
+import { client } from '../../lib/algolia'
 import { addHouses, editHouse } from '../../lib/services/houses'
 import { getCurrentDateOnline } from '../../utils/date'
 import {
@@ -79,21 +80,25 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
   const files = watch('imageUrl')
 
   const onSubmit = async (data) => {
+    const index = client.initIndex('houses')
     setLoading(true)
     try {
       if (house) {
-        await editHouse(house, data, imagefiles, AuthUser.id)
+        await editHouse(house, data, imagefiles)
+        console.log('voir modificaion', house)
         const update = (data) => {
           const houseCopy = JSON.parse(JSON.stringify(houses))
           const newHouses = houseCopy.map((res) => {
             if (house.id === res.id) {
               return {
-                ...res,
                 ...houseConstructorUpdateOffline(data),
+                ...res,
               }
             }
             return res
           })
+
+          index.partialUpdateObjects({ newHouses })
 
           setData({ houses: newHouses, lastElement })
         }
@@ -108,11 +113,12 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
           insideImages: imagefiles,
           userId: AuthUser.id,
         })
+        newHouse.objectID = newHouse.id
+        index.saveObjects([newHouse])
 
         newHouse['createdAt'] = await getCurrentDateOnline()
 
         setData({ houses: [newHouse, ...houses], lastElement })
-        mutateForAdd('houses')
         setImages([])
         setOpen(false)
         reset()
