@@ -30,6 +30,7 @@ export const houseConstructorUpdateOffline = ({
   commodite,
   offerType,
 
+
   isAvailable,
 
 }) => ({
@@ -49,6 +50,7 @@ export const houseConstructorUpdateOffline = ({
   price: price,
   surface: surface,
   isAvailable: isAvailable,
+
 })
 
 
