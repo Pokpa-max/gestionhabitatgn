@@ -114,7 +114,14 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
           insideImages: imagefiles,
           userId: AuthUser.id,
         })
+        const date = Date.now()
+        const seconds = date / 1000
+
+        const dataFormated = { seconds }
+
         newHouse.objectID = newHouse.id
+        newHouse.createdAt = dataFormated
+        newHouse.updatedAt = dataFormated
         index.saveObjects([newHouse])
 
         newHouse['createdAt'] = await getCurrentDateOnline()
