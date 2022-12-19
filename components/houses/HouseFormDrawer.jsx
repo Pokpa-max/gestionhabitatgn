@@ -82,6 +82,11 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
     const index = client.initIndex('houses')
     setLoading(true)
     try {
+      const date = Date.now() / 1000
+      const seconds = parseInt(date, 10)
+
+      const dataFormated = { seconds }
+
       if (house) {
         const dataR = await editHouse(house, data, imagefiles)
         console.log('voir modificaion', house)
@@ -99,6 +104,8 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
             return res
           })
 
+          newHouses.updatedAt = dataFormated
+          newHouses.createdAt = dataFormated
           index.partialUpdateObjects({ newHouses })
 
           setData({ houses: newHouses, lastElement })
@@ -114,8 +121,8 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
           insideImages: imagefiles,
           userId: AuthUser.id,
         })
-        const date = Date.now()
-        const seconds = date / 1000
+        const date = Date.now() / 1000
+        const seconds = parseInt(date, 10)
 
         const dataFormated = { seconds }
 
