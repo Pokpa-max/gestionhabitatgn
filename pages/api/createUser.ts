@@ -16,7 +16,6 @@ export default async function handler(
     const data = req.body
 
     const userRecord = await createUserAuth(email, passWord, name)
-    console.log('voir email', data)
 
     await setCustomUserClaims(userRecord.uid, 'manager')
     const { uid } = userRecord

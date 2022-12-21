@@ -11,7 +11,7 @@ import {
   houseConstructorUpdateOffline,
 } from '../../utils/functionFactory'
 import { notify } from '../../utils/toast'
-import { zones, houseType, offerType, commodites } from '../../_data'
+import { zones, towns, houseType, offerType, commodites } from '../../_data'
 
 import DrawerForm from '../DrawerForm'
 import GoogleMaps from '../GoogleMaps'
@@ -60,6 +60,8 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
     shouldUnregister: false,
   })
 
+  const zone = watch('zone')
+
   const setLonLat = (lon, lat) => {
     setValue('long', lon)
     setValue('lat', lat)
@@ -82,7 +84,6 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
     const index = client.initIndex('houses')
     setLoading(true)
 
-    console.log('voir donees', data)
     try {
       const date = Date.now() / 1000
       const seconds = parseInt(date, 10)
@@ -91,7 +92,6 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
 
       if (house) {
         const dataR = await editHouse(house, data, imagefiles)
-        console.log('voir modificaion', house)
         const update = async () => {
           const houseCopy = JSON.parse(JSON.stringify(houses))
           const updatedAt = await getCurrentDateOnline()
@@ -446,16 +446,16 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
                 </label>
 
                 <div className="col-span-6 sm:col-span-3">
-                  <input
-                    type="text"
-                    {...register('section', {
-                      required: 'Champs requis',
-                    })}
-                    id="section"
-                    autoComplete="family-name"
-                    placeholder="le quartier"
-                    className="mt-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
-                  />
+                  <div className="mt-1">
+                    <SimpleSelect
+                      required={'Champs requis'}
+                      name="section"
+                      control={control}
+                      options={towns[zone?.value]}
+                      placeholder="Selectionner le quartier"
+                    />
+                  </div>
+
                   <p className="pt-1 font-stratos-light text-xs text-red-600">
                     {errors?.section?.message}
                   </p>

@@ -172,7 +172,7 @@ export const housesConstructorCreate = ({
   isAvailable,
   adress: {
     zone: zone.value,
-    section: section,
+    section: section.value,
     long: Number(long),
     lat: Number(lat),
   },
@@ -637,7 +637,6 @@ export const getObjectInString = (str) => {
 
 
 export const desableHouseToFirestore = async (houseId, isAvailable) => {
-  console.log("voir condiction ", isAvailable);
 
   await updateDoc(houseRef(houseId), { isAvailable: isAvailable })
 

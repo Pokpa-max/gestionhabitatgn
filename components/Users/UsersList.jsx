@@ -52,8 +52,6 @@ function UserTable({
   data = data || {}
   const { users, lastElement } = data
   const { managers, lastElement: lasteManager } = data
-  // const { managers, lastElement: lasteManager } = data
-  console.log('voir detail', data)
 
   return isLoading ? (
     <OrderSkleton />

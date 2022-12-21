@@ -115,7 +115,6 @@ function Houses() {
     setData(nextData)
     setIsLoadingP(false)
   }
-  console.log('voir ujjjj', AuthUser.claims.userType)
   return (
     <Scaffold>
       <Header title={'Logement'} />

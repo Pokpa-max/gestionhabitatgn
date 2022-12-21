@@ -75,7 +75,6 @@ function CustomersPage() {
     setData(nextData)
     setIsLoadingP(false)
   }
-  console.log('voir donnees', data)
 
   return (
     <div className="flex-1 py-6">

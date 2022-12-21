@@ -33,7 +33,6 @@ export default function CreateUserDrawer({ open, setOpen }) {
     setLoading(true)
     try {
       await createAccount(data)
-      console.log('voir data', data)
       notify('compte creer avec succès', 'success')
       reset()
     } catch (error) {

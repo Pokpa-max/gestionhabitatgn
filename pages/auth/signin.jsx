@@ -23,7 +23,6 @@ function SignIn() {
 
   const [loading, setLoading] = useState(false)
   const onSubmit = async (data) => {
-    console.log('voir data', data)
     setLoading(true)
     try {
       await signin(data.email, data.password)

@@ -48,7 +48,6 @@ function DashbordCard() {
       )
       setUsers(parseDocsData(queryUser))
       const totalHouses = parseDocsData(querySnapshot)
-      console.log('voir donees', AuthUser)
     }
     fecthData()
   }, [AuthUser.id])

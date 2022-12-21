@@ -1,6 +1,13 @@
 import React from 'react'
 
-function HouseCard({ imageUrl, title, description, price, partNumber }) {
+function HouseCard({
+  imageUrl,
+  title,
+  description,
+  price,
+  partNumber,
+  adress,
+}) {
   return (
     <div class="p-10">
       <div class=" w-full gap-2 lg:flex lg:max-w-full">
@@ -21,7 +28,7 @@ function HouseCard({ imageUrl, title, description, price, partNumber }) {
             <div className="mb-10 flex items-center justify-between">
               <div>
                 <p className="mb-2 text-gray-600">Commune:{'Matam'}</p>
-                <p className="text-gray-600">Quartier:{'Kipe'}</p>
+                <p className="text-gray-600">Quartier:{adress?.section}</p>
               </div>
               <div>
                 <p className="mb-1 text-gray-500">

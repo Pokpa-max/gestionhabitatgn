@@ -50,10 +50,10 @@ export const columnsHouse = [
       return (
         <div className="flex-col py-4">
           <div className="text-black-900 whitespace-nowrap px-3 text-sm font-bold">
-            {data.zone}
+            {data.zone.value}
           </div>
           <div className="whitespace-nowrap px-3 text-sm text-gray-500">
-            {data.section}
+            {data.section.label}
           </div>
         </div>
       )

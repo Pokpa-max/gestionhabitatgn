@@ -55,7 +55,6 @@ function AdvertisingFormDrawer({ commercial, open, setOpen }) {
         await addAdvertising(data)
       }
 
-      console.log('voir donnees', data)
       setOpen(false)
       notify('Votre requète s est executée avec succès', 'success')
     } catch (error) {
