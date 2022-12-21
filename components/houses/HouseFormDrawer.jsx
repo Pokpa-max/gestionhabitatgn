@@ -81,6 +81,8 @@ function HouseFormDrawer({ house, open, setOpen, setData, data }) {
   const onSubmit = async (data) => {
     const index = client.initIndex('houses')
     setLoading(true)
+
+    console.log('voir donees', data)
     try {
       const date = Date.now() / 1000
       const seconds = parseInt(date, 10)
