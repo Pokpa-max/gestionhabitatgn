@@ -135,13 +135,89 @@ export const getCategoriesOptions = (categories) => {
   })
 }
 
-export const foodGenerics = [
-  { label: 'Attieke', value: 'Attieke' },
-  { label: 'Poulet', value: 'Poulet' },
-  { label: 'Pizza', value: 'Pizza' },
-  { label: 'Poisson', value: 'Poisson' },
-  { label: 'Riz gras', value: 'Riz gras' },
-]
+export const towns = {
+
+
+
+  // "Kaloum": [
+  //   "Almamya",
+  //   "Boulbinet",
+  //   "Coronthie",
+  //   "kaloum",
+  //   "Kouléwondy",
+  //   "Manquepas",
+  //   "Sandervalia",
+  //   "Sans-fil",
+  //   "Témitaye",
+  //   "Tombo"
+  // ]
+  // ,
+
+  // "Dixinn": [
+  //   "Belle-vues",
+  //   "Camayenne",
+  //   "Cameroun",
+  //   "Dixinn",
+  //   "Hafia",
+  //   "Kénien",
+  //   "Landréah",
+  //   "Minière"
+  // ]
+  // ,
+
+  // "Matoto": [
+  //   "Béanzin",
+  //   "Camp Alpha Yaya Diallo",
+  //   "Cité de l'air",
+  //   "Dabompa",
+  //   "Dabondy",
+  //   "Dar-es-salam",
+  //   "Gbéssia",
+  //   "Kissosso",
+  //   "Matoto"
+  // ]
+  // ,
+
+  "Ratoma": [
+    { label: "Cobaya-Fossidè", value: "Fossidè" },
+    { label: "Hamdalaye", value: "Hamdalaye" },
+    { label: "Kaporo", value: "Kaporo" },
+    {
+      label: "Kipé", value: "Kipé"
+    },
+    { label: "Cosa", value: "Cosa", }
+    // "Koloma",
+    // "Lambandji",
+    // "Nongo",
+    // "Ratoma",
+    // "demoudoula",
+    // "Bomboli",
+    // "Simanbossia",
+    // "Simbaya",
+    // "Sonfonia",
+    // "Taouyah",
+    // "Wanindara",
+    // "Yattayah"
+  ]
+  ,
+
+  // "Matam": [
+  //   "Boussoura",
+  //   "Carrière",
+  //   "Domino",
+  //   "Hermakönon",
+  //   "Coléah",
+  //   "Imprimerie",
+  //   "Lanséboudji",
+  //   "Madina",
+  //   "Mafanco",
+  //   "Touguiwondy"
+  // ]
+  // ,
+
+  // "Coyah": ["Coyah-Centre", "Kouriah", "Manéah", "Wonkifong"]
+
+}
 
 
 
