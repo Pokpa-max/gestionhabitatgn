@@ -78,7 +78,7 @@ function DashbordCard() {
               <i class="fas fa-users fa-2x fa-fw fa-inverse"></i>
             </div>
             <div class="flex-1 text-right">
-              <h5 class="text-white">Total occupé </h5>
+              <h5 class="text-white"> Total disponible </h5>
               <h3 class="text-3xl text-white">
                 {totalHouses?.length - totalAvailable?.length}
                 <span class="text-blue-400">
@@ -97,7 +97,7 @@ function DashbordCard() {
                 <i class="fas fa-user-plus fa-2x fa-fw fa-inverse"></i>
               </div>
               <div class="flex-1 pr-1 text-right">
-                <h5 class="text-white">Total disponible</h5>
+                <h5 class="text-white">Total occupé</h5>
                 <h3 class="text-3xl text-white">
                   {totalAvailable?.length}
                   <span class="text-orange-400">
