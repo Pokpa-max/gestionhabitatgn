@@ -28,6 +28,7 @@ export const houseType = [
   { label: 'Appartement', value: 'Appartement' },
   { label: 'Bureaux', value: 'Bureaux' },
 
+
 ]
 export const offerType = [
   { label: 'Vente', value: 'Vente' },
@@ -38,6 +39,7 @@ export const commodites = [
   { label: 'Terrasse', value: 'Terrasse' },
   { label: 'Jardin', value: 'Jardin' },
   { label: 'Picine', value: 'Picine' },
+  { label: "Balcon", value: 'Balcon' },
   { label: 'Autre', value: 'Autre' },
 
 ]
@@ -91,7 +93,9 @@ export const towns = {
     { label: "Dar-es-salam", value: "Dar-es-salam" },
     { label: "Gbéssia", value: "Gbéssia" },
     { label: "Kissosso", value: "Kissosso" },
-    { label: "Matoto", value: "Matoto" }
+    { label: "Matoto", value: "Matoto" },
+    { label: "Enta", value: "Enta" },
+    { label: "Aviation", value: "Aviation" }
   ]
   ,
 
