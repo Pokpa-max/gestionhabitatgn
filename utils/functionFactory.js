@@ -434,7 +434,7 @@ export const autoFillHouseForm = (reset, setValue, house) => {
   setValue('surface', surface)
   setValue('commodite', { value: commodite?.value, label: commodite?.value })
   setValue('houseType', { value: houseType?.value, label: houseType?.value })
-  setValue('section', adress?.section)
+  setValue('section', { value: adress?.section, label: adress?.section })
   setValue('long', Number(adress?.long))
   setValue('lat', Number(adress?.lat))
   setValue('zone', { value: adress?.zone, label: adress?.zone })
