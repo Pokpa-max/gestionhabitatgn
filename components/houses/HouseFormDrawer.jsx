@@ -6,10 +6,7 @@ import { RiImage2Fill } from 'react-icons/ri'
 import { client } from '../../lib/algolia'
 import { addHouses, editHouse } from '../../lib/services/houses'
 import { getCurrentDateOnline } from '../../utils/date'
-import {
-  autoFillHouseForm,
-  houseConstructorUpdateOffline,
-} from '../../utils/functionFactory'
+import { autoFillHouseForm } from '../../utils/functionFactory'
 import { notify } from '../../utils/toast'
 import { zones, towns, houseType, offerType, commodites } from '../../_data'
 
