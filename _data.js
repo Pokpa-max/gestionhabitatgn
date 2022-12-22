@@ -56,46 +56,44 @@ export const getCategoriesOptions = (categories) => {
 
 export const towns = {
 
+  "Kaloum": [
+    { label: "Almamya", value: "Almamya" },
+    { label: "Boulbinet", value: "Boulbinet" },
+    { label: "Coronthie", value: "Coronthie" },
+    { label: "kaloum", value: "Kaloum" },
+    { label: "Kouléwondy", value: "Kouléwondy" },
+    { label: "Manquepas", value: "Manquepas" },
+    { label: "Sandervalia", value: "Sandervalia" },
+    { label: "Sans-fil", value: "Sans-fil" },
+    { label: "Témitaye", value: "Témitaye" },
+    { label: "Tombo", value: "Tombo" },
+  ]
+  ,
 
+  "Dixinn": [
+    { label: "Belle-vues", value: "Belle-vues" },
+    { label: "Camayenne", value: "Camayenne" },
+    { label: "Cameroun", value: "Cameroun" },
+    { label: "Dixinn", value: "Dixinn" },
+    { label: "Hafia", value: "Hafia" },
+    { label: "Kénien", value: "Kénien" },
+    { label: "Landréah", label: "Landréah" },
+    { label: "Minière", value: "Minière" },
+  ]
+  ,
 
-  // "Kaloum": [
-  //   "Almamya",
-  //   "Boulbinet",
-  //   "Coronthie",
-  //   "kaloum",
-  //   "Kouléwondy",
-  //   "Manquepas",
-  //   "Sandervalia",
-  //   "Sans-fil",
-  //   "Témitaye",
-  //   "Tombo"
-  // ]
-  // ,
-
-  // "Dixinn": [
-  //   "Belle-vues",
-  //   "Camayenne",
-  //   "Cameroun",
-  //   "Dixinn",
-  //   "Hafia",
-  //   "Kénien",
-  //   "Landréah",
-  //   "Minière"
-  // ]
-  // ,
-
-  // "Matoto": [
-  //   "Béanzin",
-  //   "Camp Alpha Yaya Diallo",
-  //   "Cité de l'air",
-  //   "Dabompa",
-  //   "Dabondy",
-  //   "Dar-es-salam",
-  //   "Gbéssia",
-  //   "Kissosso",
-  //   "Matoto"
-  // ]
-  // ,
+  "Matoto": [
+    { label: "Béanzin", value: "Béanzin" },
+    { label: "Camp Alpha Yaya Diallo", value: "Camp Alpha Yaya Diallo" },
+    { label: "Cité de l'air", value: "Cité de l'air" },
+    { label: "Dabompa", value: "Dabompa" },
+    { label: "Dabondy", value: "Dabondy" },
+    { label: "Dar-es-salam", value: "Dar-es-salam" },
+    { label: "Gbéssia", value: "Gbéssia" },
+    { label: "Kissosso", value: "Kissosso" },
+    { label: "Matoto", value: "Matoto" }
+  ]
+  ,
 
   "Ratoma": [
     { label: "Cobaya-Fossidè", value: "Fossidè" },
@@ -104,37 +102,42 @@ export const towns = {
     {
       label: "Kipé", value: "Kipé"
     },
-    { label: "Cosa", value: "Cosa", }
-    // "Koloma",
-    // "Lambandji",
-    // "Nongo",
-    // "Ratoma",
-    // "demoudoula",
-    // "Bomboli",
-    // "Simanbossia",
-    // "Simbaya",
-    // "Sonfonia",
-    // "Taouyah",
-    // "Wanindara",
-    // "Yattayah"
+    { label: "Cosa", value: "Cosa", },
+    { label: "Koloma", value: "Koloma" },
+    { label: "Lambandji", value: "Lambandji" },
+    { label: "Nongo", value: "Nongo" },
+    { label: "Ratoma", value: "Ratoma" },
+    { label: "demoudoula", value: "demoula" },
+    { label: "Bomboli", value: "Bomboli" },
+    { label: "Simanbossia", value: "Simanbossia" },
+    { label: "Simbaya", value: "Simbaya" },
+    { label: "Sonfonia", value: "Sonfonia" },
+    { label: "Taouyah", value: "Taouyah" },
+    { label: "Wanindara", value: "Wanindara" },
+    { label: "Yattayah", value: "Yattayah" },
   ]
   ,
 
-  // "Matam": [
-  //   "Boussoura",
-  //   "Carrière",
-  //   "Domino",
-  //   "Hermakönon",
-  //   "Coléah",
-  //   "Imprimerie",
-  //   "Lanséboudji",
-  //   "Madina",
-  //   "Mafanco",
-  //   "Touguiwondy"
-  // ]
-  // ,
+  "Matam": [
+    { label: "Boussoura", value: "Boussoura" },
+    { label: "Carrière", value: "Carrière" },
+    { label: "Domino", value: "Domino" },
+    { label: "Hermakönon", value: "Hermakönon" },
+    { label: "Coléah", value: "Coléah" },
+    { label: "Imprimerie", value: "Imprimerie" },
+    { label: "Lanséboudji", value: "Lanséboudji" },
+    { label: "Madina", value: "Madina" },
+    { label: "Mafanco", value: "Mafanco" },
+    { label: "Touguiwondy", value: "Touguiwondy" }
+  ]
+  ,
 
-  // "Coyah": ["Coyah-Centre", "Kouriah", "Manéah", "Wonkifong"]
+  "Coyah": [
+    { label: "Coyah-Centre", value: "Coyah-Centre" },
+    { label: "Kouriah", value: "Kouriah" },
+    { label: "Manéah", value: "Manéah" },
+    { label: "Wonkifong", value: "Wonkifong" }
+  ]
 
 }
 

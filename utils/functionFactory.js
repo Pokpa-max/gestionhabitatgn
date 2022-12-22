@@ -257,7 +257,6 @@ export const collectionConstructorCreate = (data, edit) => {
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
   }
-  console.log('data', data)
   return {
     title: data.title,
     restaurantIds: data.restaurants.map(restaurant => restaurant.value),

@@ -12,7 +12,6 @@ import { getCategoriesOptions, restaurantsOptions } from '../../../_data'
 
 function BundleFormDrawer({ bundle, open, setOpen, categories }) {
   const [loading, setLoading] = useState(false)
-  console.log('bundle', bundle)
   const {
     handleSubmit,
     register,

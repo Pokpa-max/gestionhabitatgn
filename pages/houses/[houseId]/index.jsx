@@ -35,8 +35,6 @@ function HouseDetail() {
     }
   }, [houseId])
 
-  console.log('house insideHouseCard', house)
-
   return isLoading ? (
     <Scaffold>
       <OrderSkleton />

@@ -12,7 +12,6 @@ import { foodGenerics } from '../../../_data'
 
 function DishFormDrawer({ dish, open, setOpen }) {
   const [loading, setLoading] = useState(false)
-  console.log('dish', dish)
   const {
     handleSubmit,
     register,
@@ -77,14 +76,14 @@ function DishFormDrawer({ dish, open, setOpen }) {
               <>
                 <button
                   type="button"
-                  className="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                  className="border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                   onClick={() => setOpen(false)}
                 >
                   Annuler
                 </button>
                 <button
                   type="submit"
-                  className="inline-flex justify-center px-4 py-2 ml-4 text-sm font-medium text-white border border-transparent bg-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                  className="ml-4 inline-flex justify-center border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                 >
                   Enregistrer
                 </button>
@@ -96,9 +95,9 @@ function DishFormDrawer({ dish, open, setOpen }) {
         <div className="mt-5 md:col-span-2 md:mt-0">
           {/* <pre>{JSON.stringify(formData, null, 4)}</pre> */}
 
-          <div className="px-4 py-5 space-y-6 bg-white ">
+          <div className="space-y-6 bg-white px-4 py-5 ">
             <div className="grid grid-cols-2 gap-6">
-              <div className="col-span-1 group sm:col-span-1">
+              <div className="group col-span-1 sm:col-span-1">
                 <label
                   htmlFor="name"
                   className="block text-sm font-medium text-gray-700"
@@ -112,15 +111,15 @@ function DishFormDrawer({ dish, open, setOpen }) {
                       required: 'Champs requis',
                     })}
                     id="name"
-                    className="flex-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                    className="block w-full flex-1 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                     placeholder="Titre du dish"
                   />
-                  <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                  <p className="pt-1 font-stratos-light text-xs text-red-600">
                     {errors?.name?.message}
                   </p>
                 </div>
               </div>
-              <div className="col-span-1 group sm:col-span-1">
+              <div className="group col-span-1 sm:col-span-1">
                 <label
                   htmlFor="description"
                   className="block text-sm font-medium text-gray-700"
@@ -134,15 +133,15 @@ function DishFormDrawer({ dish, open, setOpen }) {
                       required: 'Champs requis',
                     })}
                     id="description"
-                    className="flex-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                    className="block w-full flex-1 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                     placeholder="Description du plat"
                   />
-                  <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                  <p className="pt-1 font-stratos-light text-xs text-red-600">
                     {errors?.description?.message}
                   </p>
                 </div>
               </div>
-              <div className="col-span-1 group sm:col-span-1">
+              <div className="group col-span-1 sm:col-span-1">
                 <label
                   htmlFor="speciality"
                   className="block text-sm font-medium text-gray-700"
@@ -156,15 +155,15 @@ function DishFormDrawer({ dish, open, setOpen }) {
                       required: 'Champs requis',
                     })}
                     id="speciality"
-                    className="flex-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                    className="block w-full flex-1 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                     placeholder="Designe l origine du plat"
                   />
-                  <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                  <p className="pt-1 font-stratos-light text-xs text-red-600">
                     {errors?.speciality?.message}
                   </p>
                 </div>
               </div>
-              <div className="col-span-1 group sm:col-span-1">
+              <div className="group col-span-1 sm:col-span-1">
                 <label
                   htmlFor="ingredients"
                   className="block text-sm font-medium text-gray-700"
@@ -178,10 +177,10 @@ function DishFormDrawer({ dish, open, setOpen }) {
                       required: 'Champs requis',
                     })}
                     id="ingredients"
-                    className="flex-1 block w-full border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
+                    className="block w-full flex-1 border-gray-300 focus:border-primary focus:ring-primary sm:text-sm"
                     placeholder="Les ingredients du plat"
                   />
-                  <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                  <p className="pt-1 font-stratos-light text-xs text-red-600">
                     {errors?.ingredients?.message}
                   </p>
                 </div>
@@ -203,7 +202,7 @@ function DishFormDrawer({ dish, open, setOpen }) {
                     placeholder="Selectionner un foodGenericId"
                   />
                 </div>
-                <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                <p className="pt-1 font-stratos-light text-xs text-red-600">
                   {errors?.foodGenericId?.message}
                 </p>
               </div>
@@ -217,7 +216,7 @@ function DishFormDrawer({ dish, open, setOpen }) {
                 Image du dish
               </label>
               <div className="mt-1 sm:col-span-2 sm:mt-0">
-                <div className="flex justify-center max-w-lg px-2 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-xs">
+                <div className="rounded-xs flex max-w-lg justify-center border-2 border-dashed border-gray-300 px-2 pt-5 pb-6">
                   <div className="space-y-1 text-center">
                     {formData?.imageUrl?.length > 0 ? (
                       <img
@@ -227,12 +226,12 @@ function DishFormDrawer({ dish, open, setOpen }) {
                     ) : dish ? (
                       <img src={dish.imageUrl1000} alt="preview" />
                     ) : (
-                      <RiImage2Fill className="w-12 h-12 mx-auto text-gray-400" />
+                      <RiImage2Fill className="mx-auto h-12 w-12 text-gray-400" />
                     )}
                     <div className="flex text-sm text-gray-600">
                       <label
                         htmlFor="file-upload"
-                        className="relative font-medium bg-white rounded-sm cursor-pointer text-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-primary-500 focus-within:ring-offset-2 hover:text-primary-500"
+                        className="relative cursor-pointer rounded-sm bg-white font-medium text-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-primary-500 focus-within:ring-offset-2 hover:text-primary-500"
                       >
                         <span>Charger image</span>
                         <input
@@ -252,7 +251,7 @@ function DishFormDrawer({ dish, open, setOpen }) {
                       PNG, JPG, GIF up to 10MB
                     </p>
                   </div>
-                  <p className="pt-1 text-xs text-red-600 font-stratos-light">
+                  <p className="pt-1 font-stratos-light text-xs text-red-600">
                     {errors?.imageUrl && 'veuillez selectionnez une image'}
                   </p>
                 </div>

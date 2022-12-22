@@ -10,7 +10,6 @@ import { autoFillCategoryForm } from '@/utils/functionFactory'
 
 function CategoryFormDrawer({ category, open, setOpen }) {
   const [loading, setLoading] = useState(false)
-  console.log('category', category)
   const {
     handleSubmit,
     register,
