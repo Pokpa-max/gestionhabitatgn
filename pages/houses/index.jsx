@@ -132,7 +132,7 @@ function Houses() {
 }
 
 const HousesPage = () => (
-  <Page name="Meloger Admin | Maisons">
+  <Page name="ConaLoge Admin | Maisons">
     <Houses />
   </Page>
 )

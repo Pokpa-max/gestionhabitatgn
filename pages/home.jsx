@@ -19,7 +19,7 @@ function Home() {
 }
 
 const HomePage = () => (
-  <Page name="Meloger - Admin">
+  <Page name="ConaLoge - Admin">
     <Home />
   </Page>
 )

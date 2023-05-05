@@ -142,7 +142,7 @@ export default function Scaffold({ children, title, subNav }) {
             <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
               <div className="flex flex-shrink-0 items-center px-4">
                 <h1 className="ml-2 text-2xl">
-                  <span className="font-extrabold ">Meloger</span>
+                  <span className="font-extrabold ">ConaLoge</span>
                 </h1>
               </div>
               <nav className="mt-5 flex-1 space-y-1 bg-white px-2">

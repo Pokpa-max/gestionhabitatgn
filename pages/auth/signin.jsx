@@ -44,7 +44,7 @@ function SignIn() {
                 alt="Workflow"
               /> */}
               <div className="ml-5 flex-col">
-                <h1 className="text-5xl font-black text-cyan-500">Meloger</h1>
+                <h1 className="text-5xl font-black text-cyan-500">ConaLoge</h1>
                 <p className="ml-10 mt-2 text-2xl text-gray-600">ADMIN</p>
               </div>
             </div>
@@ -145,7 +145,7 @@ function SignIn() {
 }
 
 const SignInPage = () => (
-  <Page name="Meloger">
+  <Page name="ConaLoge">
     <SignIn />
   </Page>
 )
