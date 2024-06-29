@@ -6,12 +6,12 @@ export const columnsMenu = [
     accessor: 'name',
     Cell: (data) => {
       return (
-        <div className="py-4 pl-4 pr-3 text-sm font-bold text-gray-900 whitespace-nowrap hover:text-primary hover:underline sm:pl-6">
-          <Link href={'/'}>
+        <div className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-bold text-gray-900 hover:text-primary hover:underline sm:pl-6">
+          <Link href={'/'} legacyBehavior>
             {data}
           </Link>
         </div>
-      );
+      )
     },
   },
   {
@@ -19,7 +19,7 @@ export const columnsMenu = [
     accessor: 'description',
     Cell: (data) => {
       return (
-        <div className="px-3 py-4 text-sm font-light text-gray-500 whitespace-nowrap">
+        <div className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-500">
           {data}
         </div>
       )
@@ -30,7 +30,7 @@ export const columnsMenu = [
     accessor: 'categories',
     Cell: (data) => {
       return (
-        <div className="px-3 py-4 text-sm font-bold text-gray-500 whitespace-nowrap">
+        <div className="whitespace-nowrap px-3 py-4 text-sm font-bold text-gray-500">
           {data}
         </div>
       )
@@ -41,7 +41,7 @@ export const columnsMenu = [
     accessor: 'items',
     Cell: (data) => {
       return (
-        <div className="px-3 py-4 text-sm font-bold text-gray-500 whitespace-nowrap">
+        <div className="whitespace-nowrap px-3 py-4 text-sm font-bold text-gray-500">
           {data}
         </div>
       )
@@ -55,12 +55,12 @@ export const columnsCategories = [
     accessor: 'name',
     Cell: (data) => {
       return (
-        <div className="py-4 pl-4 pr-3 text-sm font-bold text-gray-900 whitespace-nowrap hover:text-primary hover:underline sm:pl-6">
-          <Link href={'/'}>
+        <div className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-bold text-gray-900 hover:text-primary hover:underline sm:pl-6">
+          <Link href={'/'} legacyBehavior>
             {data}
           </Link>
         </div>
-      );
+      )
     },
   },
   {
@@ -68,7 +68,7 @@ export const columnsCategories = [
     accessor: 'note',
     Cell: (data) => {
       return (
-        <div className="px-3 py-4 text-sm font-light text-gray-500 w2/4 whitespace-nowrap">
+        <div className="w2/4 whitespace-nowrap px-3 py-4 text-sm font-light text-gray-500">
           {data}
         </div>
       )
@@ -80,10 +80,10 @@ export const columnsCategories = [
     Cell: (data) => {
       return (
         <div className="flex-col py-4">
-          <div className="px-3 text-sm font-bold text-black-900 whitespace-nowrap">
+          <div className="text-black-900 whitespace-nowrap px-3 text-sm font-bold">
             {data[0]}
           </div>
-          <div className="px-3 text-sm font-light text-gray-500 whitespace-nowrap">
+          <div className="whitespace-nowrap px-3 text-sm font-light text-gray-500">
             + {data.length - 1} autres menus
           </div>
         </div>
@@ -95,7 +95,7 @@ export const columnsCategories = [
     accessor: 'items',
     Cell: (data) => {
       return (
-        <div className="px-3 py-4 text-sm font-bold text-gray-500 whitespace-nowrap">
+        <div className="whitespace-nowrap px-3 py-4 text-sm font-bold text-gray-500">
           {data}
         </div>
       )
@@ -109,24 +109,26 @@ export const columnsItems = [
     accessor: 'item',
     Cell: (data) => {
       return (
-        <div className="flex items-center justify-start py-4 pl-4 pr-3 space-x-1 ">
+        <div className="flex items-center justify-start space-x-1 py-4 pl-4 pr-3 ">
           <img
-            className="object-center w-10 h-10 rounded-full"
+            className="h-10 w-10 rounded-full object-center"
             src={data.imgUrl}
             alt=""
           />
-          <div className="text-sm font-bold text-gray-900 group whitespace-nowrap sm:pl-6">
-            <Link href={'/'} className="group-hover:text-primary group-hover:underline">
-
+          <div className="group whitespace-nowrap text-sm font-bold text-gray-900 sm:pl-6">
+            <Link
+              href={'/categories'}
+              className="group-hover:text-primary group-hover:underline"
+              legacyBehavior
+            >
               {data.name}
-
             </Link>
-            <p className="text-sm font-light text-gray-500 w2/4 whitespace-nowrap">
+            <p className="w2/4 whitespace-nowrap text-sm font-light text-gray-500">
               {data.description}
             </p>
           </div>
         </div>
-      );
+      )
     },
   },
 
@@ -136,11 +138,11 @@ export const columnsItems = [
     Cell: (data) => {
       return (
         <div className="flex-col py-4">
-          <div className="px-3 text-sm font-bold text-black-900 whitespace-nowrap">
+          <div className="text-black-900 whitespace-nowrap px-3 text-sm font-bold">
             {data[0]}
           </div>
           {data.length > 1 ? (
-            <div className="px-3 text-sm font-light text-gray-500 whitespace-nowrap">
+            <div className="whitespace-nowrap px-3 text-sm font-light text-gray-500">
               + {data.length - 1} autres menus
             </div>
           ) : null}
@@ -154,7 +156,7 @@ export const columnsItems = [
     Cell: (data) => {
       return (
         <div className="flex flex-col py-4 text-center">
-          <p className="px-3 text-sm font-bold text-gray-500 whitespace-nowrap">
+          <p className="whitespace-nowrap px-3 text-sm font-bold text-gray-500">
             12 cmd(s)
           </p>
         </div>
@@ -167,7 +169,7 @@ export const columnsItems = [
     Cell: (data) => {
       return (
         <div className="flex-col py-4">
-          <p className="px-3 text-sm font-bold text-black-900 whitespace-nowrap">
+          <p className="text-black-900 whitespace-nowrap px-3 text-sm font-bold">
             12 300 000 GNF
           </p>
         </div>

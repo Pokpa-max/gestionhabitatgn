@@ -119,7 +119,11 @@ export default function Scaffold({ children, title, subNav }) {
                   </nav>
                 </div>
                 <div className="flex flex-shrink-0 border-t border-gray-200 p-4">
-                  <Link href="#" className="group block flex-shrink-0">
+                  <Link
+                    href="#"
+                    className="group block flex-shrink-0"
+                    legacyBehavior
+                  >
                     <div className="flex items-center">
                       <div>
                         <img
@@ -136,7 +140,6 @@ export default function Scaffold({ children, title, subNav }) {
             <div className="w-14 flex-shrink-0"></div>
           </Dialog>
         </Transition.Root>
-
         <div className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
           <div className="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white">
             <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
@@ -159,6 +162,7 @@ export default function Scaffold({ children, title, subNav }) {
               <Link
                 href={'/auth/signin'}
                 className="group block w-full flex-shrink-0"
+                legacyBehavior
               >
                 <div className="flex items-center">
                   <div className="ml-3">

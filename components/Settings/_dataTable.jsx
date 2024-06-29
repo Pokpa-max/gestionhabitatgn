@@ -13,7 +13,7 @@ export const columnsCategory = [
     Cell: (data) => {
       return (
         <div className="flex-col p-4 line-clamp-2">
-          <p className="text-sm text-gray-500 truncate whitespace-nowrap font-stratos-light">
+          <p className="truncate whitespace-nowrap font-stratos-light text-sm text-gray-500">
             {data}
           </p>
         </div>
@@ -25,16 +25,18 @@ export const columnsCategory = [
     accessor: 'name',
     Cell: (data) => {
       return (
-        <div className="flex items-center justify-start py-4 pl-4 pr-3 space-x-1 ">
-          <div className="text-sm font-bold text-gray-900 group whitespace-nowrap sm:pl-6">
-            <Link href={'/'} className="group-hover:text-primary group-hover:underline">
-
+        <div className="flex items-center justify-start space-x-1 py-4 pl-4 pr-3 ">
+          <div className="group whitespace-nowrap text-sm font-bold text-gray-900 sm:pl-6">
+            <Link
+              href={'/'}
+              className="group-hover:text-primary group-hover:underline"
+              legacyBehavior
+            >
               {data}
-
             </Link>
           </div>
         </div>
-      );
+      )
     },
   },
 
@@ -43,7 +45,7 @@ export const columnsCategory = [
     accessor: 'nbPlaces',
     Cell: (data) => {
       return (
-        <div className="px-3 text-sm text-gray-500 capitalize whitespace-nowrap font-stratos-light">
+        <div className="whitespace-nowrap px-3 font-stratos-light text-sm capitalize text-gray-500">
           {data}
         </div>
       )
@@ -83,7 +85,7 @@ export const columnsCategory = [
     Cell: (data) => {
       return (
         <div className="flex-col py-4">
-          <div className="px-3 text-sm text-gray-500 whitespace-nowrap font-stratos-light">
+          <div className="whitespace-nowrap px-3 font-stratos-light text-sm text-gray-500">
             {firebaseDateFormat(data)}
           </div>
         </div>
@@ -99,7 +101,7 @@ export const columnsBundle = [
     Cell: (data) => {
       return (
         <div className="flex-col p-4 line-clamp-2">
-          <p className="text-sm text-gray-500 truncate whitespace-nowrap font-stratos-light">
+          <p className="truncate whitespace-nowrap font-stratos-light text-sm text-gray-500">
             {data}
           </p>
         </div>
@@ -111,16 +113,18 @@ export const columnsBundle = [
     accessor: 'name',
     Cell: (data) => {
       return (
-        <div className="flex items-center justify-start py-4 pl-4 pr-3 space-x-1 ">
-          <div className="text-sm font-bold text-gray-900 group whitespace-nowrap sm:pl-6">
-            <Link href={'/'} className="group-hover:text-primary group-hover:underline">
-
+        <div className="flex items-center justify-start space-x-1 py-4 pl-4 pr-3 ">
+          <div className="group whitespace-nowrap text-sm font-bold text-gray-900 sm:pl-6">
+            <Link
+              href={'/categories'}
+              className="group-hover:text-primary group-hover:underline"
+              legacyBehavior
+            >
               {data}
-
             </Link>
           </div>
         </div>
-      );
+      )
     },
   },
   {
@@ -128,7 +132,7 @@ export const columnsBundle = [
     accessor: 'hasCategories',
     Cell: (data) => {
       return (
-        <div className="px-3 text-sm text-gray-500 capitalize whitespace-nowrap font-stratos-light">
+        <div className="whitespace-nowrap px-3 font-stratos-light text-sm capitalize text-gray-500">
           {data ? 'Avec ' : 'Sans'} Categories
         </div>
       )
@@ -168,7 +172,7 @@ export const columnsBundle = [
     Cell: (data) => {
       return (
         <div className="flex-col py-4">
-          <div className="px-3 text-sm text-gray-500 whitespace-nowrap font-stratos-light">
+          <div className="whitespace-nowrap px-3 font-stratos-light text-sm text-gray-500">
             {firebaseDateFormat(data)}
           </div>
         </div>
@@ -184,7 +188,7 @@ export const columnsDish = [
     Cell: (data) => {
       return (
         <div className="flex-col p-4 line-clamp-2">
-          <p className="text-sm text-gray-500 truncate whitespace-nowrap font-stratos-light">
+          <p className="truncate whitespace-nowrap font-stratos-light text-sm text-gray-500">
             {data}
           </p>
         </div>
@@ -197,10 +201,10 @@ export const columnsDish = [
     Cell: (name, description) => {
       return (
         <div className="flex-col py-4">
-          <div className="px-3 text-sm font-bold text-black-900 whitespace-nowrap">
+          <div className="text-black-900 whitespace-nowrap px-3 text-sm font-bold">
             {name}
           </div>
-          <div className="px-3 text-sm text-gray-500 whitespace-nowrap">
+          <div className="whitespace-nowrap px-3 text-sm text-gray-500">
             {description}
           </div>
         </div>
@@ -213,10 +217,10 @@ export const columnsDish = [
     Cell: (speciality, ingredients) => {
       return (
         <div className="flex-col py-4">
-          <div className="px-3 text-sm font-bold text-black-900 whitespace-nowrap">
+          <div className="text-black-900 whitespace-nowrap px-3 text-sm font-bold">
             {speciality}
           </div>
-          <div className="px-3 text-sm text-gray-500 whitespace-nowrap">
+          <div className="whitespace-nowrap px-3 text-sm text-gray-500">
             {ingredients}
           </div>
         </div>
@@ -228,7 +232,7 @@ export const columnsDish = [
     accessor: 'likerCount',
     Cell: (data) => {
       return (
-        <div className="px-3 text-sm text-gray-500 capitalize whitespace-nowrap font-stratos-light">
+        <div className="whitespace-nowrap px-3 font-stratos-light text-sm capitalize text-gray-500">
           <span className="font-bold">{data}</span> likes
         </div>
       )
@@ -268,7 +272,7 @@ export const columnsDish = [
     Cell: (data) => {
       return (
         <div className="flex-col py-4">
-          <div className="px-3 text-sm text-gray-500 whitespace-nowrap font-stratos-light">
+          <div className="whitespace-nowrap px-3 font-stratos-light text-sm text-gray-500">
             {firebaseDateFormat(data)}
           </div>
         </div>

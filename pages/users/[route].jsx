@@ -59,17 +59,19 @@ function Users() {
               <aside className="py-6 lg:col-span-2">
                 <nav className="space-y-1">
                   {subNavigation.map((item) => (
-                    (<Link
+                    <Link
                       passHref
                       key={item.name}
                       href={item.href}
+                      // href={item.href}
                       className={classNames(
                         item.current
                           ? 'bg-cyan-500 text-white'
                           : 'text-gray-500 hover:bg-cyan-500 hover:text-white',
                         'group flex items-center px-2 py-3 text-sm font-medium hover:cursor-pointer'
-                      )}>
-
+                      )}
+                      legacyBehavior
+                    >
                       <item.icon
                         className={classNames(
                           item.current
@@ -80,8 +82,7 @@ function Users() {
                         aria-hidden="true"
                       />
                       <span className="truncate">{item.name}</span>
-
-                    </Link>)
+                    </Link>
                   ))}
                 </nav>
               </aside>
@@ -94,7 +95,7 @@ function Users() {
       }
       title={'Users'}
     />
-  );
+  )
 }
 
 const UsersPage = () => (

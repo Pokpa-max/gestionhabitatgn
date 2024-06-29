@@ -30,17 +30,19 @@ export const columnsHouse = [
       return (
         <div className="flex items-center justify-start space-x-1 py-4 pl-4 pr-3 ">
           <div className="group whitespace-pre-wrap text-sm font-bold text-gray-900 sm:pl-6">
-            <Link href={'/'} className="group-hover:text-primary group-hover:underline">
-
+            <Link
+              href={'/category'}
+              className="group-hover:text-primary group-hover:underline"
+              legacyBehavior
+            >
               {data.value}
-
             </Link>
             <p className="w-2/4 truncate whitespace-nowrap font-stratos-light text-sm text-gray-500">
               {data.description}
             </p>
           </div>
         </div>
-      );
+      )
     },
   },
   {

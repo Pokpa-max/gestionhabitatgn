@@ -11,17 +11,18 @@ function NavItem({ item }) {
   const active = pathname === item.href
 
   return (
-    (<Link
+    <Link
+      href={item.href}
       passHref
       key={item.name}
-      href={item.href}
       className={classNames(
         active
           ? 'bg-cyan-500 text-white'
           : 'text-gray-500 hover:bg-cyan-500 hover:text-white',
         'group flex items-center px-2 py-3 text-sm font-medium hover:cursor-pointer'
-      )}>
-
+      )}
+      legacyBehavior
+    >
       <item.icon
         className={classNames(
           active ? 'text-white' : 'text-gray-500 group-hover:text-white',
@@ -30,9 +31,8 @@ function NavItem({ item }) {
         aria-hidden="true"
       />
       {item.name}
-
-    </Link>)
-  );
+    </Link>
+  )
 }
 
 export default NavItem
