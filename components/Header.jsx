@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Breadcrumbs from 'nextjs-breadcrumbs'
 import { RiArrowLeftLine } from 'react-icons/ri'
 
@@ -6,16 +7,16 @@ export default function Header({ title }) {
     <div className="py-5">
       <div>
         <nav className="sm:hidden" aria-label="Back">
-          <a
+          <Link
             href="#"
             className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700"
           >
             <RiArrowLeftLine
-              className="flex-shrink-0 w-5 h-5 mr-1 -ml-1 text-gray-400"
+              className="mr-1 -ml-1 h-5 w-5 flex-shrink-0 text-gray-400"
               aria-hidden="true"
             />
             Retour
-          </a>
+          </Link>
         </nav>
         <nav className="hidden sm:flex" aria-label="Breadcrumb">
           <ol role="list" className="flex items-center space-x-4">
@@ -30,7 +31,7 @@ export default function Header({ title }) {
         </nav>
       </div>
       <div className="mt-2 md:flex md:items-center md:justify-between">
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
           <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl">
             {title}
           </h2>

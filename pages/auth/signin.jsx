@@ -8,6 +8,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { signin } from '../../lib/services/auth'
+import Link from 'next/link'
 
 function SignIn() {
   const {
@@ -120,12 +121,12 @@ function SignIn() {
               </div>
 
               <div className="text-sm">
-                <a
+                <Link
                   href="#"
                   className="font-medium text-primary-500 hover:text-primary-500"
                 >
                   Mot de passe oublié ?
-                </a>
+                </Link>
               </div>
             </div>
 

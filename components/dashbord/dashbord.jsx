@@ -1,11 +1,16 @@
 import { db } from '@/lib/firebase/client_config'
 import { useAuthUser } from 'next-firebase-auth'
-import { collection, getDocs, orderBy, query, where } from 'firebase/firestore'
+import {
+  collection,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  where,
+} from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { parseDocsData } from '@/utils/firebase/firestore'
 import { FaWallet, FaUsers, FaUserPlus, FaTasks } from 'react-icons/fa'
-import Chart from 'chart.js/auto'
-import { Line, Bar } from 'react-chartjs-2'
 
 function DashboardCard() {
   const AuthUser = useAuthUser()

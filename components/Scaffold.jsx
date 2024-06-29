@@ -119,7 +119,7 @@ export default function Scaffold({ children, title, subNav }) {
                   </nav>
                 </div>
                 <div className="flex flex-shrink-0 border-t border-gray-200 p-4">
-                  <a href="#" className="group block flex-shrink-0">
+                  <Link href="#" className="group block flex-shrink-0">
                     <div className="flex items-center">
                       <div>
                         <img
@@ -129,7 +129,7 @@ export default function Scaffold({ children, title, subNav }) {
                         />
                       </div>
                     </div>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </Transition.Child>
@@ -156,22 +156,23 @@ export default function Scaffold({ children, title, subNav }) {
               </nav>
             </div>
             <div className="flex flex-shrink-0 border-t border-gray-200 p-4">
-              <Link href={'/auth/signin'}>
-                <a className="group block w-full flex-shrink-0">
-                  <div className="flex items-center">
-                    <div className="ml-3">
-                      <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
-                        {AuthUser?.displayName}
-                      </p>
-                      <button
-                        onClick={AuthUser.signOut}
-                        className="text-xs font-medium text-gray-500 group-hover:text-gray-700"
-                      >
-                        Se deconnecter
-                      </button>
-                    </div>
+              <Link
+                href={'/auth/signin'}
+                className="group block w-full flex-shrink-0"
+              >
+                <div className="flex items-center">
+                  <div className="ml-3">
+                    <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
+                      {AuthUser?.displayName}
+                    </p>
+                    <button
+                      onClick={AuthUser.signOut}
+                      className="text-xs font-medium text-gray-500 group-hover:text-gray-700"
+                    >
+                      Se deconnecter
+                    </button>
                   </div>
-                </a>
+                </div>
               </Link>
             </div>
           </div>

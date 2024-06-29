@@ -11,10 +11,10 @@ function MenuPopover({ options, label }) {
     <div>
       <Menu as="div" className="relative inline-block text-left ">
         <div>
-          <Menu.Button className="inline-flex justify-center text-sm font-medium text-white group focus:outline-none ">
+          <Menu.Button className="group inline-flex justify-center text-sm font-medium text-white focus:outline-none ">
             {label}
             <RiArrowDownSLine
-              className="flex-shrink-0 w-5 h-5 ml-1 -mr-1 text-gray-400 group-hover:text-gray-500"
+              className="ml-1 -mr-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
               aria-hidden="true"
             />
           </Menu.Button>
@@ -29,12 +29,12 @@ function MenuPopover({ options, label }) {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-left bg-white shadow-2xl rounded-xs ring-1 ring-black ring-opacity-5 focus:outline-none md:origin-top-right">
+          <Menu.Items className="rounded-xs absolute right-0 mt-2 w-56 origin-top-left bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none md:origin-top-right">
             <div className="py-1">
               {options?.map((option) => (
                 <Menu.Item key={option.name}>
                   {({ active }) => (
-                    <a
+                    <Link
                       href={option.href}
                       className={classNames(
                         option.current
@@ -45,7 +45,7 @@ function MenuPopover({ options, label }) {
                       )}
                     >
                       {option.name}
-                    </a>
+                    </Link>
                   )}
                 </Menu.Item>
               ))}
