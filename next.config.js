@@ -8,4 +8,6 @@ module.exports = {
       'img.freepik.com',
     ],
   },
+  swcMinify: true,
+
 }
