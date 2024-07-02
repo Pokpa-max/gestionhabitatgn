@@ -3,8 +3,9 @@ import Scaffold from '@/components/Scaffold'
 import Header from '@/components/Header'
 import {
   AuthAction,
-  withAuthUser,
-  withAuthUserTokenSSR,
+  useUser,
+  withUser,
+  withUserTokenSSR,
 } from 'next-firebase-auth'
 import AdvertisinglsList from '../../components/adverstising/advertisingList'
 
@@ -23,10 +24,10 @@ const AdvertisingPage = () => (
   </Page>
 )
 
-export const getServerSideProps = withAuthUserTokenSSR({
+export const getServerSideProps = withUserTokenSSR({
   whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
-})(async ({ AuthUser }) => {
-  if (AuthUser.claims.userType !== 'admin') {
+})(async ({ user }) => {
+  if (user.claims.userType !== 'admin') {
     return {
       notFound: true,
     }
@@ -37,6 +38,6 @@ export const getServerSideProps = withAuthUserTokenSSR({
   }
 })
 
-export default withAuthUser({
+export default withUser({
   whenAuthedBeforeRedirect: AuthAction.RENDER,
 })(AdvertisingPage)

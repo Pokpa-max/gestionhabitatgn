@@ -39,7 +39,7 @@ const navigation = [
 
   {
     name: 'Utilisateurs',
-    href: '/users',
+    href: '/users/customers',
     icon: RiGroupFill,
     claims: ['admin'],
   },

@@ -145,7 +145,7 @@ function DashboardCard() {
                   <p className="text-red-500">${financialSummary.expenses}</p>
                 </div>
               </div>
-              <Bar
+              {/* <Bar
                 data={{
                   labels: ['Income', 'Expenses'],
                   datasets: [
@@ -171,7 +171,7 @@ function DashboardCard() {
                   responsive: true,
                   maintainAspectRatio: false,
                 }}
-              />
+              /> */}
             </div>
           </div>
 

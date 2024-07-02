@@ -26,10 +26,18 @@ export default function Header({ title }) {
                 rootLabel="Acceuil"
                 
               /> */}
-               {/* <Breadcrumbs
-      useDefaultStyle
-      transformLabel={(title) => title + ' Acceuil'}
-    /> */}
+
+              <li>
+                <div className="flex items-center">
+                  <a
+                    href="#"
+                    className="text-sm font-medium text-gray-500 hover:text-gray-700"
+                  >
+                    {title}
+                  </a>
+                </div>
+              </li>
+
             </div>
           </ol>
         </nav>
@@ -61,9 +69,25 @@ export default function Header({ title }) {
 
 
 
-import React from 'react';
-import Breadcrumbs from 'nextjs-breadcrumbs';
 
-// const Example = () => {
-//   return <Breadcrumbs useDefaultStyle rootLabel="Home" />;
+// function Breadcrumbs({ separator, items }) {
+//   return (
+//     <nav>
+//       <ol>
+//         {items.map((item, index) => (
+//           <li key={index}>
+//             {item}
+//             {index < items.length - 1 && separator}
+//           </li>
+//         ))}
+//       </ol>
+//     </nav>
+//   );
+// }
+
+// Breadcrumbs.defaultProps = {
+//   separator: ' / ',
+//   items: [],
 // };
+
+// export default Breadcrumbs;

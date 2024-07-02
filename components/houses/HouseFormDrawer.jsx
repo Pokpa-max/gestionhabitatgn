@@ -1,4 +1,4 @@
-import { useAuthUser } from 'next-firebase-auth'
+import { useUser } from 'next-firebase-auth'
 import React, { useEffect, useState } from 'react'
 
 import { useForm } from 'react-hook-form'
@@ -16,7 +16,7 @@ import Loader from '../Loader'
 import SimpleSelect from '../SimpleSelect'
 
 function HouseFormDrawer({ house, open, setOpen, setData, data }) {
-  const AuthUser = useAuthUser()
+  const AuthUser = useUser()
   const [loading, setLoading] = useState(false)
   const [images, setImages] = useState([])
   const [imagefiles, setImageFiles] = useState([])

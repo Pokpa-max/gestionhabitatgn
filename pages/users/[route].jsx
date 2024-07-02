@@ -4,8 +4,7 @@ import { RiGroupFill, RiProfileLine } from 'react-icons/ri'
 
 import {
   AuthAction,
-  withAuthUser,
-  withAuthUserTokenSSR,
+  useUser, withUser, withUserTokenSSR
 } from 'next-firebase-auth'
 
 import Page from '@/components/Page'
@@ -22,7 +21,6 @@ function classNames(...classes) {
 function Users() {
   const router = useRouter()
   const currentPath = router.query.route
-
   const subNavigation = [
     {
       name: 'Utlisateurs',
@@ -102,10 +100,10 @@ const UsersPage = () => (
   </Page>
 )
 
-export const getServerSideProps = withAuthUserTokenSSR({
+export const getServerSideProps = withUserTokenSSR({
   whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
-})(async ({ AuthUser }) => {
-  if (AuthUser.claims.userType !== 'admin') {
+})(async ({ user }) => {
+  if (user.claims.userType !== 'admin') {
     return {
       notFound: true,
     }
@@ -114,6 +112,6 @@ export const getServerSideProps = withAuthUserTokenSSR({
     props: {},
   }
 })
-export default withAuthUser({
+export default withUser({
   whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
 })(UsersPage)

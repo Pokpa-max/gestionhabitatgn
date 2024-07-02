@@ -1,11 +1,4 @@
-import {
-  // AuthAction,
-  // withAuthUser,
-  // withAuthUserTokenSSR,
-  useUser,
-  withUser,
-  withUserTokenSSR,
-} from 'next-firebase-auth'
+import { useUser, withUser, withUserTokenSSR } from 'next-firebase-auth'
 
 import HomePage from './home'
 import { useState } from 'react'
