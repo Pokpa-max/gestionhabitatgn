@@ -27,17 +27,15 @@ export const columnsSlider = [
       return (
         <div className="flex items-center justify-start space-x-1 py-4 pl-4 pr-3 ">
           <div className="group whitespace-nowrap text-sm font-bold text-gray-900 sm:pl-6">
-            <Link href={'/'}>
-              <a className="group-hover:text-primary group-hover:underline">
-                {data.title}
-              </a>
+            <Link id="link" href={'/slider'} className="group-hover:text-primary group-hover:underline">
+              {data.title}
             </Link>
             <p className="truncate whitespace-nowrap font-stratos-light text-sm text-gray-500">
               {data.description}
             </p>
           </div>
         </div>
-      )
+      );
     },
   },
 
@@ -118,17 +116,15 @@ export const columnsSponsor = [
       return (
         <div className="flex items-center justify-start space-x-1 py-4 pl-4 pr-3 ">
           <div className="group whitespace-nowrap text-sm font-bold text-gray-900 sm:pl-6">
-            <Link href={'/'}>
-              <a className="group-hover:text-primary group-hover:underline">
-                {data.name}
-              </a>
+            <Link id="link" href={'/restaurant'} className="group-hover:text-primary group-hover:underline">
+              {data.name}
             </Link>
             <p className="truncate whitespace-nowrap font-stratos-light text-sm text-gray-500">
               {data.id}
             </p>
           </div>
         </div>
-      )
+      );
     },
   },
   {
@@ -239,14 +235,12 @@ export const columnsCommercial = [
       return (
         <div className="flex items-center justify-start space-x-1 py-4 pl-4 pr-3 ">
           <div className="group whitespace-nowrap text-sm font-bold text-gray-900 sm:pl-6">
-            <Link href={'/'}>
-              <a className="group-hover:text-primary group-hover:underline">
-                {data}
-              </a>
+            <Link id="link" href={'/titre'} className="group-hover:text-primary group-hover:underline">
+              {data}
             </Link>
           </div>
         </div>
-      )
+      );
     },
   },
   {
@@ -299,14 +293,12 @@ export const columnsCollection = [
       return (
         <div className="flex items-center justify-start space-x-1 py-4 pl-4 pr-3 ">
           <div className="group whitespace-nowrap text-sm font-bold text-gray-900 sm:pl-6">
-            <Link href={'/'}>
-              <a className="group-hover:text-primary group-hover:underline">
-                {data}
-              </a>
+            <Link id="link" href={'/titre'} className="group-hover:text-primary group-hover:underline">
+              {data}
             </Link>
           </div>
         </div>
-      )
+      );
     },
   },
   {

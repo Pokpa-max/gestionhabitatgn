@@ -7,9 +7,12 @@ import { parseDocsData } from '@/utils/firebase/firestore'
 import { db } from '@/lib/firebase/client_config'
 import {
   AuthAction,
-  useAuthUser,
-  withAuthUser,
-  withAuthUserTokenSSR,
+  // useAuthUser,
+  // withAuthUser,
+  // withAuthUserTokenSSR,
+  useUser,
+  withUser,
+  withUserTokenSSR,
 } from 'next-firebase-auth'
 import {
   collection,
@@ -28,7 +31,7 @@ import { HITS_PER_PAGE } from '../../lib/constants'
 import HousesList from '../../components/houses/HouseList'
 
 function Houses() {
-  const AuthUser = useAuthUser()
+  const AuthUser = useUser()
   const [data, setData] = useState(null)
 
   const [pagination, setPagination] = useState({
@@ -137,13 +140,13 @@ const HousesPage = () => (
   </Page>
 )
 
-export const getServerSideProps = withAuthUserTokenSSR({
+export const getServerSideProps = withUserTokenSSR({
   whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
 })(async ({ AuthUser }) => {
   return {
     props: {},
   }
 })
-export default withAuthUser({
+export default withUser({
   whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
 })(HousesPage)

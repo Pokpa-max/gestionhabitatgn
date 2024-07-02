@@ -7,11 +7,11 @@ export const columnsMenu = [
     Cell: (data) => {
       return (
         <div className="py-4 pl-4 pr-3 text-sm font-bold text-gray-900 whitespace-nowrap hover:text-primary hover:underline sm:pl-6">
-          <Link href={'/'}>
-            <a>{data}</a>
+          <Link id="link" href={'/menu'}>
+            {data}
           </Link>
         </div>
-      )
+      );
     },
   },
   {
@@ -56,11 +56,11 @@ export const columnsCategories = [
     Cell: (data) => {
       return (
         <div className="py-4 pl-4 pr-3 text-sm font-bold text-gray-900 whitespace-nowrap hover:text-primary hover:underline sm:pl-6">
-          <Link href={'/'}>
-            <a>{data}</a>
+          <Link id="link" href={'/categorie'}>
+            {data}
           </Link>
         </div>
-      )
+      );
     },
   },
   {
@@ -116,17 +116,15 @@ export const columnsItems = [
             alt=""
           />
           <div className="text-sm font-bold text-gray-900 group whitespace-nowrap sm:pl-6">
-            <Link href={'/'}>
-              <a className="group-hover:text-primary group-hover:underline">
-                {data.name}
-              </a>
+            <Link id="link" href={'/nomelement'} className="group-hover:text-primary group-hover:underline">
+              {data.name}
             </Link>
             <p className="text-sm font-light text-gray-500 w2/4 whitespace-nowrap">
               {data.description}
             </p>
           </div>
         </div>
-      )
+      );
     },
   },
 

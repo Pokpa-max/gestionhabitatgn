@@ -1,4 +1,5 @@
 import Breadcrumbs from 'nextjs-breadcrumbs'
+
 import { RiArrowLeftLine } from 'react-icons/ri'
 
 export default function Header({ title }) {
@@ -6,8 +7,7 @@ export default function Header({ title }) {
     <div className="py-5">
       <div>
         <nav className="sm:hidden" aria-label="Back">
-          <a
-            href="#"
+          <span
             className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700"
           >
             <RiArrowLeftLine
@@ -15,16 +15,21 @@ export default function Header({ title }) {
               aria-hidden="true"
             />
             Retour
-          </a>
+          </span>
         </nav>
         <nav className="hidden sm:flex" aria-label="Breadcrumb">
           <ol role="list" className="flex items-center space-x-4">
             <div className="flex flex-row">
-              <Breadcrumbs
+              {/* <Breadcrumbs
                 containerClassName="bread-container"
                 transformLabel={(title) => title}
                 rootLabel="Acceuil"
-              />
+                
+              /> */}
+               {/* <Breadcrumbs
+      useDefaultStyle
+      transformLabel={(title) => title + ' Acceuil'}
+    /> */}
             </div>
           </ol>
         </nav>
@@ -53,3 +58,12 @@ export default function Header({ title }) {
     </div>
   )
 }
+
+
+
+import React from 'react';
+import Breadcrumbs from 'nextjs-breadcrumbs';
+
+// const Example = () => {
+//   return <Breadcrumbs useDefaultStyle rootLabel="Home" />;
+// };

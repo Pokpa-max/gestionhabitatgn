@@ -27,14 +27,12 @@ export const columnsCategory = [
       return (
         <div className="flex items-center justify-start py-4 pl-4 pr-3 space-x-1 ">
           <div className="text-sm font-bold text-gray-900 group whitespace-nowrap sm:pl-6">
-            <Link href={'/'}>
-              <a className="group-hover:text-primary group-hover:underline">
-                {data}
-              </a>
+            <Link  id="link" href={'/new'} className="group-hover:text-primary group-hover:underline">
+              {data}
             </Link>
           </div>
         </div>
-      )
+      );
     },
   },
 
@@ -113,14 +111,12 @@ export const columnsBundle = [
       return (
         <div className="flex items-center justify-start py-4 pl-4 pr-3 space-x-1 ">
           <div className="text-sm font-bold text-gray-900 group whitespace-nowrap sm:pl-6">
-            <Link href={'/'}>
-              <a className="group-hover:text-primary group-hover:underline">
-                {data}
-              </a>
+            <Link id="link" href={'/nom'} className="group-hover:text-primary group-hover:underline">
+              {data}
             </Link>
           </div>
         </div>
-      )
+      );
     },
   },
   {

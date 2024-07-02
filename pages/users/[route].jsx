@@ -59,27 +59,28 @@ function Users() {
               <aside className="py-6 lg:col-span-2">
                 <nav className="space-y-1">
                   {subNavigation.map((item) => (
-                    <Link passHref key={item.name} href={item.href}>
-                      <a
+                    (<Link
+                      id="link"
+                      passHref
+                      key={item.name}
+                      href={item.href}
+                      className={classNames(
+                        item.current
+                          ? 'bg-cyan-500 text-white'
+                          : 'text-gray-500 hover:bg-cyan-500 hover:text-white',
+                        'group flex items-center px-2 py-3 text-sm font-medium hover:cursor-pointer'
+                      )}>
+                      <item.icon
                         className={classNames(
                           item.current
-                            ? 'bg-cyan-500 text-white'
-                            : 'text-gray-500 hover:bg-cyan-500 hover:text-white',
-                          'group flex items-center px-2 py-3 text-sm font-medium hover:cursor-pointer'
+                            ? 'text-white'
+                            : 'text-gray-500 group-hover:text-white',
+                          'mr-3 h-7 w-7 flex-shrink-0'
                         )}
-                      >
-                        <item.icon
-                          className={classNames(
-                            item.current
-                              ? 'text-white'
-                              : 'text-gray-500 group-hover:text-white',
-                            'mr-3 h-7 w-7 flex-shrink-0'
-                          )}
-                          aria-hidden="true"
-                        />
-                        <span className="truncate">{item.name}</span>
-                      </a>
-                    </Link>
+                        aria-hidden="true"
+                      />
+                      <span className="truncate">{item.name}</span>
+                    </Link>)
                   ))}
                 </nav>
               </aside>
@@ -92,7 +93,7 @@ function Users() {
       }
       title={'Users'}
     />
-  )
+  );
 }
 
 const UsersPage = () => (
